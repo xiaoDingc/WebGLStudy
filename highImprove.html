@@ -1,0 +1,254 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>从已经加载的纹理贴图集中创建精灵</title>
+</head>
+<script src="pixi/jquery-3.3.1.min.js"></script>
+
+<script src="pixi/pixi.min.js"></script>
+
+<body>
+    <button id="wo"> wo dian le </button>
+    <script type="text/javascript">
+        let type = "WebGL"
+        if (!PIXI.utils.isWebGLSupported()) {
+            type = "canvas"
+        }
+        PIXI.utils.sayHello(type)
+
+        let Application = PIXI.Application,
+            Container = PIXI.Container,
+            loader = PIXI.loader,
+            resources = PIXI.loader.resources,
+            TextureCache = PIXI.utils.TextureCache,
+            Sprite = PIXI.Sprite,
+            Rectangle = PIXI.Rectangle
+
+        //create a Pixi App
+        let app = new Application({
+            width: 512,
+            height: 512,
+            antialiasing: true,
+            transparent: false,
+            resolution: 1
+        });
+
+        app.renderer.backgroundColor = 0x87CEEB; //蓝色 16进制码
+        document.body.appendChild(app.view);
+
+
+        //loader an image and run the 'setup' function when it's done
+        loader
+            .add([
+                "./images/treasureHunter.json",
+            ])
+            .on("progress", loadProgressHandler)
+            .load(setup);
+
+
+        let exploer, exploer1, dungeon;
+        //This setup function that will run when the image has loaded
+        function setup() {
+            //1 Access the 'TexttureCache' directly
+            let dungeonTexture = TextureCache['dungeon.png'];
+
+            dungeon = new Sprite(dungeonTexture);
+
+            app.stage.addChild(dungeon);
+
+
+            exploer = new Sprite(resources['./images/treasureHunter.json'].textures["explorer.png"]);
+            exploer.x = 68;
+            exploer.y = app.stage.height / 2 - exploer.height / 2;
+            app.stage.addChild(exploer);
+
+            exploer1 = new Sprite(resources['./images/treasureHunter.json'].textures["explorer.png"]);
+            exploer1.x = 268;
+            exploer1.y = app.stage.height / 3 - exploer.height / 2;
+            app.stage.addChild(exploer1);
+
+
+
+            //Capture the keyboard arrow keys
+            let left = keyboard(37),
+                up = keyboard(38),
+                right = keyboard(39),
+                down = keyboard(40);
+
+            //Left arrow key `press` method
+            left.press = () => {
+                //Change the cat's velocity when the key is pressed
+                exploer1.x = -5;
+                exploer1.y = 0;
+                console.log("我按左键了");
+            };
+
+            //Left arrow key `release` method
+            left.release = () => {
+                //If the left arrow has been released, and the right arrow isn't down,
+                //and the cat isn't moving vertically:
+                //Stop the cat
+                if (!right.isDown && exploer1.y === 0) {
+                    exploer1.x = 0;
+                }
+                console.log("我左键抬起了");
+            };
+
+
+            for (i = 0; i < 10; i++) {
+                let treasureTexture = TextureCache['treasure.png'];
+                let treasure = new Sprite(treasureTexture);
+                app.stage.addChild(treasure);
+
+                treasure.x = app.stage.width - treasure.width - (i + 1) * 35;
+                treasure.y = app.stage.height / 2 - treasure.height / 2;
+                app.stage.addChild(treasure);
+            }
+            // let treasureTexture = TextureCache['treasure.png'];
+            // let treasure = new Sprite(treasureTexture);
+            // app.stage.addChild(treasure);
+
+            // treasure.x = app.stage.width - treasure.width - 48;
+            // treasure.y = app.stage.height / 2 - treasure.height / 2;
+            // app.stage.addChild(treasure);
+            //Set the game play
+            state = play;
+            //change();
+            app.ticker.add(delta => gameLoop(delta));
+            console.log("All files loaded")
+        }
+
+
+        function hitTestRectangle(r1, r2) {
+
+            //Define the variables we'll need to calculate
+            let hit, combinedHalfWidths, combinedHalfHeights, vx, vy;
+
+            //hit will determine whether there's a collision
+            hit = false;
+
+            //Find the center points of each sprite
+            r1.centerX = r1.x + r1.width / 2;
+            r1.centerY = r1.y + r1.height / 2;
+            r2.centerX = r2.x + r2.width / 2;
+            r2.centerY = r2.y + r2.height / 2;
+
+            //Find the half-widths and half-heights of each sprite
+            r1.halfWidth = r1.width / 2;
+            r1.halfHeight = r1.height / 2;
+            r2.halfWidth = r2.width / 2;
+            r2.halfHeight = r2.height / 2;
+
+            //Calculate the distance vector between the sprites
+            vx = r1.centerX - r2.centerX;
+            vy = r1.centerY - r2.centerY;
+
+            //Figure out the combined half-widths and half-heights
+            combinedHalfWidths = r1.halfWidth + r2.halfWidth;
+            combinedHalfHeights = r1.halfHeight + r2.halfHeight;
+
+            //Check for a collision on the x axis
+            if (Math.abs(vx) < combinedHalfWidths) {
+
+                //A collision might be occuring. Check for a collision on the y axis
+                if (Math.abs(vy) < combinedHalfHeights) {
+
+                    //There's definitely a collision happening
+                    hit = true;
+                } else {
+
+                    //There's no collision on the y axis
+                    hit = false;
+                }
+            } else {
+
+                //There's no collision on the x axis
+                hit = false;
+            }
+
+            //`hit` will be either `true` or `false`
+            return hit;
+        };
+
+
+        function play(delta) {
+
+            if (hitTestRectangle(exploer, exploer1)) {
+                console.log("我被碰到了")
+            } else {
+                console.log("还没碰到");
+            }
+
+
+            $("#wo").click(function() {
+                console.log("1234");
+            })
+            if (exploer1.y < 1) {
+                exploer1.y = 268;
+            } else {
+                if (exploer1.y == 100) {
+                    //todo
+                    console.log("good");
+                }
+                exploer1.y -= 0.5;
+            }
+            if (exploer.x > 250) {
+                exploer.x = 1;
+
+            } else {
+                exploer.x += 3;
+            }
+        }
+
+        function gameLoop(delta) {
+            state(delta);
+        }
+
+        function loadProgressHandler(loader, resource) {
+            console.log("loading " + resource.url)
+            console.log("progress " + loader.progress + " %");
+        }
+
+        //键盘代码
+        function keyboard(keyCode) {
+            let key = {};
+            key.code = keyCode;
+            key.isDown = false;
+            key.isUp = true;
+            key.press = undefined;
+            key.release = undefined;
+            //The `downHandler`
+            key.downHandler = event => {
+                if (event.keyCode === key.code) {
+                    if (key.isUp && key.press) key.press();
+                    key.isDown = true;
+                    key.isUp = false;
+                }
+                event.preventDefault();
+            };
+
+            //The `upHandler`
+            key.upHandler = event => {
+                if (event.keyCode === key.code) {
+                    if (key.isDown && key.release) key.release();
+                    key.isDown = false;
+                    key.isUp = true;
+                }
+                event.preventDefault();
+            };
+
+            //Attach event listeners
+            window.addEventListener(
+                "keydown", key.downHandler.bind(key), false
+            );
+            window.addEventListener(
+                "keyup", key.upHandler.bind(key), false
+            );
+            return key;
+        }
+    </script>
+</body>
+
+</html>

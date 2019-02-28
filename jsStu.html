@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="css/jquery-ui.min.css">
+    <style>
+        .titleBlock {
+            width: 300px;
+            height: 10px;
+            border: solid 18px;
+            margin: 0 auto;
+            background-color: black;
+        }
+        
+        .parentBlock {
+            width: 300px;
+            border: solid 18px;
+            margin: 0 auto;
+            background-color: dimgrey
+        }
+        
+        .innerContentBlock {
+            width: 100%;
+            height: 100%;
+            background-color: dimgrey
+        }
+        
+        .areaBlock {
+            width: 280px;
+            height: 12px;
+            margin: 0 auto;
+            margin-top: 3px;
+            background-color: black;
+            text-align: center;
+        }
+        
+        .areaBlockWithImg {
+            width: 280px;
+            height: 12px;
+            margin: 0 auto;
+            margin-top: 3px;
+            background-color: black;
+            text-align: center;
+            background-image: url(img/1.jpg);
+            background-size: 100% 100%;
+            -moz-background-size: 100% 100%;
+            color: transparent;
+        }
+        
+        .blockFont {
+            line-height: 12px;
+            color: white;
+            font-size: 10px
+        }
+    </style>
+</head>
+
+<body>
+    <div class="titleBlock" align="center">
+        <font color="white" style="font-weight: bold">测试机柜</font>
+    </div>
+    <div class="parentBlock">
+        <div class="innerContentBlock">
+        </div>
+    </div>
+</body>
+<script src="js/jquery-1.11.0.min.js"></script>
+<script src="js/jquery-ui.min.js"></script>
+<script>
+    $(function() {
+        $(document).tooltip({
+            position: {
+                my: "left+50 center",
+                at: "right center"
+            },
+            items: "[data-geo]",
+            content: function() {
+                var element = $(this);
+                if (element.is("[data-geo]")) {
+                    var text = element.text().split(',');
+                    var content = '';
+                    if (text.length == 3) {
+                        content += "<div>" + text[0] + "</div><div>" + text[1] + "</div><div>" + text[2] + "</div>";
+                    } else {
+                        content += "<div>单元 " + text[0] + " 可使用</div>";
+                    }
+                    return content;
+                }
+
+            }
+        });
+
+        var array = new Array();
+        array.push({
+            index: 1,
+            name: '11',
+            length: 2,
+            type: 1
+        })
+        array.push({
+            index: 10,
+            name: '22',
+            length: 4,
+            type: 1
+        })
+        array.push({
+            index: 25,
+            name: '23',
+            length: 6,
+            type: 1
+        })
+        init(40, array)
+    })
+
+    function init(unitCount, unitArray) {
+        var blockInterval = 3; //单元的间隔
+        var blockHeight = 12; //单元高度
+        var map = {};
+        for (var i = 0; i < unitArray.length; i++) {
+            map[unitArray[i].index + unitArray[i].length - 1] = unitArray[i];
+        }
+        var parentBlockHeight = (blockHeight + blockInterval) * unitCount + 'px';
+        $('.parentBlock').css('height', parentBlockHeight);
+        var content = "";
+        for (var i = unitCount; i >= 1; i--) {
+            if (typeof(map[i]) == 'undefined') {
+                content += '<div class="areaBlock" align="center" data-geo=""><div class="blockFont">' + i + '</div></div>'
+            } else {
+                var length = parseInt(map[i].length);
+                var height = blockHeight * (length) + blockInterval * (length - 1) + 'px';
+                i -= (length - 1);
+                content += '<div class="areaBlockWithImg" align="center" style="height: ' + height + '" data-geo="">' + '台式机,dell,XSAD123' + '</div>'
+            }
+
+        }
+        $('.innerContentBlock').append(content)
+    }
+</script>
+
+</html>

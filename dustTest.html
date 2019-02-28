@@ -1,0 +1,106 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>baseLearn</title>
+</head>
+
+<script src="pixi/pixi.min.js"></script>
+<script src="pixi/dust.js"></script>
+
+<body>
+    <script type="text/javascript">
+        let type = "WebGL"
+        if (!PIXI.utils.isWebGLSupported()) {
+            type = "canvas"
+        }
+        PIXI.utils.sayHello(type)
+
+        let Application = PIXI.Application,
+            loader = PIXI.loader,
+            resources = PIXI.loader.resources,
+            Sprite = PIXI.Sprite;
+
+        let d = new Dust(PIXI);
+        //create a Pixi App
+        let app = new Application({
+            width: 256,
+            height: 256
+        });
+        app.renderer.autoResize = true;
+        app.renderer.resize(512, 512); //重新设置范围大小
+        app.renderer.backgroundColor = 0x87CEEB; //蓝色 16进制码
+        document.body.appendChild(app.view);
+
+
+        //loader an image and run the 'setup' function when it's done
+        loader
+            .add([
+                "./images/cat.png",
+                "./images/cat1.png",
+                "./images/cat2.png",
+            ])
+            .on("progress", loadProgressHandler)
+            .load(setup);
+
+        let cat;
+        //This setup function that will run when the image has loaded
+        function setup() {
+            //Create the cat sprite
+            // cat = new Sprite(resources['./images/cat.png'].texture);
+            // let cat1 = new Sprite(resources['./images/cat1.png'].texture);
+            // //   let cat2 = new Sprite(resources['./images/cat2.png'].texture);
+
+            // //Change the sprite's position
+            // // cat.x = 96;
+            // // cat.y = 96;
+            // //anthor write method
+            // cat.position.set(96, 96);
+
+            // // cat1.x = 150;
+            // // cat1.y = 20;
+            // cat1.position.set(150, 20);
+            // cat1.scale.set(0.5, 0.5);
+
+            // //change the sprite rotation 改变精灵的角度
+            // cat1.rotation = 0.5
+
+            // //Change the sprite's position
+            // // cat.width = 80;
+            // // cat.height = 120;
+            // //add the cat to the stage
+            // app.stage.addChild(cat);
+            // app.stage.addChild(cat1);
+            //   app.stage.addChild(cat2);
+            //control the sprite display yes or no
+            //app.stage.visible = false;
+
+            let stars = d.create(
+                128, //x start position
+                128, //y start position
+                () => new PIXI.Sprite( //Sprite function
+                    PIXI.utils.TextureCache["./images/cat2.png"]
+                ),
+                app.stage, //Container for particles
+                500 //Number of particles
+            );
+            stars.play();
+            app.ticker.add(delta => gameLoop(delta));
+            console.log("All files loaded")
+        }
+
+        function gameLoop(delta) {
+            requestAnimationFrame(gameLoop);
+            d.update();
+            // cat.x += 1;
+        }
+
+        function loadProgressHandler(loader, resource) {
+            console.log("loading " + resource.url)
+            console.log("progress " + loader.progress + " %");
+        }
+    </script>
+</body>
+
+</html>

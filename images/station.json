@@ -1,0 +1,20 @@
+{"frames": {
+
+"jiantouarrow506(1).svg":
+{
+	"frame": {"x":1,"y":1,"w":881,"h":717},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":244,"y":36,"w":881,"h":717},
+	"sourceSize": {"w":1366,"h":768}
+}},
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "1123.png",
+	"format": "RGBA8888",
+	"size": {"w":883,"h":719},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:ed4f917a54827fcc2a722b13f13cfd4e:e518d160822ee6f58fc49471c727196d:0bee6db12a4f74f9c5c954830e918b81$"
+}
+}

@@ -1,0 +1,220 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>从已经加载的纹理贴图集中创建精灵</title>
+</head>
+<script src="pixi/jquery-3.3.1.min.js"></script>
+
+<script src="pixi/pixi.min.js"></script>
+
+<body>
+    <script type="text/javascript">
+        let type = "WebGL"
+        if (!PIXI.utils.isWebGLSupported()) {
+            type = "canvas"
+        }
+        PIXI.utils.sayHello(type)
+
+        let Application = PIXI.Application,
+            Container = PIXI.Container,
+            loader = PIXI.loader,
+            Graphics = PIXI.Graphics,
+            resources = PIXI.loader.resources,
+            TextureCache = PIXI.utils.TextureCache,
+            Sprite = PIXI.Sprite,
+            Rectangle = PIXI.Rectangle
+
+        //create a Pixi App
+        let app = new Application({
+            width: 1024,
+            height: 1024,
+            antialiasing: true,
+            transparent: false,
+            resolution: 1
+        });
+
+        // app.renderer.backgroundColor = 0x87CEEB; //蓝色 16进制码
+        app.renderer.backgroundColor = 0xffffff; //蓝色 16进制码
+        document.body.appendChild(app.view);
+
+
+        //loader an image and run the 'setup' function when it's done
+        loader
+            .add([
+                "./images/12.json",
+            ])
+            .on("progress", loadProgressHandler)
+            .load(setup);
+
+
+        let border, arraySvg, dungeon;
+        //This setup function that will run when the image has loaded
+        function setup() {
+            //1 Access the 'TexttureCache' directly
+            let borderTexture = TextureCache['管道图.svg'];
+
+            border = new Sprite(borderTexture);
+
+            app.stage.addChild(border);
+
+
+            let line = new Graphics();
+            line.lineStyle(2, 0x4169E1, 1);
+            line.moveTo(0, 150);
+            line.lineTo(1000, 150);
+            line.x = 32;
+            line.y = 32;
+            app.stage.addChild(line);
+
+            // let arrayTexture = TextureCache['牛奶.svg'];
+
+            // arraySvg = new Sprite(arrayTexture);
+
+            // arraySvg.x = 68;
+            // arraySvg.y = app.stage.height / 2 - arraySvg.height / 2;
+            // app.stage.addChild(arraySvg);
+
+
+            //Capture the keyboard arrow keys
+            let left = keyboard(37),
+                up = keyboard(38),
+                right = keyboard(39),
+                down = keyboard(40);
+
+            //Left arrow key `press` method
+            left.press = () => {
+
+                console.log("我按左键了");
+            };
+
+            //Left arrow key `release` method
+            left.release = () => {
+
+                console.log("我左键抬起了");
+            };
+
+
+
+
+            state = play;
+            //change();
+            app.ticker.add(delta => gameLoop(delta));
+
+        }
+
+
+        function play(delta) {
+
+            // if (arraySvg.x > 1000) {
+            //     arraySvg.x = 1;
+            // } else {
+            //     arraySvg.x += 1;
+            // }
+
+        }
+
+        function hitTestRectangle(r1, r2) {
+
+            //Define the variables we'll need to calculate
+            let hit, combinedHalfWidths, combinedHalfHeights, vx, vy;
+
+            //hit will determine whether there's a collision
+            hit = false;
+
+            //Find the center points of each sprite
+            r1.centerX = r1.x + r1.width / 2;
+            r1.centerY = r1.y + r1.height / 2;
+            r2.centerX = r2.x + r2.width / 2;
+            r2.centerY = r2.y + r2.height / 2;
+
+            //Find the half-widths and half-heights of each sprite
+            r1.halfWidth = r1.width / 2;
+            r1.halfHeight = r1.height / 2;
+            r2.halfWidth = r2.width / 2;
+            r2.halfHeight = r2.height / 2;
+
+            //Calculate the distance vector between the sprites
+            vx = r1.centerX - r2.centerX;
+            vy = r1.centerY - r2.centerY;
+
+            //Figure out the combined half-widths and half-heights
+            combinedHalfWidths = r1.halfWidth + r2.halfWidth;
+            combinedHalfHeights = r1.halfHeight + r2.halfHeight;
+
+            //Check for a collision on the x axis
+            if (Math.abs(vx) < combinedHalfWidths) {
+
+                //A collision might be occuring. Check for a collision on the y axis
+                if (Math.abs(vy) < combinedHalfHeights) {
+
+                    //There's definitely a collision happening
+                    hit = true;
+                } else {
+
+                    //There's no collision on the y axis
+                    hit = false;
+                }
+            } else {
+
+                //There's no collision on the x axis
+                hit = false;
+            }
+
+            //`hit` will be either `true` or `false`
+            return hit;
+        };
+
+
+
+        function gameLoop(delta) {
+            state(delta);
+        }
+
+        function loadProgressHandler(loader, resource) {
+            console.log("loading " + resource.url)
+            console.log("progress " + loader.progress + " %");
+        }
+
+        //键盘代码
+        function keyboard(keyCode) {
+            let key = {};
+            key.code = keyCode;
+            key.isDown = false;
+            key.isUp = true;
+            key.press = undefined;
+            key.release = undefined;
+            //The `downHandler`
+            key.downHandler = event => {
+                if (event.keyCode === key.code) {
+                    if (key.isUp && key.press) key.press();
+                    key.isDown = true;
+                    key.isUp = false;
+                }
+                event.preventDefault();
+            };
+
+            //The `upHandler`
+            key.upHandler = event => {
+                if (event.keyCode === key.code) {
+                    if (key.isDown && key.release) key.release();
+                    key.isDown = false;
+                    key.isUp = true;
+                }
+                event.preventDefault();
+            };
+
+            //Attach event listeners
+            window.addEventListener(
+                "keydown", key.downHandler.bind(key), false
+            );
+            window.addEventListener(
+                "keyup", key.upHandler.bind(key), false
+            );
+            return key;
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,289 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>从一个图中截取部分</title>
+</head>
+
+<script src="pixi/pixi.min.js"></script>
+<script src="pixi/dust.js"></script>
+<script src="pixi/spriteUtilities.js"></script>
+<script src="pixi/bump.js"></script>
+<script src="pixi/jquery-3.3.1.min.js"></script>
+
+
+<body>
+    <script type="text/javascript">
+        let type = "WebGL"
+        if (!PIXI.utils.isWebGLSupported()) {
+            type = "canvas"
+        }
+        PIXI.utils.sayHello(type)
+
+        let Application = PIXI.Application,
+            Container = PIXI.Container,
+            loader = PIXI.loader,
+            resources = PIXI.loader.resources,
+            TextureCache = PIXI.utils.TextureCache,
+            Sprite = PIXI.Sprite,
+            Rectangle = PIXI.Rectangle,
+            Graphics = PIXI.Graphics
+
+
+        let array;
+        let u = new SpriteUtilities(PIXI);
+        let d = new Dust(PIXI);
+        //碰撞检测初始化
+        let b = new Bump(PIXI);
+        //模拟ajax请求变量
+        var modifyArg = 0;
+
+        //create a Pixi App
+        let app = new Application({
+            width: 1040,
+            height: 1040,
+            antialiasing: true,
+            transparent: false,
+            resolution: 1
+        });
+
+
+
+        let hexColor = u.color("white");
+
+        app.renderer.backgroundColor = hexColor; //蓝色 16进制码
+        document.body.appendChild(app.view);
+
+        //loader an image and run the 'setup' function when it's done
+        loader
+            .add([
+                "./images/array.json",
+                "./images/guandao.json",
+                "./images/station.json"
+            ])
+            .on("progress", loadProgressHandler)
+            .load(setup);
+
+        let container, containerGuanDao, containerReal;
+        let testArray;
+        let guandao;
+        let testAll;
+        let basicText;
+        let textCount = 0;
+        let realCount = 0;
+        //This setup function that will run when the image has loaded
+        function setup() {
+            let arrayTexture = TextureCache['array.svg'];
+            let guandaoTexture = TextureCache["guandao.svg"]
+
+            let testAllTexture = TextureCache["jiantouarrow506(1).svg"]
+            testAll = new Sprite(testAllTexture);
+            //add to stage
+            app.stage.addChild(testAll);
+
+
+            let square = u.rectangle(164, 64, "seaGreen", "hotPink", 2);
+            app.stage.addChild(square);
+
+
+            for (let index = 1; index <= 8; index++) {
+                guandao = new Sprite(guandaoTexture);
+                guandao.scale.set(0.05, 0.05);
+                guandao.x = index * 67;
+                app.stage.addChild(guandao);
+            }
+
+
+
+
+            //加入容器中,以组的形式出现
+            container = u.group();
+            for (let i = 0; i < 2; i++) {
+                array = new Sprite(arrayTexture);
+                array.x = i * 100 + 5;
+                array.y = 7;
+                array.scale.set(0.5, 0.5);
+                container.addChild(array);
+            }
+            app.stage.addChild(container);
+
+
+
+            containerReal = u.group();
+            //真实区域位置
+            for (let i = 0; i < 2; i++) {
+                array = new Sprite(arrayTexture);
+                array.x = i * 40 + 25;
+                //   array.y = 189;
+                array.scale.set(0.2, 0.2);
+                containerReal.addChild(array);
+            }
+            containerReal.x = 322;
+            containerReal.y = 191;
+
+            app.stage.addChild(containerReal);
+
+
+
+            //整个容器的旋转角度
+            // container.rotation = 30;
+
+            testArray = new Sprite(arrayTexture);
+            testArray.x = 150;
+            testArray.y = 150;
+
+            //指定该精灵 是否使用鼠标点击交互功能
+            // Opt-in to interactivity
+            testArray.interactive = true;
+
+            // Shows hand cursor
+            testArray.buttonMode = true;
+
+            // Pointers normalize touch and mouse
+            testArray.on('pointerdown', onClick);
+            app.stage.addChild(testArray);
+
+            //长方形绘制
+            let rectangle = new Graphics();
+            rectangle.lineStyle(4, u.color("blue"), 1);
+            rectangle.beginFill(u.color("blue"));
+            rectangle.drawRect(422, 259, 144, 77);
+            rectangle.endFill();
+
+
+            //指定该精灵 是否使用鼠标点击交互功能
+            // Opt-in to interactivity
+            rectangle.interactive = true;
+
+            // Shows hand cursor
+            rectangle.buttonMode = true;
+
+            // Pointers normalize touch and mouse
+            rectangle.on('pointerdown', onClick);
+
+            app.stage.addChild(rectangle);
+
+
+
+            basicText = new PIXI.Text('0');
+            basicText.position.set(453, 275);
+            app.stage.addChild(basicText);
+
+            //缩放箭头的大小
+            //  container.scale.set(0.2, 0.2);
+            //    array.rotation = 0.5;
+
+            //Position the array on the canvas
+            // container.x = 32;
+            // container.y = 32;
+
+            let left = keyboard(37),
+                up = keyboard(38),
+                right = keyboard(39),
+                down = keyboard(40);
+
+            //Left arrow key `press` method
+            // testArray.rotation = 2.5;
+            left.press = () => {
+                testArray.rotation += 0.1;
+                console.warn(testArray.rotation);
+                console.log("我按左键了");
+            };
+            right.press = () => {
+                testArray.rotation -= 0.1;
+                console.warn(testArray.rotation);
+                console.log("我按左键了");
+            };
+
+            app.ticker.add(delta => gameLoop(delta));
+            console.log("All files loaded")
+
+            //模拟ajax获取value
+            getXy(modifyArg);
+            setInterval(getXy, 1000)
+        }
+
+
+
+        function onClick() {
+            testArray.rotation += 0.1;
+        }
+
+
+        function getXy(x) {
+            modifyArg++;
+        }
+        //加载程序进程
+        function loadProgressHandler(loader, resource) {
+            console.log("loading " + resource.url)
+            console.log("progress " + loader.progress + " %");
+        }
+
+        function gameLoop(delta) {
+            textCount++;
+            console.log(textCount)
+            if (textCount == 59) {
+                //文字改变
+                basicText.text = realCount++;
+                textCount = 0;
+            }
+            if (modifyArg <= 7) {
+                containerReal.x += 1;
+            } else {
+                modifyArg = 0;
+                container.x = 0;
+                containerReal.x = 322;
+            }
+
+            //碰撞检测
+            if (b.hit({
+                    x: 200,
+                    y: 200
+                }, container)) {
+                console.log("碰撞到了");
+                console.log("container:-----" + container.x + "======= container:" + container.y);
+            }
+        }
+
+
+        function keyboard(keyCode) {
+            let key = {};
+            key.code = keyCode;
+            key.isDown = false;
+            key.isUp = true;
+            key.press = undefined;
+            key.release = undefined;
+            //The `downHandler`
+            key.downHandler = event => {
+                if (event.keyCode === key.code) {
+                    if (key.isUp && key.press) key.press();
+                    key.isDown = true;
+                    key.isUp = false;
+                }
+                event.preventDefault();
+            };
+
+            //The `upHandler`
+            key.upHandler = event => {
+                if (event.keyCode === key.code) {
+                    if (key.isDown && key.release) key.release();
+                    key.isDown = false;
+                    key.isUp = true;
+                }
+                event.preventDefault();
+            };
+
+            //Attach event listeners
+            window.addEventListener(
+                "keydown", key.downHandler.bind(key), false
+            );
+            window.addEventListener(
+                "keyup", key.upHandler.bind(key), false
+            );
+            return key;
+        }
+    </script>
+</body>
+
+</html>

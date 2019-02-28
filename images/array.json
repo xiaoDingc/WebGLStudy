@@ -1,0 +1,20 @@
+{"frames": {
+
+"array.svg":
+{
+	"frame": {"x":0,"y":0,"w":116,"h":44},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":116,"h":44},
+	"sourceSize": {"w":116,"h":44}
+}},
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "array.png",
+	"format": "RGBA8888",
+	"size": {"w":116,"h":44},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:c0e99134fa04d5514516c2723b56a523:e5e132967c99b073843a90145b061828:bc9266f9083536fefb4ef11840e31610$"
+}
+}

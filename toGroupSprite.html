@@ -1,0 +1,162 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>精灵分组</title>
+</head>
+<script src="pixi/jquery-3.3.1.min.js"></script>
+
+<script src="pixi/pixi.min.js"></script>
+
+<body>
+    <script type="text/javascript">
+        let type = "WebGL"
+        if (!PIXI.utils.isWebGLSupported()) {
+            type = "canvas"
+        }
+        PIXI.utils.sayHello(type)
+
+        let Application = PIXI.Application,
+            Container = PIXI.Container,
+            loader = PIXI.loader,
+            resources = PIXI.loader.resources,
+            TextureCache = PIXI.utils.TextureCache,
+            Graphics = PIXI.Graphics,
+            Sprite = PIXI.Sprite,
+            Rectangle = PIXI.Rectangle
+
+        //create a Pixi App
+        let app = new Application({
+            width: 512,
+            height: 512,
+            antialiasing: true,
+            transparent: false,
+            resolution: 1
+        });
+
+        app.renderer.backgroundColor = 0x87CEEB; //蓝色 16进制码
+        document.body.appendChild(app.view);
+
+
+        //loader an image and run the 'setup' function when it's done
+        loader
+            .add([
+                "./images/animals.json",
+            ])
+            .load(setup);
+
+        //This setup function that will run when the image has loaded
+        function setup() {
+            //1 Access the 'TexttureCache' directly
+            //there are three ways to make Sprite from texture alias frames
+
+
+
+            let cat = new Sprite(TextureCache["cat.png"]);
+            cat.position.set(16, 16);
+
+            let hedgehog = new Sprite(TextureCache["hedgehog.png"]);
+
+            hedgehog.position.set(32, 32);
+
+            let tiger = new Sprite(TextureCache["tiger.png"]);
+            tiger.position.set(64, 64);
+
+            let animals = new Container();
+
+            animals.addChild(cat);
+
+            animals.addChild(hedgehog);
+
+            animals.addChild(tiger);
+
+
+
+
+            app.stage.addChild(animals);
+
+            animals.position.set(64, 64);
+
+
+
+
+
+            //Capture the keyboard arrow keys
+            let left = keyboard(37),
+                up = keyboard(38),
+                right = keyboard(39),
+                down = keyboard(40);
+
+            //Left arrow key `press` method
+            left.press = () => {
+                console.log(animals.children);
+                animals.x += 5;
+                animals.y += 5;
+                //Change the cat's velocity when the key is pressed
+                console.log(animals.toGlobal(cat.position));
+            };
+
+            //Left arrow key `release` method
+            left.release = () => {
+                //If the left arrow has been released, and the right arrow isn't down,
+
+
+            };
+
+
+            state = play;
+
+            //app.ticker.add(delta => gameLoop(delta));
+            console.log("All files loaded")
+        }
+
+        function play(delta) {
+
+        }
+
+        function gameLoop(delta) {
+            state(delta);
+        }
+
+        //键盘代码
+        function keyboard(keyCode) {
+            let key = {};
+            key.code = keyCode;
+            key.isDown = false;
+            key.isUp = true;
+            key.press = undefined;
+            key.release = undefined;
+            //The `downHandler`
+            key.downHandler = event => {
+                if (event.keyCode === key.code) {
+                    if (key.isUp && key.press) key.press();
+                    key.isDown = true;
+                    key.isUp = false;
+                }
+                event.preventDefault();
+            };
+
+            //The `upHandler`
+            key.upHandler = event => {
+                if (event.keyCode === key.code) {
+                    if (key.isDown && key.release) key.release();
+                    key.isDown = false;
+                    key.isUp = true;
+                }
+                event.preventDefault();
+            };
+
+            //Attach event listeners
+            window.addEventListener(
+                "keydown", key.downHandler.bind(key), false
+            );
+            window.addEventListener(
+                "keyup", key.upHandler.bind(key), false
+            );
+            return key;
+        }
+    </script>
+</body>
+
+</html>

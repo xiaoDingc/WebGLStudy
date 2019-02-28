@@ -1,0 +1,681 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>从一个图中截取部分</title>
+</head>
+
+<script src="pixi/pixi.min.js"></script>
+<script src="pixi/dust.js"></script>
+<script src="pixi/spriteUtilities.js"></script>
+<script src="pixi/bump.js"></script>
+<script src="pixi/jquery-3.3.1.min.js"></script>
+
+
+<body>
+
+    <script type="text/javascript">
+        let type = "WebGL"
+        if (!PIXI.utils.isWebGLSupported()) {
+            type = "canvas"
+        }
+        PIXI.utils.sayHello(type)
+
+        let Application = PIXI.Application,
+            Container = PIXI.Container,
+            loader = PIXI.loader,
+            resources = PIXI.loader.resources,
+            TextureCache = PIXI.utils.TextureCache,
+            Sprite = PIXI.Sprite,
+            Rectangle = PIXI.Rectangle,
+            Graphics = PIXI.Graphics
+
+
+        let array;
+        let u = new SpriteUtilities(PIXI);
+        let d = new Dust(PIXI);
+        let particleStream;
+
+
+
+        //模拟ajax请求变量
+        var modifyArg = 0;
+
+        //create a Pixi App
+        let app = new Application({
+            width: 1920,
+            height: 1080,
+            antialiasing: true,
+            transparent: false,
+            resolution: 1
+        });
+
+        let b = new Bump(PIXI);
+
+        let hexColor = u.color("white");
+
+        app.renderer.backgroundColor = hexColor; //蓝色 16进制码
+        document.body.appendChild(app.view);
+
+
+        //loader an image and run the 'setup' function when it's done
+        loader
+            .add([
+                "./images/array.json",
+                "./images/guandao.json",
+                "./images/station.json"
+            ])
+            .on("progress", loadProgressHandler)
+            .load(setup);
+
+
+        let container, containerGuanDao, containerReal;
+        let testArray;
+        let guandao;
+        let testAll;
+        //This setup function that will run when the image has loaded
+        function setup() {
+
+            let arrayTexture = TextureCache['array.svg'];
+            let guandaoTexture = TextureCache["guandao.svg"]
+
+            let testAllTexture = TextureCache["jiantouarrow506(1).svg"]
+            testAll = new Sprite(testAllTexture);
+
+
+            //add to stage
+            app.stage.addChild(testAll);
+
+
+            for (let index = 1; index <= 8; index++) {
+                guandao = new Sprite(guandaoTexture);
+                guandao.scale.set(0.05, 0.05);
+                guandao.x = index * 67;
+                app.stage.addChild(guandao);
+            }
+
+
+
+
+            //加入容器中,以组的形式出现
+            container = u.group();
+
+            for (let i = 0; i < 2; i++) {
+                array = new Sprite(arrayTexture);
+                array.x = i * 100 + 5;
+                array.y = 7;
+                array.scale.set(0.5, 0.5);
+                container.addChild(array);
+            }
+
+            containerReal = u.group();
+            //真实区域位置
+            for (let i = 0; i < 2; i++) {
+                array = new Sprite(arrayTexture);
+                array.x = i * 40 + 25;
+                //   array.y = 189;
+                array.scale.set(0.2, 0.2);
+                containerReal.addChild(array);
+            }
+            containerReal.x = 322;
+            containerReal.y = 191;
+
+            app.stage.addChild(containerReal);
+
+
+            app.stage.addChild(container);
+
+            //整个容器的旋转角度
+            // container.rotation = 30;
+
+            testArray = new Sprite(arrayTexture);
+            testArray.x = 150;
+            testArray.y = 150;
+
+            //指定该精灵 是否使用鼠标点击交互功能
+            // Opt-in to interactivity
+            testArray.interactive = true;
+
+            // Shows hand cursor
+            testArray.buttonMode = true;
+
+            // Pointers normalize touch and mouse
+            testArray.on('pointerdown', onClick);
+            app.stage.addChild(testArray);
+
+            //用气区域I
+            let rectangle = new Graphics();
+            rectangle.beginFill(u.color("#0b8ef9"));
+            rectangle.drawRect(422, 228, 144, 77);
+            rectangle.endFill();
+
+
+            //指定该精灵 是否使用鼠标点击交互功能
+            // Opt-in to interactivity
+            rectangle.interactive = true;
+
+            // Shows hand cursor
+            rectangle.buttonMode = true;
+
+            // Pointers normalize touch and mouse
+            rectangle.on('pointerdown', onClick);
+
+            app.stage.addChild(rectangle);
+
+            //用气区域IV
+            let yq4 = new Graphics();
+            yq4.beginFill(u.color("#0b8ef9"));
+            yq4.drawRect(422, 550, 144, 77);
+            yq4.endFill();
+
+
+            //指定该精灵 是否使用鼠标点击交互功能
+            // Opt-in to interactivity
+            yq4.interactive = true;
+
+            // Shows hand cursor
+            yq4.buttonMode = true;
+
+            // Pointers normalize touch and mouse
+            yq4.on('pointerdown', onClick);
+
+            app.stage.addChild(yq4);
+
+            //用气区域IV流量
+            let yq4l = new Graphics();
+            yq4l.beginFill(u.color("#e6e6e6"));
+            yq4l.drawRect(422, 632, 144, 24);
+            yq4l.endFill();
+
+
+            //指定该精灵 是否使用鼠标点击交互功能
+            // Opt-in to interactivity
+            yq4l.interactive = true;
+
+            // Shows hand cursor
+            yq4l.buttonMode = true;
+
+            // Pointers normalize touch and mouse
+            yq4l.on('pointerdown', onClick);
+
+            app.stage.addChild(yq4l);
+
+            //用气区域IV压力
+            let yq4y = new Graphics();
+            yq4y.beginFill(u.color("#e6e6e6"));
+            yq4y.drawRect(422, 658, 144, 24);
+            yq4y.endFill();
+
+
+            //指定该精灵 是否使用鼠标点击交互功能
+            // Opt-in to interactivity
+            yq4y.interactive = true;
+
+            // Shows hand cursor
+            yq4y.buttonMode = true;
+
+            // Pointers normalize touch and mouse
+            yq4y.on('pointerdown', onClick);
+
+            app.stage.addChild(yq4y);
+
+            //用气区域V
+            let yq5 = new Graphics();
+            yq5.beginFill(u.color("#0b8ef9"));
+            yq5.drawRect(628, 550, 144, 77);
+            yq5.endFill();
+
+
+            //指定该精灵 是否使用鼠标点击交互功能
+            // Opt-in to interactivity
+            yq5.interactive = true;
+
+            // Shows hand cursor
+            yq5.buttonMode = true;
+
+            // Pointers normalize touch and mouse
+            yq5.on('pointerdown', onClick);
+
+            app.stage.addChild(yq5);
+
+            //用气区域V流量
+            let yq5l = new Graphics();
+            yq5l.beginFill(u.color("#e6e6e6"));
+            yq5l.drawRect(628, 632, 144, 24);
+            yq5l.endFill();
+
+
+            //指定该精灵 是否使用鼠标点击交互功能
+            // Opt-in to interactivity
+            yq5l.interactive = true;
+
+            // Shows hand cursor
+            yq5l.buttonMode = true;
+
+            // Pointers normalize touch and mouse
+            yq5l.on('pointerdown', onClick);
+
+            app.stage.addChild(yq5l);
+
+            //用气区域V压力
+            let yq5y = new Graphics();
+            yq5y.beginFill(u.color("#e6e6e6"));
+            yq5y.drawRect(628, 658, 144, 24);
+            yq5y.endFill();
+
+
+            //指定该精灵 是否使用鼠标点击交互功能
+            // Opt-in to interactivity
+            yq5y.interactive = true;
+
+            // Shows hand cursor
+            yq5y.buttonMode = true;
+
+            // Pointers normalize touch and mouse
+            yq5y.on('pointerdown', onClick);
+
+            app.stage.addChild(yq5y);
+
+
+      		//用气区域III
+            let yq3 = new Graphics();
+            yq3.beginFill(u.color("#0b8ef9"));
+            yq3.drawRect(864, 68, 141, 76);
+            yq3.endFill();
+
+
+            //指定该精灵 是否使用鼠标点击交互功能
+            // Opt-in to interactivity
+            yq3.interactive = true;
+
+            // Shows hand cursor
+            yq3.buttonMode = true;
+
+            // Pointers normalize touch and mouse
+            yq3.on('pointerdown', onClick);
+
+            app.stage.addChild(yq3);
+
+      		//空压站一
+            let kyz1 = new Graphics();
+            kyz1.beginFill(u.color("#414766"));
+            kyz1.drawRect(245, 628, 152, 46);
+            kyz1.endFill();
+
+
+            //指定该精灵 是否使用鼠标点击交互功能
+            // Opt-in to interactivity
+            kyz1.interactive = true;
+
+            // Shows hand cursor
+            kyz1.buttonMode = true;
+
+            // Pointers normalize touch and mouse
+            kyz1.on('pointerdown', onClick);
+
+            app.stage.addChild(kyz1);
+
+      		//空压站一流量
+            let kyz1l = new Graphics();
+            kyz1l.beginFill(u.color("#e6e6e6"));
+            kyz1l.drawRect(245, 678, 152, 24);
+            kyz1l.endFill();
+
+
+            //指定该精灵 是否使用鼠标点击交互功能
+            // Opt-in to interactivity
+            kyz1l.interactive = true;
+
+            // Shows hand cursor
+            kyz1l.buttonMode = true;
+
+            // Pointers normalize touch and mouse
+            kyz1l.on('pointerdown', onClick);
+
+            app.stage.addChild(kyz1l);
+
+      		//空压站一压力
+            let kyz1y = new Graphics();
+            kyz1y.beginFill(u.color("#e6e6e6"));
+            kyz1y.drawRect(245, 704, 152, 24);
+            kyz1y.endFill();
+
+
+            //指定该精灵 是否使用鼠标点击交互功能
+            // Opt-in to interactivity
+            kyz1y.interactive = true;
+
+            // Shows hand cursor
+            kyz1y.buttonMode = true;
+
+            // Pointers normalize touch and mouse
+            kyz1y.on('pointerdown', onClick);
+
+            app.stage.addChild(kyz1y);
+
+      		//空压站一UPI
+            let kyz1u = new Graphics();
+            kyz1u.beginFill(u.color("#e6e6e6"));
+            kyz1u.drawRect(245, 730, 152, 24);
+            kyz1u.endFill();
+
+
+            //指定该精灵 是否使用鼠标点击交互功能
+            // Opt-in to interactivity
+            kyz1u.interactive = true;
+
+            // Shows hand cursor
+            kyz1u.buttonMode = true;
+
+            // Pointers normalize touch and mouse
+            kyz1u.on('pointerdown', onClick);
+
+            app.stage.addChild(kyz1u);
+
+
+      		//空压站四
+            let kyz4 = new Graphics();
+            kyz4.beginFill(u.color("#414766"));
+            kyz4.drawRect(858, 168, 152, 46);
+            kyz4.endFill();
+
+
+            //指定该精灵 是否使用鼠标点击交互功能
+            // Opt-in to interactivity
+            kyz4.interactive = true;
+
+            // Shows hand cursor
+            kyz4.buttonMode = true;
+
+            // Pointers normalize touch and mouse
+            kyz4.on('pointerdown', onClick);
+
+            app.stage.addChild(kyz4);
+
+      		//空压站四流量
+            let kyz4l = new Graphics();
+            kyz4l.beginFill(u.color("#e6e6e6"));
+            kyz4l.drawRect(858, 216, 152, 24);
+            kyz4l.endFill();
+
+
+            //指定该精灵 是否使用鼠标点击交互功能
+            // Opt-in to interactivity
+            kyz4l.interactive = true;
+
+            // Shows hand cursor
+            kyz4l.buttonMode = true;
+
+            // Pointers normalize touch and mouse
+            kyz4l.on('pointerdown', onClick);
+
+            app.stage.addChild(kyz4l);
+
+      		//空压站四压力
+            let kyz4y = new Graphics();
+            kyz4y.beginFill(u.color("#e6e6e6"));
+            kyz4y.drawRect(858, 240, 152, 24);
+            kyz4y.endFill();
+
+
+            //指定该精灵 是否使用鼠标点击交互功能
+            // Opt-in to interactivity
+            kyz4y.interactive = true;
+
+            // Shows hand cursor
+            kyz4y.buttonMode = true;
+
+            // Pointers normalize touch and mouse
+            kyz4y.on('pointerdown', onClick);
+
+            app.stage.addChild(kyz4y);
+
+      		//空压站四UPI
+            let kyz4u = new Graphics();
+            kyz4u.beginFill(u.color("#e6e6e6"));
+            kyz4u.drawRect(858, 266, 152, 24);
+            kyz4u.endFill();
+
+
+            //指定该精灵 是否使用鼠标点击交互功能
+            // Opt-in to interactivity
+            kyz4u.interactive = true;
+
+            // Shows hand cursor
+            kyz4u.buttonMode = true;
+
+            // Pointers normalize touch and mouse
+            kyz4u.on('pointerdown', onClick);
+
+            app.stage.addChild(kyz4u);
+
+
+      		//空压站二
+            let kyz2 = new Graphics();
+            kyz2.beginFill(u.color("#414766"));
+            kyz2.drawRect(968, 444, 152, 46);
+            kyz2.endFill();
+
+
+            //指定该精灵 是否使用鼠标点击交互功能
+            // Opt-in to interactivity
+            kyz2.interactive = true;
+
+            // Shows hand cursor
+            kyz2.buttonMode = true;
+
+            // Pointers normalize touch and mouse
+            kyz2.on('pointerdown', onClick);
+
+            app.stage.addChild(kyz2);
+
+      		//空压站二流量
+            let kyz2l = new Graphics();
+            kyz2l.beginFill(u.color("#e6e6e6"));
+            kyz2l.drawRect(968, 492, 152, 24);
+            kyz2l.endFill();
+
+
+            //指定该精灵 是否使用鼠标点击交互功能
+            // Opt-in to interactivity
+            kyz2l.interactive = true;
+
+            // Shows hand cursor
+            kyz2l.buttonMode = true;
+
+            // Pointers normalize touch and mouse
+            kyz2l.on('pointerdown', onClick);
+
+            app.stage.addChild(kyz2l);
+
+      		//空压站二压力
+            let kyz2y = new Graphics();
+            kyz2y.beginFill(u.color("#e6e6e6"));
+            kyz2y.drawRect(968, 518, 152, 24);
+            kyz2y.endFill();
+
+
+            //指定该精灵 是否使用鼠标点击交互功能
+            // Opt-in to interactivity
+            kyz2y.interactive = true;
+
+            // Shows hand cursor
+            kyz2y.buttonMode = true;
+
+            // Pointers normalize touch and mouse
+            kyz2y.on('pointerdown', onClick);
+
+            app.stage.addChild(kyz2y);
+
+      		//空压站二UPI
+            let kyz2u = new Graphics();
+            kyz2u.beginFill(u.color("#e6e6e6"));
+            kyz2u.drawRect(968, 544, 152, 24);
+            kyz2u.endFill();
+
+
+            //指定该精灵 是否使用鼠标点击交互功能
+            // Opt-in to interactivity
+            kyz2u.interactive = true;
+
+            // Shows hand cursor
+            kyz2u.buttonMode = true;
+
+            // Pointers normalize touch and mouse
+            kyz2u.on('pointerdown', onClick);
+
+            app.stage.addChild(kyz2u);
+
+      		//用气区域II
+            let yq2 = new Graphics();
+            yq2.beginFill(u.color("#0b8ef9"));
+            yq2.drawRect(628, 228, 141, 76);
+            yq2.endFill();
+
+
+            //指定该精灵 是否使用鼠标点击交互功能
+            // Opt-in to interactivity
+            yq2.interactive = true;
+
+            // Shows hand cursor
+            yq2.buttonMode = true;
+
+            // Pointers normalize touch and mouse
+            yq2.on('pointerdown', onClick);
+
+            app.stage.addChild(yq2);
+
+      		//空压站三
+            let kyz3 = new Graphics();
+            kyz3.beginFill(u.color("#414766"));
+            kyz3.drawRect(628, 345, 152, 46);
+            kyz3.endFill();
+
+
+            //指定该精灵 是否使用鼠标点击交互功能
+            // Opt-in to interactivity
+            kyz3.interactive = true;
+
+            // Shows hand cursor
+            kyz3.buttonMode = true;
+
+            // Pointers normalize touch and mouse
+            kyz3.on('pointerdown', onClick);
+
+            app.stage.addChild(kyz3);
+
+
+
+
+            //缩放箭头的大小
+            //  container.scale.set(0.2, 0.2);
+            //    array.rotation = 0.5;
+
+            //Position the array on the canvas
+            // container.x = 32;
+            // container.y = 32;
+
+            let left = keyboard(37),
+                up = keyboard(38),
+                right = keyboard(39),
+                down = keyboard(40);
+
+            //Left arrow key `press` method
+            // testArray.rotation = 2.5;
+            left.press = () => {
+                testArray.rotation += 0.1;
+                console.warn(testArray.rotation);
+                console.log("我按左键了");
+            };
+            right.press = () => {
+                testArray.rotation -= 0.1;
+                console.warn(testArray.rotation);
+                console.log("我按左键了");
+            };
+
+            app.ticker.add(delta => gameLoop(delta));
+            console.log("All files loaded")
+
+            getXy(modifyArg);
+            setInterval(getXy, 1000)
+        }
+
+        function onClick() {
+            testArray.rotation += 0.1;
+        }
+
+
+        function getXy(x) {
+            modifyArg++;
+        }
+        //加载程序进程
+        function loadProgressHandler(loader, resource) {
+            console.log("loading " + resource.url)
+            console.log("progress " + loader.progress + " %");
+        }
+
+        function gameLoop(delta) {
+            if (modifyArg <= 7) {
+                container.x += 1;
+                containerReal.x += 1;
+            } else {
+                modifyArg = 0;
+                container.x = 0;
+                containerReal.x = 322;
+            }
+
+            //碰撞检测
+            if (b.hit({
+                    x: 200,
+                    y: 200
+                }, container)) {
+                console.log("碰撞到了");
+                console.log("container:-----" + container.x + "======= container:" + container.y);
+            }
+        }
+
+
+
+
+
+        function keyboard(keyCode) {
+            let key = {};
+            key.code = keyCode;
+            key.isDown = false;
+            key.isUp = true;
+            key.press = undefined;
+            key.release = undefined;
+            //The `downHandler`
+            key.downHandler = event => {
+                if (event.keyCode === key.code) {
+                    if (key.isUp && key.press) key.press();
+                    key.isDown = true;
+                    key.isUp = false;
+                }
+                event.preventDefault();
+            };
+
+            //The `upHandler`
+            key.upHandler = event => {
+                if (event.keyCode === key.code) {
+                    if (key.isDown && key.release) key.release();
+                    key.isDown = false;
+                    key.isUp = true;
+                }
+                event.preventDefault();
+            };
+
+            //Attach event listeners
+            window.addEventListener(
+                "keydown", key.downHandler.bind(key), false
+            );
+            window.addEventListener(
+                "keyup", key.upHandler.bind(key), false
+            );
+            return key;
+        }
+    </script>
+</body>
+
+</html>

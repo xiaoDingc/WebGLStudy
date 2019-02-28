@@ -1,0 +1,716 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>从一个图中截取部分</title>
+</head>
+
+<script src="pixi/pixi.min.js"></script>
+<script src="pixi/dust.js"></script>
+<script src="pixi/spriteUtilities.js"></script>
+<script src="pixi/bump.js"></script>
+<script src="pixi/jquery-3.3.1.min.js"></script>
+
+
+<body>
+    <script type="text/javascript">
+        let type = "WebGL"
+        if (!PIXI.utils.isWebGLSupported()) {
+            type = "canvas"
+        }
+        PIXI.utils.sayHello(type)
+
+        let Application = PIXI.Application,
+            Container = PIXI.Container,
+            loader = PIXI.loader,
+            resources = PIXI.loader.resources,
+            TextureCache = PIXI.utils.TextureCache,
+            Sprite = PIXI.Sprite,
+            Rectangle = PIXI.Rectangle,
+            Graphics = PIXI.Graphics
+
+        let u = new SpriteUtilities(PIXI);
+        let d = new Dust(PIXI);
+        //碰撞检测初始化
+        let b = new Bump(PIXI);
+
+        //箭头纹理加载
+        let flowArrowTexture;
+        //管道纹理加载
+        let pipelineTexture;
+
+        //模拟ajax请求变量
+        var modifyArg = 0;
+        //最上方箭头容器
+        let containerTop;
+        //管道图中间箭头容器
+        let containerMiddle;
+        //管道图底部箭头容器
+        let containerBottom;
+
+
+        //用气区域初始化
+        let GasArea1;
+        let GasArea1Flow;
+        let GasArea1Press;
+        //用气区域1文字
+        let GasArea1FlowText;
+        let GasArea1PressText;
+
+        let GasArea2;
+        let GasArea2Flow;
+        let GasArea2Press;
+        //用气区域2文字
+        let GasArea2FlowText;
+        let GasArea2PressText;
+
+        let GasArea3;
+        let GasArea3Flow;
+        let GasArea3Press;
+        //用气区域3文字
+        let GasArea3FlowText;
+        let GasArea3PressText;
+
+        let GasArea4;
+        let GasArea4Flow;
+        let GasArea4Press;
+        //用气区域4文字
+        let GasArea4PressText;
+        let GasArea4FlowText;
+
+        let GasArea5;
+        let GasArea5Flow;
+        let GasArea5Press;
+        //用气区域5文字
+        let GasArea5FlowText;
+        let GasArea5PressText;
+
+        let GasAreaText1;
+        let GasAreaText2;
+        let GasAreaText3;
+        let GasAreaText4;
+        let GasAreaText5;
+
+        let GasArea3Liuliang;
+
+
+
+        //create a Pixi App
+        let app = new Application({
+            width: 1920,
+            height: 1080,
+            antialiasing: true,
+            transparent: false,
+            resolution: 1
+        });
+
+
+        let hexColor = u.color("white");
+        app.renderer.backgroundColor = hexColor; //蓝色 16进制码
+        document.body.appendChild(app.view);
+
+        //loader an image and run the 'setup' function when it's done
+        //添加json文件,并加载'setup'函数
+        loader
+            .add([
+                "./realImages/PipelineAndFlowArrow.json",
+            ])
+            .on("progress", loadProgressHandler)
+            .load(setup);
+
+
+        //管道相对位置
+        let pipelineRelativePosition = 123;
+        //This setup function that will run when the image has loaded
+        function setup() {
+            toRightArrowTexture = TextureCache['toRightArrow.svg'];
+            pipelineTexture = TextureCache["Pipeline.svg"]
+
+            //加载管道
+            pipeline = new Sprite(pipelineTexture);
+            //add to stage
+            pipeline.position.set(234, pipelineRelativePosition);
+            app.stage.addChild(pipeline);
+
+            //管道内部箭头初始化
+            PipelineInnerArrowInit();
+
+            //空压站位置初始化
+            StationLocationInit();
+            //用气区域位置加载
+            GasAreaLocationInit();
+
+            //文字位置加载
+            TextLocationInit()
+
+
+            //上下左右箭头加载
+            let left = keyboard(37),
+                up = keyboard(38),
+                right = keyboard(39),
+                down = keyboard(40);
+
+            //Left arrow key `release` method  左箭头释放
+            left.release = () => {
+
+                }
+                //Right arrow key 'press' method
+
+
+            //Left arrow key `press` method          
+            left.press = () => {
+                //区域1位置调节
+                // GasArea1.x -= 10;
+                // console.log(GasArea1.x + ": " + GasArea1.y);
+
+                // //区域2位置调节
+                // GasArea2.x -= 10;
+                // console.log(GasArea2.x + ": " + GasArea2.y);
+
+                //区域3位置调节
+                // GasArea3.x -= 10;
+                // console.log(GasArea3.x + ": " + GasArea3.y);
+
+                //区域4位置调节
+                GasArea4.x -= 10;
+                console.log(GasArea4.x + ": " + GasArea4.y);
+
+                // GasAreaText1.x += 1;
+                // console.log(GasAreaText1.x + ": " + GasAreaText1.y);
+            };
+
+            right.press = () => {
+                //区域1位置调节
+                // GasArea1.y += 10;
+                // console.log(GasArea1.x + ": " + GasArea1.y);
+
+
+                //区域2位置调节
+                // GasArea2.x += 10;
+                // console.log(GasArea2.x + ": " + GasArea2.y);
+
+                //区域3位置调节
+                // GasArea3.x += 10;
+                // console.log(GasArea3.x + ": " + GasArea3.y);
+
+                //区域4位置调节
+                GasArea4.x += 10;
+                console.log(GasArea4.x + ": " + GasArea4.y);
+
+
+
+                // GasAreaText1.x -= 1;
+                // console.log(GasAreaText1.x + ": " + GasAreaText1.y);
+
+            }
+
+            //Up arrow key 'press' method
+            up.press = () => {
+
+                //区域2位置调节
+                // GasArea2.y -= 10;
+                // console.log(GasArea2.x + ": " + GasArea2.y);
+
+                //区域3位置调节
+                // GasArea3.y -= 10;
+                // console.log(GasArea3.x + ": " + GasArea3.y);
+
+                //区域4位置调节
+                GasArea4.y -= 10;
+                console.log(GasArea4.x + ": " + GasArea4.y);
+
+
+                // GasAreaText1.y += 1;
+                // console.log(GasAreaText1.x + ": " + GasAreaText1.y);
+
+            }
+
+            //Down arrow key 'press' method
+            down.press = () => {
+                //区域2位置调节
+                // GasArea2.y += 10;
+                // console.log(GasArea2.x + ": " + GasArea2.y);
+
+                //区域4位置调节
+                GasArea4.y += 10;
+                console.log(GasArea4.x + ": " + GasArea4.y);
+
+
+                // GasAreaText1.y -= 1;
+                // console.log(GasAreaText1.x + ": " + GasAreaText1.y);
+
+            }
+
+
+            app.ticker.add(delta => gameLoop(delta));
+
+            //模拟ajax获取value
+            getXy(modifyArg);
+            setInterval(getXy, 1000)
+        }
+
+
+
+        function onClick() {
+
+        }
+
+
+        function getXy(x) {
+            modifyArg++;
+        }
+
+        //加载程序进程
+        function loadProgressHandler(loader, resource) {
+            console.log("loading " + resource.url)
+            console.log("progress " + loader.progress + " %");
+        }
+
+        //每秒60帧运行函数
+        function gameLoop(delta) {
+
+        }
+
+        //用气区域位置加载函数
+        function GasAreaLocationInit() {
+
+            //用气区域I
+            GasArea1 = new Graphics();
+            GasArea1.beginFill(u.color("#0b8ef9"));
+            GasArea1.drawRect(310, 238, 179, 80);
+            GasArea1.endFill();
+            //指定该精灵 是否使用鼠标点击交互功能
+            // Opt-in to interactivity
+            GasArea1.interactive = true;
+            // Shows hand cursor
+            GasArea1.buttonMode = true;
+            // Pointers normalize touch and mouse
+            GasArea1.on('pointerdown', onClick);
+            app.stage.addChild(GasArea1);
+
+
+            //用气区域IV流量矩形区域绘制
+            GasArea4Flow = GasAreaFlow(GasArea4Flow, 346, 634);
+            //用气区域IV 用户压力文字加载
+            //GasArea4FlowText = GasAreaFlowText(GasArea4FlowText, 355, 637, "流量:")
+            GasArea4FlowText = GasAreaFlowText(GasArea4FlowText, 0, 0, "流量:")
+
+            //用气区域IV压力矩形区域绘制
+            GasArea4Press = GasAreaPress(GasArea4Press, 345, 659);
+            //用气区域IV 用户压力文字加载
+            GasArea4PressText = GasAreaPressText(GasArea4PressText, 354, 664, "压力:");
+
+
+
+
+            //用气区域II
+            GasArea2 = new Graphics();
+            GasArea2.beginFill(u.color("#0b8ef9"));
+            GasArea2.drawRect(422 + 130, 550 - 330, 144, 77);
+            GasArea2.endFill();
+
+            //指定该精灵 是否使用鼠标点击交互功能
+            // Opt-in to interactivity
+            GasArea2.interactive = true;
+            // Shows hand cursor
+            GasArea2.buttonMode = true;
+            // Pointers normalize touch and mouse
+            GasArea2.on('pointerdown', onClick);
+            app.stage.addChild(GasArea2);
+
+            //用气区域IV流量
+            GasArea3Liuliang = new Graphics();
+            GasArea3Liuliang.beginFill(u.color("#e6e6e6"));
+            GasArea3Liuliang.drawRect(422, 632, 144, 24);
+            GasArea3Liuliang.endFill();
+
+
+            //指定该精灵 是否使用鼠标点击交互功能
+            // Opt-in to interactivity
+            GasArea3Liuliang.interactive = true;
+
+            // Shows hand cursor
+            GasArea3Liuliang.buttonMode = true;
+
+            // Pointers normalize touch and mouse
+            GasArea3Liuliang.on('pointerdown', onClick);
+
+            app.stage.addChild(GasArea3Liuliang);
+
+            //用气区域IV压力
+            let yq4y = new Graphics();
+            yq4y.beginFill(u.color("#e6e6e6"));
+            yq4y.drawRect(422, 658, 144, 24);
+            yq4y.endFill();
+
+            //指定该精灵 是否使用鼠标点击交互功能
+            // Opt-in to interactivity
+            yq4y.interactive = true;
+
+            // Shows hand cursor
+            yq4y.buttonMode = true;
+
+            // Pointers normalize touch and mouse
+            yq4y.on('pointerdown', onClick);
+
+            app.stage.addChild(yq4y);
+
+            //用气区域III
+            GasArea3 = new Graphics();
+            GasArea3.beginFill(u.color("#0b8ef9"));
+            GasArea3.drawRect(628 + 160, 550 - 510 + 8, 144, 77);
+            GasArea3.endFill();
+
+
+            //指定该精灵 是否使用鼠标点击交互功能
+            // Opt-in to interactivity
+            GasArea3.interactive = true;
+
+            // Shows hand cursor
+            GasArea3.buttonMode = true;
+
+            // Pointers normalize touch and mouse
+            GasArea3.on('pointerdown', onClick);
+
+            app.stage.addChild(GasArea3);
+
+            //用气区域V流量
+            let yq5l = new Graphics();
+            yq5l.beginFill(u.color("#e6e6e6"));
+            yq5l.drawRect(628, 632, 144, 24);
+            yq5l.endFill();
+
+
+            //指定该精灵 是否使用鼠标点击交互功能
+            // Opt-in to interactivity
+            yq5l.interactive = true;
+
+            // Shows hand cursor
+            yq5l.buttonMode = true;
+
+            // Pointers normalize touch and mouse
+            yq5l.on('pointerdown', onClick);
+
+            app.stage.addChild(yq5l);
+
+            //用气区域V压力
+            let yq5y = new Graphics();
+            yq5y.beginFill(u.color("#e6e6e6"));
+            yq5y.drawRect(628, 658, 144, 24);
+            yq5y.endFill();
+
+
+            //指定该精灵 是否使用鼠标点击交互功能
+            // Opt-in to interactivity
+            yq5y.interactive = true;
+
+            // Shows hand cursor
+            yq5y.buttonMode = true;
+
+            // Pointers normalize touch and mouse
+            yq5y.on('pointerdown', onClick);
+
+            app.stage.addChild(yq5y);
+
+
+            //用气区域V
+            GasArea5 = new Graphics();
+            GasArea5.beginFill(u.color("#0b8ef9"));
+            GasArea5.drawRect(864 - 310, 68 + 480, 141, 76);
+            GasArea5.endFill();
+
+
+            //指定该精灵 是否使用鼠标点击交互功能
+            // Opt-in to interactivity
+            GasArea5.interactive = true;
+            // Shows hand cursor
+            GasArea5.buttonMode = true;
+
+            // Pointers normalize touch and mouse
+            GasArea5.on('pointerdown', onClick);
+
+            app.stage.addChild(GasArea5);
+
+
+            //用气区域IV
+            GasArea4 = new Graphics();
+            GasArea4.beginFill(u.color("#0b8ef9"));
+            GasArea4.drawRect(346, 554, 141, 76);
+            GasArea4.endFill();
+
+
+            //指定该精灵 是否使用鼠标点击交互功能
+            // Opt-in to interactivity
+            GasArea4.interactive = true;
+
+            // Shows hand cursor
+            GasArea4.buttonMode = true;
+
+            // Pointers normalize touch and mouse
+            GasArea4.on('pointerdown', onClick);
+            app.stage.addChild(GasArea4);
+
+        }
+
+        //初始化文字位置加载函数
+        function TextLocationInit() {
+
+
+            //加载用户区域1文字
+            GasAreaText1 = new PIXI.Text('用气区域I');
+            //初始文字位置 set(x,y) x:left y:top
+            GasAreaText1.position.set(325, 266);
+            app.stage.addChild(GasAreaText1);
+
+
+            //加载用户区域2文字
+            GasAreaText2 = new PIXI.Text('用气区域II');
+            //初始文字位置 set(x,y) x:left y:top
+            GasAreaText2.position.set(567, 244);
+            app.stage.addChild(GasAreaText2);
+
+            //加载用户区域3文字
+            GasAreaText3 = new PIXI.Text('用气区域III');
+            //初始文字位置 set(x,y) x:left y:top
+            GasAreaText3.position.set(800, 74);
+            app.stage.addChild(GasAreaText3);
+
+            //加载用户区域4文字
+            GasAreaText4 = new PIXI.Text('用气区域IV');
+            //初始文字位置 set(x,y) x:left y:top
+            GasAreaText4.position.set(352, 576);
+            app.stage.addChild(GasAreaText4);
+
+            //加载用户区域5文字
+            GasAreaText5 = new PIXI.Text('用气区域V');
+            //初始文字位置 set(x,y) x:left y:top
+            GasAreaText5.position.set(564, 573);
+            app.stage.addChild(GasAreaText5);
+
+
+        }
+
+        function StationLocationInit() {
+
+        }
+
+
+        //加入容器中,以组的形式出现FlowArrow流向箭头 最上面一组管道箭头
+        function PipelineInnerArrowInit() {
+            //修改箭头相对距离的比例
+            let changeRate = 60;
+            let scaleX = 0.04;
+            let scaleY = 0.04;
+            let arrowCount = 2;
+
+
+            containerTop = u.group();
+            for (let i = 0; i < arrowCount; i++) {
+                flowArrow = new Sprite(toRightArrowTexture);
+                flowArrow.x = i * changeRate + 5;
+                flowArrow.scale.set(scaleX, scaleY);
+                containerTop.addChild(flowArrow);
+            }
+            containerTop.position.set(256, 171);
+            app.stage.addChild(containerTop);
+
+
+            //加入容器中,以组的形式出现FlowArrow流向箭头 最上面一组管道箭头
+            containerMiddle = u.group();
+            for (let i = 0; i < arrowCount; i++) {
+                flowArrow = new Sprite(toRightArrowTexture);
+                flowArrow.x = i * changeRate + 5;
+                flowArrow.scale.set(scaleX, scaleY);
+                containerMiddle.addChild(flowArrow);
+            }
+            containerMiddle.position.set(248, 417);
+            app.stage.addChild(containerMiddle);
+
+            //加入容器中,以组的形式出现FlowArrow流向箭头 最上面一组管道箭头
+            containerBottom = u.group();
+            for (let i = 0; i < arrowCount; i++) {
+                flowArrow = new Sprite(toRightArrowTexture);
+                flowArrow.x = i * changeRate + 5;
+                flowArrow.scale.set(scaleX, scaleY);
+                containerBottom.addChild(flowArrow);
+            }
+            containerBottom.position.set(248, 477);
+            app.stage.addChild(containerBottom);
+        }
+
+        //鼠标拖放事件函数
+        function createBunny(x, y, bunny) {
+
+            // create our little bunny friend..
+            // var bunny = new PIXI.Sprite(texture);
+
+            // enable the bunny to be interactive... this will allow it to respond to mouse and touch events
+            bunny.interactive = true;
+
+            // this button mode will mean the hand cursor appears when you roll over the bunny with your mouse
+            bunny.buttonMode = true;
+
+            // center the bunny's anchor point
+            // bunny.anchor.set(0.5);
+
+            // make it a bit bigger, so it's easier to grab 放大三倍容易抓取
+            //bunny.scale.set(3);
+
+            // setup events for mouse + touch using
+            // the pointer events
+            bunny
+                .on('pointerdown', onDragStart)
+                .on('pointerup', onDragEnd)
+                .on('pointerupoutside', onDragEnd)
+                .on('pointermove', onDragMove);
+
+            // For mouse-only events
+            // .on('mousedown', onDragStart)
+            // .on('mouseup', onDragEnd)
+            // .on('mouseupoutside', onDragEnd)
+            // .on('mousemove', onDragMove);
+
+            // For touch-only events
+            // .on('touchstart', onDragStart)
+            // .on('touchend', onDragEnd)
+            // .on('touchendoutside', onDragEnd)
+            // .on('touchmove', onDragMove);
+
+            // move the sprite to its designated position
+            bunny.x = x;
+            bunny.y = y;
+
+            // add it to the stage
+            app.stage.addChild(bunny);
+        }
+
+
+        //鼠标拖拽开始
+        function onDragStart(event) {
+            // store a reference to the data
+            // the reason for this is because of multitouch
+            // we want to track the movement of this particular touch
+            this.data = event.data;
+            this.alpha = 0.5;
+            this.dragging = true;
+
+        }
+        //鼠标拖拽结束
+        function onDragEnd(event) {
+            this.alpha = 1;
+            this.dragging = false;
+            // set the interaction data to null
+            this.data = null;
+
+        }
+        //鼠标拖拽过程
+        function onDragMove() {
+            if (this.dragging) {
+                var newPosition = this.data.getLocalPosition(this.parent);
+                this.x = newPosition.x;
+                this.y = newPosition.y;
+                console.log("this X:" + this.x + "  this Y" + this.y);
+            }
+        }
+
+        //键盘事件函数
+        function keyboard(keyCode) {
+            let key = {};
+            key.code = keyCode;
+            key.isDown = false;
+            key.isUp = true;
+            key.press = undefined;
+            key.release = undefined;
+            //The `downHandler`
+            key.downHandler = event => {
+                if (event.keyCode === key.code) {
+                    if (key.isUp && key.press) key.press();
+                    key.isDown = true;
+                    key.isUp = false;
+                }
+                event.preventDefault();
+            };
+
+            //The `upHandler`
+            key.upHandler = event => {
+                if (event.keyCode === key.code) {
+                    if (key.isDown && key.release) key.release();
+                    key.isDown = false;
+                    key.isUp = true;
+                }
+                event.preventDefault();
+            };
+
+            //Attach event listeners
+            window.addEventListener(
+                "keydown", key.downHandler.bind(key), false
+            );
+            window.addEventListener(
+                "keyup", key.upHandler.bind(key), false
+            );
+            return key;
+        }
+
+
+
+        //用气区域IV流量文字填充
+        function GasAreaFlow(GasAreaFlow, x, y, func) {
+            //用气区域流量
+            GasAreaFlow = new Graphics();
+            GasAreaFlow.beginFill(u.color("#e6e6e6"));
+            if (x == 0 && y == 0) {
+                createBunny(0, 0, GasAreaFlow);
+            } else {
+                GasAreaFlow.drawRect(x, y, 144, 24);
+            }
+            GasAreaFlow.endFill();
+            //指定该精灵 是否使用鼠标点击交互功能
+            // Opt-in to interactivity
+            GasAreaFlow.interactive = true;
+            // Shows hand cursor
+            GasAreaFlow.buttonMode = true;
+            // Pointers normalize touch and mouse
+            GasAreaFlow.on('pointerdown', function() {
+                //后续再加入此功能,目前取消传不传参,都不报错
+                // if (typeof(func) != "function")
+                //     alert("传入的不是函数,报错了");
+                // func();
+                //测试跳转
+                //window.location.href = "http://www.baidu.com";
+            });
+            app.stage.addChild(GasAreaFlow);
+            return GasAreaFlow;
+        }
+        //用户区域流量文字加载
+        function GasAreaFlowText(GasAreaFlowText, x, y, message, func) {
+            //用气区域 用户压力文字加载
+            GasAreaFlowText = new PIXI.Text(message);
+            //初始文字位置 set(x,y) x:left y:top
+            //GasAreaFlowText.x = 0;
+            //GasAreaFlowText.y = 0;
+            if (x == 0 && y == 0) {
+                createBunny(0, 0, GasAreaFlowText);
+            } else {
+                GasAreaFlowText.position.set(x, y);
+            }
+            GasAreaFlowText.style = {
+                fill: "black",
+                font: "15px"
+            };
+            app.stage.addChild(GasAreaFlowText);
+            return GasAreaFlowText;
+        }
+
+        //用户区域压力矩形区域绘制
+        function GasAreaPress(GasAreaPress, x, y, func) {
+            GasAreaFlow(GasAreaPress, x, y, func);
+        }
+        //用户区域压力文字加载
+        function GasAreaPressText(GasAreaPressText, x, y, message, func) {
+            GasAreaFlowText(GasAreaPressText, x, y, message, func);
+        }
+    </script>
+</body>
+
+</html>

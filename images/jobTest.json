@@ -1,0 +1,28 @@
+{"frames": {
+
+"border.svg":
+{
+	"frame": {"x":0,"y":0,"w":966,"h":734},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":966,"h":734},
+	"sourceSize": {"w":966,"h":734}
+},
+"箭头.svg":
+{
+	"frame": {"x":966,"y":0,"w":53,"h":13},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":53,"h":13},
+	"sourceSize": {"w":53,"h":13}
+}},
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "jobTest.png",
+	"format": "RGBA8888",
+	"size": {"w":1019,"h":734},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:e60d3b118808622722e7b283931dacbd:86990b104d382760ec7a685e97593d30:1b4f712447ae79891cafc58fc4ccb0c8$"
+}
+}

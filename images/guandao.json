@@ -1,0 +1,20 @@
+{"frames": {
+
+"guandao.svg":
+{
+	"frame": {"x":1,"y":1,"w":1345,"h":527},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":12,"y":122,"w":1345,"h":527},
+	"sourceSize": {"w":1366,"h":768}
+}},
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "guandao.png",
+	"format": "RGBA8888",
+	"size": {"w":1347,"h":529},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:5e255be1ae48d3b3035aaa0ae8f80a34:aaaf062ee034444027488f5b9a490c69:ab7a29a845a5822448d07245fdec4436$"
+}
+}

@@ -1,0 +1,175 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>从一个图中截取部分</title>
+</head>
+
+<script src="pixi/pixi.min.js"></script>
+<script src="pixi/dust.js"></script>
+<script src="https://www.kkkk1000.com/js/spriteUtilities.js"></script>
+<script src="https://www.kkkk1000.com/js/bump.js"></script>
+
+<body>
+    <script type="text/javascript">
+        let type = "WebGL"
+        if (!PIXI.utils.isWebGLSupported()) {
+            type = "canvas"
+        }
+        PIXI.utils.sayHello(type)
+
+        let Application = PIXI.Application,
+            Container = PIXI.Container,
+            loader = PIXI.loader,
+            resources = PIXI.loader.resources,
+            TextureCache = PIXI.utils.TextureCache,
+            Sprite = PIXI.Sprite,
+            Rectangle = PIXI.Rectangle
+
+
+        let rocket;
+        let su = new SpriteUtilities(PIXI);
+        let d = new Dust(PIXI);
+        let particleStream;
+        var x1 = 10;
+        var x2 = 0;
+
+        //create a Pixi App
+        let app = new Application({
+            width: 256,
+            height: 256,
+            antialiasing: true,
+            transparent: false,
+            resolution: 1
+        });
+
+        let b = new Bump(PIXI);
+
+        let hexColor = su.color("green");
+
+        app.renderer.view.style.border = "1px dashed black";
+        app.renderer.backgroundColor = hexColor; //蓝色 16进制码
+        document.body.appendChild(app.view);
+
+        let imgURL = "https://www.kkkk1000.com/images/learnPixiJS-ParticleEffects/star.png";
+
+        //loader an image and run the 'setup' function when it's done
+        loader
+            .add([
+                "./images/tileset.png",
+                imgURL,
+            ])
+            .on("progress", loadProgressHandler)
+            .load(setup);
+
+
+        //This setup function that will run when the image has loaded
+        function setup() {
+            particleStream = d.emitter(
+                100,
+                () => d.create(
+                    128, 128,
+                    () => su.sprite(imgURL),
+                    app.stage,
+                    30,
+                    0.1,
+                    10000, //随机间隔
+                    3.14, 6.28,
+                    30, 60,
+                    1, 5
+                )
+            );
+
+            particleStream.stop();
+            //开始游戏循环
+            gameLoop1();
+
+
+            //Create the 'tileset' sprite from the texture
+            let texture = TextureCache['./images/tileset.png'];
+
+            // let rectangle = new PIXI.Rectangle(x, y, width, height);
+            let rectangle = new Rectangle(32 * (4 - 1), 32 * (3 - 1), 32, 32);
+
+            texture.frame = rectangle;
+
+            rocket = new Sprite(texture);
+
+            //Position the rocket on the canvas
+            rocket.x = 32;
+            rocket.y = 32;
+
+            rocket.rotation = 0.5;
+
+
+            app.stage.addChild(rocket);
+
+            //Render the stage 
+            // renderer.render(stage);
+
+            // app.ticker.delta = 10000;
+            app.ticker.add(delta => gameLoop(delta));
+            console.log("All files loaded")
+
+            getXy(x1, x2);
+            setInterval(getXy, 1000)
+        }
+
+        function getXy(x, y) {
+            //x1 100  x2 0
+            x1--;
+            x2++;
+            if (x1 == 0 || x2 == 10) {
+                x1 = 10;
+                x2 = 0;
+            }
+        }
+
+        function loadProgressHandler(loader, resource) {
+            console.log("loading " + resource.url)
+            console.log("progress " + loader.progress + " %");
+        }
+
+        function gameLoop1() {
+            requestAnimationFrame(gameLoop1);
+            d.update();
+            app.renderer.render(app.stage);
+        }
+
+        function gameLoop(delta) {
+            // if (rocket.x > app.renderer.width) {
+            //     rocket.x = 32;
+            //     rocket.y = 32;
+            //     console.log(app.renderer.width);
+            //     //   particleStream.play();
+            // } else {
+            //     rocket.x += 1;
+            //     rocket.y += 1;
+            //     //   particleStream.stop();
+            // }
+            console.log("x1:-----" + x1 + "======= x2:" + x2);
+            // //x1 100  x2 0
+            // x1--;
+            // x2++;
+            if (x1 > x2) {
+                rocket.x += 1;
+                rocket.y += 1;
+            } else {
+                rocket.x -= 1;
+                rocket.y -= 1;
+            }
+            if (b.hit({
+                    x: 200,
+                    y: 200
+                }, rocket)) {
+                console.log("碰撞到了");
+                console.log("rocket:-----" + rocket.x + "======= rocket:" + rocket.y);
+            }
+
+
+        }
+    </script>
+</body>
+
+</html>
