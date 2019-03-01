@@ -1,0 +1,36 @@
+{"frames": {
+
+"吸附式干燥机.png":
+{
+	"frame": {"x":0,"y":74,"w":1946,"h":1693},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":1946,"h":1693},
+	"sourceSize": {"w":1946,"h":1693}
+},
+"空气压缩机.png":
+{
+	"frame": {"x":38,"y":0,"w":99,"h":69},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":99,"h":69},
+	"sourceSize": {"w":99,"h":69}
+},
+"自洁式过滤器.png":
+{
+	"frame": {"x":0,"y":0,"w":38,"h":74},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":38,"h":74},
+	"sourceSize": {"w":38,"h":74}
+}},
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "station.png",
+	"format": "RGBA8888",
+	"size": {"w":1946,"h":1767},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:ec710f9eb43b03315b18e2477d27b4a0:6a2d3f5b7f08af7704170b27bc509697:0a3b0f3bc9e0d733df44ea4ab66c5458$"
+}
+}

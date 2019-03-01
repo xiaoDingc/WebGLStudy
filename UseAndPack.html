@@ -1,0 +1,321 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>从一个图中截取部分</title>
+</head>
+
+<script src="pixi/pixi.min.js"></script>
+<script src="pixi/dust.js"></script>
+<script src="pixi/spriteUtilities.js"></script>
+<script src="pixi/bump.js"></script>
+<script src="pixi/jquery-3.3.1.min.js"></script>
+
+
+<body>
+
+    <script type="text/javascript">
+        let type = "WebGL"
+        if (!PIXI.utils.isWebGLSupported()) {
+            type = "canvas"
+        }
+        PIXI.utils.sayHello(type)
+
+        let Application = PIXI.Application,
+            Container = PIXI.Container,
+            loader = PIXI.loader,
+            resources = PIXI.loader.resources,
+            TextureCache = PIXI.utils.TextureCache,
+            Sprite = PIXI.Sprite,
+            Rectangle = PIXI.Rectangle,
+            Graphics = PIXI.Graphics
+
+        let u = new SpriteUtilities(PIXI);
+        let d = new Dust(PIXI);
+        //碰撞检测初始化
+        let b = new Bump(PIXI);
+
+
+        let areaTest;
+        let GasArea4FlowText;
+
+
+        //create a Pixi App
+        let app = new Application({
+            width: 1920,
+            height: 850,
+            antialiasing: true,
+            transparent: false,
+            resolution: 1
+        });
+
+        let hexColor = u.color("white");
+        app.renderer.backgroundColor = hexColor; //蓝色 16进制码
+        document.body.appendChild(app.view);
+
+        //loader an image and run the 'setup' function when it's done
+        //添加json文件,并加载'setup'函数
+        loader
+            .add([
+                "./realImages/PipelineAndFlowArrow.json",
+                "./realImages/station.json",
+            ])
+            .on("progress", loadProgressHandler)
+            .load(setup);
+
+
+        //管道相对位置
+        let pipelineRelativePosition = 123;
+        var test;
+        let modifyCount = 1;
+
+        //This setup function that will run when the image has loaded
+        function setup() {
+            toRightArrowTexture = TextureCache['toRightArrow.svg'];
+            pipelineTexture = TextureCache["Pipeline.svg"]
+
+            GasAreaLocationInit();
+
+            //上下左右箭头加载
+            let left = keyboard(37),
+                up = keyboard(38),
+                right = keyboard(39),
+                down = keyboard(40);
+
+            //Left arrow key `release` method  左箭头释放
+            left.release = () => {
+
+            }
+            //Right arrow key 'press' method
+
+            //Left arrow key `press` method          
+            left.press = () => {
+                //区域1位置调节
+                // GasArea1.x -= 10;
+                // console.log(GasArea1.x + ": " + GasArea1.y);
+
+            };
+
+            right.press = () => {
+                //区域1位置调节
+                // GasArea1.y += 10;
+                // console.log(GasArea1.x + ": " + GasArea1.y);
+
+            }
+
+            //Up arrow key 'press' method
+            up.press = () => {
+
+                //区域2位置调节
+                // GasArea2.y -= 10;
+                // console.log(GasArea2.x + ": " + GasArea2.y);
+
+            }
+
+            //Down arrow key 'press' method
+            down.press = (event) => {
+
+            }
+
+            test = textFill(test, x = 15, y = 200, "几点了", debug = true);
+            app.ticker.add(delta => gameLoop(delta));
+        }
+
+        setInterval(modXY, 1000)
+
+        function modXY() {
+            var url = "";
+            $.ajax({
+                url: "http://localhost:35544/Home/TestWeb",
+                type: "GET",
+                success: function (data) {
+                    modifyCount = data;
+                },
+                error: function (res) {
+                    // alert(res);
+                }
+
+            });
+        }
+
+        function onClick() {}
+
+        //加载程序进程
+        function loadProgressHandler(loader, resource) {
+            console.log("loading " + resource.url)
+            console.log("progress " + loader.progress + " %");
+        }
+
+        //每秒60帧运行函数
+        function gameLoop(delta) {
+            test.text = "几点了 " + modifyCount;
+        }
+
+        //鼠标拖放事件函数
+        function loadMouseEvent(sprite) {
+            // create our little sprite friend..
+            // var sprite = new PIXI.Sprite(texture);
+            // enable the sprite to be interactive... this will allow it to respond to mouse and touch events
+            sprite.interactive = true;
+
+            // this button mode will mean the hand cursor appears when you roll over the sprite with your mouse
+            sprite.buttonMode = true;
+
+            // setup events for mouse + touch using
+            // the pointer events
+            // sprite
+            //     .on('pointerdown', onDragStart)
+            //     .on('pointerup', onDragEnd)
+            //     .on('pointerupoutside', onDragEnd)
+            //     .on('pointermove', onDragMove);
+
+            // For mouse-only events
+            sprite
+                .on('mousedown', onDragStart)
+                .on('mouseup', onDragEnd)
+                .on('mouseupoutside', onDragEnd)
+                .on('mousemove', onDragMove);
+
+            // For touch-only events
+            // sprite
+            //     .on('touchstart', onDragStart)
+            //     .on('touchend', onDragEnd)
+            //     .on('touchendoutside', onDragEnd)
+            //     .on('touchmove', onDragMove);
+
+        }
+
+        //用气区域位置加载函数
+        function GasAreaLocationInit() {
+            //用气区域IV流量矩形区域绘制
+            //x y width height debug
+            //if debug=0
+            for (let index = 0; index < 10; index++) {
+                let areaTest;
+                // areaTest = rectangleFill(areaTest, x = 10, y = 0, width = 144, height = 24, debug = true);
+                areaTest = rectangleFill(areaTest, x = 10, y = 0 * index + 15, width = 144, height = 24, debug = true);
+            }
+            // areaTest = rectangleFill(areaTest, x = 10, y = 0, width = 144, height = 24, debug = true);
+            //文字加载
+            for (let index = 0; index < 10; index++) {
+                let textTexture;
+                textFill(textTexture, x = 15, y = 20 * index, "几点了" + index, debug = true);
+
+            }
+
+        }
+
+        //鼠标拖拽开始
+        function onDragStart(event) {
+            // store a reference to the data
+            // the reason for this is because of multitouch
+            // we want to track the movement of this particular touch
+            this.data = event.data;
+            this.alpha = 0.5;
+            this.dragging = true;
+        }
+        //鼠标拖拽结束
+        function onDragEnd(event) {
+            // this.alpha = 1;
+            // this.dragging = false;
+            // // set the interaction data to null
+            // this.data = null;
+            this.alpha = 1;
+            this.dragging = false;
+            // set the interaction data to null
+            var newPosition = this.data.getLocalPosition(this.parent);
+            this.x = newPosition.x;
+            this.y = newPosition.y;
+            console.log("this X:" + this.x + " this Y:" + this.y);
+        }
+        //鼠标拖拽过程
+        function onDragMove() {
+            // if (this.dragging) {
+            //     var newPosition = this.data.getLocalPosition(this.parent);
+            //      this.x = newPosition.x;
+            //      this.y = newPosition.y;
+            //      console.log("this X:" + this.x + "  this Y:" + this.y);
+            // }
+        }
+
+        //矩形填充
+        function rectangleFill(rectangleFill, x, y, width, height, debug, fillColor, func) {
+            //用气区域流量
+            rectangleFill = new Graphics();
+            if (fillColor == undefined) {
+                fillColor = "#e6e6e6";
+            }
+            rectangleFill.beginFill(u.color(fillColor));
+            if (debug) {
+                loadMouseEvent(rectangleFill);
+            }
+            rectangleFill.position.set(x, y);
+            rectangleFill.drawRect(x, y, width, height);
+            rectangleFill.endFill();
+            app.stage.addChild(rectangleFill);
+            return rectangleFill;
+        }
+
+        //用户区域流量文字加载
+        function textFill(textFill, x, y, message, debug, func) {
+            //用气区域 用户压力文字加载
+            textFill = new PIXI.Text(message);
+            //初始文字位置 set(x,y) x:left y:top
+            //textFill.x = 0;
+            //textFill.y = 0;
+            if (debug) {
+                loadMouseEvent(textFill);
+            }
+            textFill.position.set(x, y);
+            textFill.style = {
+                fill: "black",
+                font: "15px"
+            };
+            app.stage.addChild(textFill);
+            return textFill;
+        }
+
+
+
+        //键盘事件函数
+        function keyboard(keyCode) {
+            let key = {};
+            key.code = keyCode;
+            key.isDown = false;
+            key.isUp = true;
+            key.press = undefined;
+            key.release = undefined;
+            //The `downHandler`
+            key.downHandler = event => {
+                if (event.keyCode === key.code) {
+                    if (key.isUp && key.press) key.press();
+                    key.isDown = true;
+                    key.isUp = false;
+                }
+                event.preventDefault();
+            };
+
+            //The `upHandler`
+            key.upHandler = event => {
+                if (event.keyCode === key.code) {
+                    if (key.isDown && key.release) key.release();
+                    key.isDown = false;
+                    key.isUp = true;
+                }
+                event.preventDefault();
+            };
+
+            //Attach event listeners
+            window.addEventListener(
+                "keydown", key.downHandler.bind(key), false
+            );
+            window.addEventListener(
+                "keyup", key.upHandler.bind(key), false
+            );
+            return key;
+        }
+    </script>
+</body>
+
+</html>
