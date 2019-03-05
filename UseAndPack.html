@@ -112,9 +112,41 @@
         let SelfCleaningFilter5Texture;
         let SelfCleaningFilter6Texture;
 
+        let bar;
+        let bar1;
+        let bar2;
+        let bar3;
+        let bar4;
+        let bar5;
+        let bar6;
+
         let HealthBar;
         let LoadBar;
         let UnloadBar;
+
+        let HealthBar1;
+        let LoadBar1;
+        let UnloadBar1;
+
+        let HealthBar2;
+        let LoadBar2;
+        let UnloadBar2;
+
+        let HealthBar3;
+        let LoadBar3;
+        let UnloadBar3;
+
+        let HealthBar4;
+        let LoadBar4;
+        let UnloadBar4;
+
+        let HealthBar5;
+        let LoadBar5;
+        let UnloadBar5;
+
+        let HealthBar6;
+        let LoadBar6;
+        let UnloadBar6;
 
         // let areaTest;
 
@@ -231,11 +263,15 @@
                     142 * 0 - pipeLinewidth + 70, width = 308, height = 24, debug = false, fillColor = "RoyalBlue");
 
                 let flowTexture;
-                flowTexture = textFill(flowTexture, x = 589 + pipeLineleft, y = 222 - pipeLinewidth, "加载功率:         " +
-                    "功率:          " +
-                    "UPI:       ",
-                    debug =
+                flowTexture = textFill(flowTexture, x = 589 + pipeLineleft, y = 222 - pipeLinewidth, "加载功率:         ",
+                    debug = false);
+                let flowTexture01;
+                flowTexture01 = textFill(flowTexture01, x = 694 + pipeLineleft, y = 222 - pipeLinewidth, "功率: ", debug =
                     false);
+                let flowTexture02;
+                flowTexture02 = textFill(flowTexture02, x = 769 + pipeLineleft, y = 222 - pipeLinewidth, "UPI: ", debug =
+                    false);
+
 
                 //#2加载功率以及UPI等制作
                 let areaTest1;
@@ -243,11 +279,16 @@
                     142 * 1 - pipeLinewidth + 70, width = 308, height = 24, debug = false, fillColor = "RoyalBlue");
                 let flowTexture1;
                 flowTexture1 = textFill(flowTexture1, x = 589 + pipeLineleft, y = 222 - pipeLinewidth + 142 * 1,
-                    "加载功率:          " +
-                    "功率:          " +
-                    "UPI:       ",
-                    debug =
-                    true);
+                    "加载功率: ",
+                    debug = false);
+                let flowTexture11;
+                flowTexture11 = textFill(flowTexture11, x = 694 + pipeLineleft, y = 222 - pipeLinewidth + 142 * 1,
+                    "功率: ", debug =
+                    false);
+                let flowTexture12;
+                flowTexture12 = textFill(flowTexture12, x = 769 + pipeLineleft, y = 222 - pipeLinewidth + 142 * 1,
+                    "UPI: ", debug =
+                    false);
 
                 //#3加载功率以及UPI等制作
                 let areaTest2;
@@ -257,10 +298,15 @@
 
                 let flowTexture2;
                 flowTexture2 = textFill(flowTexture2, x = 589 + pipeLineleft, y = 222 - pipeLinewidth + 142 * 2 - 15,
-                    "加载功率:          " +
-                    "功率:          " +
-                    "UPI:       ",
-                    debug =
+                    "加载功率: ",
+                    debug = false);
+                let flowTexture21;
+                flowTexture21 = textFill(flowTexture21, x = 694 + pipeLineleft, y = 222 - pipeLinewidth + 142 * 2 - 15,
+                    "功率: ", debug =
+                    false);
+                let flowTexture22;
+                flowTexture22 = textFill(flowTexture22, x = 769 + pipeLineleft, y = 222 - pipeLinewidth + 142 * 2 - 15,
+                    "UPI: ", debug =
                     false);
 
                 //#4加载功率以及UPI等制作
@@ -270,11 +316,19 @@
                     "RoyalBlue");
 
                 let flowTexture3;
-                flowTexture3 = textFill(flowTexture3, x = 589 + pipeLineleft, y = 222 - pipeLinewidth + 142 * 3 - 15,
-                    "加载功率:          " +
-                    "功率:          " +
-                    "UPI:       ",
-                    debug =
+                flowTexture3 = textFill(flowTexture3, x = 589 + pipeLineleft, y = 222 - pipeLinewidth + 142 * 3 -
+                    15,
+                    "加载功率: ",
+                    debug = false);
+                let flowTexture31;
+                flowTexture31 = textFill(flowTexture31, x = 694 + pipeLineleft, y = 222 - pipeLinewidth + 142 * 3 -
+                    15,
+                    "功率: ", debug =
+                    false);
+                let flowTexture32;
+                flowTexture32 = textFill(flowTexture32, x = 769 + pipeLineleft, y = 222 - pipeLinewidth + 142 * 3 -
+                    15,
+                    "UPI: ", debug =
                     false);
 
                 //#5加载功率以及UPI等制作
@@ -284,11 +338,19 @@
                     "RoyalBlue");
 
                 let flowTexture4;
-                flowTexture4 = textFill(flowTexture4, x = 589 + pipeLineleft, y = 222 - pipeLinewidth + 142 * 4 - 25,
-                    "加载功率:          " +
-                    "功率:          " +
-                    "UPI:       ",
-                    debug =
+                flowTexture4 = textFill(flowTexture4, x = 589 + pipeLineleft, y = 222 - pipeLinewidth + 142 * 4 -
+                    25,
+                    "加载功率: ",
+                    debug = false);
+                let flowTexture41;
+                flowTexture41 = textFill(flowTexture41, x = 694 + pipeLineleft, y = 222 - pipeLinewidth + 142 * 4 -
+                    25,
+                    "功率: ", debug =
+                    false);
+                let flowTexture42;
+                flowTexture42 = textFill(flowTexture42, x = 769 + pipeLineleft, y = 222 - pipeLinewidth + 142 * 4 -
+                    25,
+                    "UPI: ", debug =
                     false);
 
                 //#6加载功率以及UPI等制作
@@ -298,17 +360,20 @@
                     "RoyalBlue");
 
                 let flowTexture5;
-                flowTexture5 = textFill(flowTexture5, x = 589 + pipeLineleft, y = 222 - pipeLinewidth + 142 * 5 - 40,
-                    "加载功率:          " +
-                    "功率:          " +
-                    "UPI:       ",
-                    debug =
+                flowTexture5 = textFill(flowTexture5, x = 589 + pipeLineleft, y = 222 - pipeLinewidth + 142 * 5 -
+                    40,
+                    "加载功率: ",
+                    debug = false);
+                let flowTexture51;
+                flowTexture51 = textFill(flowTexture51, x = 694 + pipeLineleft, y = 222 - pipeLinewidth + 142 * 5 -
+                    40,
+                    "功率: ", debug =
                     false);
-                tempTextPure = areaTest5;
-
-
-
-
+                let flowTexture52;
+                flowTexture52 = textFill(flowTexture52, x = 769 + pipeLineleft, y = 222 - pipeLinewidth + 142 * 5 -
+                    40,
+                    "UPI: ", debug =
+                    false);
 
             }
 
@@ -323,16 +388,16 @@
                 let areaTestBottom;
                 areaTestBottom = rectangleFill(areaTestBottom, x = 750 + pipeLineleft, y = 189 + 142 * 0 -
                     pipeLinewidth, width = 108,
-                    height = 24, debug = true, fillColor = "RoyalBlue");
+                    height = 24, debug = false, fillColor = "RoyalBlue");
 
 
                 let flowTexture;
                 flowTexture = textFill(flowTexture, x = 759 + pipeLineleft, y = 152 - pipeLinewidth, "流量 :", debug =
-                    true);
+                    false);
 
                 let pressTexture;
                 pressTexture = textFill(pressTexture, x = 759 + pipeLineleft, y = 192 - pipeLinewidth, "压力 :", debug =
-                    true);
+                    false);
 
 
                 //空压机2
@@ -343,21 +408,21 @@
                 let areaTestBottom1;
                 areaTestBottom1 = rectangleFill(areaTestBottom1, x = 750 + pipeLineleft, y = 189 + 142 * 1 -
                     pipeLinewidth, width = 108,
-                    height = 24, debug = true, fillColor = "RoyalBlue");
+                    height = 24, debug = false, fillColor = "RoyalBlue");
 
                 let flow1Texture;
                 flow1Texture = textFill(flow1Texture, x = 759 + pipeLineleft, y = 152 - pipeLinewidth + 142 * 1, "流量 :",
                     debug =
-                    true);
+                    false);
                 let press1Texture;
                 press1Texture = textFill(press1Texture, x = 759 + pipeLineleft, y = 192 - pipeLinewidth + 142 * 1,
                     "压力 :", debug =
-                    true);
+                    false);
 
 
                 let areaTest2;
                 areaTest2 = rectangleFill(areaTest2, x = 750 + pipeLineleft, y = 149 - 15 +
-                    142 * 2 - pipeLinewidth + 5, width = 108, height = 24, debug = true, fillColor = "RoyalBlue");
+                    142 * 2 - pipeLinewidth + 5, width = 108, height = 24, debug = false, fillColor = "RoyalBlue");
                 let areaTestBottom2;
                 areaTestBottom2 = rectangleFill(areaTestBottom2, x = 750 + pipeLineleft, y = 189 - 15 + 142 * 2 -
                     pipeLinewidth, width = 108,
@@ -367,11 +432,11 @@
                 flow2Texture = textFill(flow2Texture, x = 759 + pipeLineleft, y = 152 - pipeLinewidth + 142 * 2 - 11,
                     "流量 :",
                     debug =
-                    true);
+                    false);
                 let press2Texture;
                 press2Texture = textFill(press2Texture, x = 759 + pipeLineleft, y = 192 - pipeLinewidth + 142 * 2 - 15,
                     "压力 :", debug =
-                    true);
+                    false);
 
 
 
@@ -387,13 +452,11 @@
                 flow3Texture = textFill(flow3Texture, x = 759 + pipeLineleft, y = 152 - pipeLinewidth + 142 * 3 - 15,
                     "流量 :",
                     debug =
-                    true);
+                    false);
                 let press3Texture;
                 press3Texture = textFill(press3Texture, x = 759 + pipeLineleft, y = 192 - pipeLinewidth + 142 * 3 - 15,
                     "压力 :", debug =
-                    true);
-
-
+                    false);
 
                 let areaTest4;
                 areaTest4 = rectangleFill(areaTest4, x = 750 + pipeLineleft, y = 149 +
@@ -407,17 +470,15 @@
                 flow4Texture = textFill(flow4Texture, x = 759 + pipeLineleft, y = 152 - pipeLinewidth + 142 * 4 - 25,
                     "流量 :",
                     debug =
-                    true);
+                    false);
                 let press4Texture;
                 press4Texture = textFill(press4Texture, x = 759 + pipeLineleft, y = 192 - pipeLinewidth + 142 * 4 - 25,
                     "压力 :", debug =
-                    true);
-
-
+                    false);
 
                 let areaTest5;
                 areaTest5 = rectangleFill(areaTest5, x = 750 + pipeLineleft, y = 149 +
-                    142 * 5 - pipeLinewidth - 35, width = 108, height = 24, debug = true, fillColor = "RoyalBlue");
+                    142 * 5 - pipeLinewidth - 35, width = 108, height = 24, debug = false, fillColor = "RoyalBlue");
                 let areaTestBottom5;
                 areaTestBottom5 = rectangleFill(areaTestBottom5, x = 750 + pipeLineleft, y = 189 + 142 * 5 -
                     pipeLinewidth - 40, width = 108,
@@ -427,12 +488,11 @@
                 flow5Texture = textFill(flow5Texture, x = 759 + pipeLineleft, y = 152 - pipeLinewidth + 142 * 5 - 35,
                     "流量 :",
                     debug =
-                    true);
+                    false);
                 let press5Texture;
                 press5Texture = textFill(press5Texture, x = 759 + pipeLineleft, y = 192 - pipeLinewidth + 142 * 5 - 40,
                     "压力 :", debug =
-                    true);
-
+                    false);
 
                 //吸附式干燥机绘制
                 let areaTestRight;
@@ -441,20 +501,19 @@
                 let areaTestBottomRight;
                 areaTestBottomRight = rectangleFill(areaTestBottomRight, x = 1065 + pipeLineleft, y = 189 + 142 * 0 -
                     pipeLinewidth, width = 108,
-                    height = 24, debug = true, fillColor = "RoyalBlue");
+                    height = 24, debug = false, fillColor = "RoyalBlue");
 
                 let flowTextureRight;
                 flowTextureRight = textFill(flowTextureRight, x = 1065 + pipeLineleft, y = 152 - pipeLinewidth,
                     "流量 :",
                     debug =
-                    true);
+                    false);
 
                 let pressTextureRight;
                 pressTextureRight = textFill(pressTextureRight, x = 1065 + pipeLineleft, y = 192 - pipeLinewidth,
                     "压力 :",
                     debug =
-                    true);
-
+                    false);
 
 
                 let areaTest1Right;
@@ -463,24 +522,24 @@
                 let areaTestBottom1Right;
                 areaTestBottom1Right = rectangleFill(areaTestBottom1Right, x = 1065 + pipeLineleft, y = 189 + 142 * 1 -
                     pipeLinewidth, width = 108,
-                    height = 24, debug = true, fillColor = "RoyalBlue");
+                    height = 24, debug = false, fillColor = "RoyalBlue");
 
                 let flow1TextureRight;
                 flow1TextureRight = textFill(flow1TextureRight, x = 1065 + pipeLineleft, y = 152 - pipeLinewidth + 142 *
                     1,
                     "流量 :",
                     debug =
-                    true);
+                    false);
                 let press1TextureRight;
                 press1TextureRight = textFill(press1TextureRight, x = 1065 + pipeLineleft, y = 192 - pipeLinewidth +
                     142 * 1,
                     "压力 :", debug =
-                    true);
+                    false);
 
 
                 let areaTest2Right;
                 areaTest2Right = rectangleFill(areaTest2Right, x = 1065 + pipeLineleft, y = 149 - 15 +
-                    142 * 2 - pipeLinewidth + 5, width = 108, height = 24, debug = true, fillColor = "RoyalBlue");
+                    142 * 2 - pipeLinewidth + 5, width = 108, height = 24, debug = false, fillColor = "RoyalBlue");
                 let areaTestBottom2Right;
                 areaTestBottom2Right = rectangleFill(areaTestBottom2Right, x = 1065 + pipeLineleft, y = 189 - 15 + 142 *
                     2 -
@@ -492,13 +551,13 @@
                     2 - 11,
                     "流量 :",
                     debug =
-                    true);
+                    false);
                 let press2TextureRight;
                 press2TextureRight = textFill(press2TextureRight, x = 1065 + pipeLineleft, y = 192 - pipeLinewidth +
                     142 *
                     2 - 15,
                     "压力 :", debug =
-                    true);
+                    false);
 
                 let areaTest3Right;
                 areaTest3Right = rectangleFill(areaTest3Right, x = 1065 + pipeLineleft, y = 149 +
@@ -513,13 +572,13 @@
                     3 - 15,
                     "流量 :",
                     debug =
-                    true);
+                    false);
                 let press3TextureRight;
                 press3TextureRight = textFill(press3TextureRight, x = 1065 + pipeLineleft, y = 192 - pipeLinewidth +
                     142 *
                     3 - 15,
                     "压力 :", debug =
-                    true);
+                    false);
 
                 let areaTest4Right;
                 areaTest4Right = rectangleFill(areaTest4Right, x = 1065 + pipeLineleft, y = 149 +
@@ -534,17 +593,17 @@
                     4 - 25,
                     "流量 :",
                     debug =
-                    true);
+                    false);
                 let press4TextureRight;
                 press4TextureRight = textFill(press4TextureRight, x = 1065 + pipeLineleft, y = 192 - pipeLinewidth +
                     142 *
                     4 - 25,
                     "压力 :", debug =
-                    true);
+                    false);
 
                 let areaTest5Right;
                 areaTest5Right = rectangleFill(areaTest5Right, x = 1065 + pipeLineleft, y = 149 +
-                    142 * 5 - pipeLinewidth - 35, width = 108, height = 24, debug = true, fillColor = "RoyalBlue");
+                    142 * 5 - pipeLinewidth - 35, width = 108, height = 24, debug = false, fillColor = "RoyalBlue");
                 let areaTestBottom5Right;
                 areaTestBottom5Right = rectangleFill(areaTestBottom5Right, x = 1065 + pipeLineleft, y = 189 + 142 * 5 -
                     pipeLinewidth - 40, width = 108,
@@ -554,101 +613,45 @@
                     5 - 35,
                     "流量 :",
                     debug =
-                    true);
+                    false);
                 let press5TextureRight;
                 press5TextureRight = textFill(press5TextureRight, x = 1065 + pipeLineleft, y = 192 - pipeLinewidth +
                     142 *
                     5 - 40,
                     "压力 :", debug =
-                    true);
-            }
-
-            //     tempTextPure = areaTest99;
-            // GasAreaLocationInit();
-            //流量区域正方形绘制
-            // let pipeLineleft = 0;
-            // let pipeLinewidth = 108;
-
-            var BarInit = {
-                LoadBar: LoadBar,
-                UnloadBar: UnloadBar,
-                healthBar: HealthBar,
-                LoadBarInit() {
-                    //Create the health bar
-                    LoadBar = new PIXI.DisplayObjectContainer();
-                    LoadBar.position.set(app.stage.width - 170, 30)
-                    app.stage.addChild(LoadBar);
-
-                    //Create the black background rectangle
-                    let innerBar = new PIXI.Graphics();
-                    innerBar.beginFill(0x000000);
-                    innerBar.drawRect(0, 0, 128, 8);
-                    innerBar.endFill();
-                    LoadBar.addChild(innerBar);
-
-                    //Create the front red rectangle 动态变化颜色
-                    let outerBar = new PIXI.Graphics();
-                    outerBar.beginFill(u.color("green"));
-                    outerBar.drawRect(0, 0, 128, 8);
-                    outerBar.endFill();
-                    LoadBar.addChild(outerBar);
-
-                    LoadBar.outer = outerBar;
-
-                },
-                UnloadBarInit() {
-                    //Create the health bar
-                    UnloadBar = new PIXI.DisplayObjectContainer();
-                    UnloadBar.position.set(app.stage.width - 170, 30)
-                    app.stage.addChild(UnloadBar);
-
-                    //Create the black background rectangle
-                    let innerBar = new PIXI.Graphics();
-                    innerBar.beginFill(0x000000);
-                    innerBar.drawRect(0, 0, 128, 8);
-                    innerBar.endFill();
-                    UnloadBar.addChild(innerBar);
-
-                    //Create the front red rectangle 动态变化颜色
-                    let outerBar = new PIXI.Graphics();
-                    outerBar.beginFill(u.color("orange"));
-                    outerBar.drawRect(0, 0, 128, 8);
-                    outerBar.endFill();
-                    UnloadBar.addChild(outerBar);
-
-                    UnloadBar.outer = outerBar;
-
-
-                },
-                HealthBarInit() {
-                    //Create the health bar
-                    healthBar = new PIXI.DisplayObjectContainer();
-                    healthBar.position.set(app.stage.width - 170, 30)
-                    app.stage.addChild(healthBar);
-
-                    //Create the black background rectangle
-                    let innerBar = new PIXI.Graphics();
-                    innerBar.beginFill(0x000000);
-                    innerBar.drawRect(0, 0, 128, 8);
-                    innerBar.endFill();
-                    healthBar.addChild(innerBar);
-
-                    //Create the front red rectangle 动态变化颜色
-                    let outerBar = new PIXI.Graphics();
-                    outerBar.beginFill(0xFF3300);
-                    outerBar.drawRect(0, 0, 128, 8);
-                    outerBar.endFill();
-                    healthBar.addChild(outerBar);
-
-                    healthBar.outer = outerBar;
-                }
-
+                    false);
             }
 
 
-            BarInit.HealthBarInit();
-            BarInit.UnloadBarInit();
-            BarInit.LoadBarInit();
+
+
+            //条形图绘制
+            var bar = new Bar(619 + pipeLineleft, 31 + pipeLinewidth);
+
+            bar.HealthBarInit();
+            bar.UnloadBarInit();
+            bar.LoadBarInit();
+
+            var bar2 = new Bar2(619 + pipeLineleft, 174 + pipeLinewidth);
+            bar2.HealthBarInit();
+            bar2.UnloadBarInit();
+            bar2.LoadBarInit();
+            var bar3 = new Bar3(619 + pipeLineleft, 304 + pipeLinewidth);
+            bar3.HealthBarInit();
+            bar3.UnloadBarInit();
+            bar3.LoadBarInit();
+            var bar4 = new Bar4(619 + pipeLineleft, 444 + pipeLinewidth);
+            bar4.HealthBarInit();
+            bar4.UnloadBarInit();
+            bar4.LoadBarInit();
+            var bar5 = new Bar5(619 + pipeLineleft, 574 + pipeLinewidth);
+            bar5.HealthBarInit();
+            bar5.UnloadBarInit();
+            bar5.LoadBarInit();
+            var bar6 = new Bar6(619 + pipeLineleft, 705 + pipeLinewidth);
+            bar6.HealthBarInit();
+            bar6.UnloadBarInit();
+            bar6.LoadBarInit();
 
 
             //上下左右箭头加载
@@ -694,7 +697,6 @@
                 console.log(tempTextPure.x + ": " + tempTextPure.y);
             }
 
-            test = textFill(test, x = 15, y = 200, "空压机压力", debug = true);
             app.ticker.add(delta => gameLoop(delta));
         }
 
@@ -725,7 +727,6 @@
 
         //每秒60帧运行函数
         function gameLoop(delta) {
-            test.text = "空压机压力 " + modifyCount;
             if (modifyCount < 30) {
                 LoadBar.visible = false;
                 UnloadBar.visible = true;
@@ -829,7 +830,502 @@
         }
 
 
+        function Bar(x, y) {
+            var w = 200;
+            var h = 8;
+            this.LoadBarInit = function () {
+                    //Create the health bar
+                    LoadBar = new PIXI.DisplayObjectContainer();
+                    LoadBar.position.set(x, y)
+                    app.stage.addChild(LoadBar);
 
+                    //Create the black background rectangle
+                    let innerBar = new PIXI.Graphics();
+                    innerBar.beginFill(0x000000);
+                    innerBar.drawRect(0, 0, w, h);
+                    innerBar.endFill();
+                    LoadBar.addChild(innerBar);
+
+                    //Create the front red rectangle 动态变化颜色
+                    let outerBar = new PIXI.Graphics();
+                    outerBar.beginFill(u.color("green"));
+                    outerBar.drawRect(0, 0, w, h);
+                    outerBar.endFill();
+                    LoadBar.addChild(outerBar);
+                    LoadBar.outer = outerBar;
+                },
+                this.UnloadBarInit = function () {
+                    //Create the health bar
+                    UnloadBar = new PIXI.DisplayObjectContainer();
+                    UnloadBar.position.set(x, y)
+                    app.stage.addChild(UnloadBar);
+
+                    //Create the black background rectangle
+                    let innerBar = new PIXI.Graphics();
+                    innerBar.beginFill(0x000000);
+                    innerBar.drawRect(0, 0, w, h);
+                    innerBar.endFill();
+                    UnloadBar.addChild(innerBar);
+
+                    //Create the front red rectangle 动态变化颜色
+                    let outerBar = new PIXI.Graphics();
+                    outerBar.beginFill(u.color("orange"));
+                    outerBar.drawRect(0, 0, w, h);
+                    outerBar.endFill();
+                    UnloadBar.addChild(outerBar);
+
+                    UnloadBar.outer = outerBar;
+
+                },
+                this.HealthBarInit = function () {
+                    //Create the health bar
+                    healthBar = new PIXI.DisplayObjectContainer();
+                    healthBar.position.set(x, y)
+                    app.stage.addChild(healthBar);
+
+                    //Create the black background rectangle
+                    let innerBar = new PIXI.Graphics();
+                    innerBar.beginFill(0x000000);
+                    innerBar.drawRect(0, 0, w, h);
+                    innerBar.endFill();
+                    healthBar.addChild(innerBar);
+
+                    //Create the front red rectangle 动态变化颜色
+                    let outerBar = new PIXI.Graphics();
+                    outerBar.beginFill(0xFF3300);
+                    outerBar.drawRect(0, 0, w, h);
+                    outerBar.endFill();
+                    healthBar.addChild(outerBar);
+
+                    healthBar.outer = outerBar;
+                }
+        }
+
+        function Bar1(x, y) {
+            var w = 200;
+            var h = 8;
+            this.LoadBarInit = function () {
+                    //Create the health bar
+                    LoadBar1 = new PIXI.DisplayObjectContainer();
+                    LoadBar1.position.set(x, y)
+                    app.stage.addChild(LoadBar1);
+
+                    //Create the black background rectangle
+                    let innerBar = new PIXI.Graphics();
+                    innerBar.beginFill(0x000000);
+                    innerBar.drawRect(0, 0, w, h);
+                    innerBar.endFill();
+                    LoadBar1.addChild(innerBar);
+
+                    //Create the front red rectangle 动态变化颜色
+                    let outerBar = new PIXI.Graphics();
+                    outerBar.beginFill(u.color("green"));
+                    outerBar.drawRect(0, 0, w, h);
+                    outerBar.endFill();
+                    LoadBar1.addChild(outerBar);
+                    LoadBar1.outer = outerBar;
+                },
+                this.UnloadBarInit = function () {
+                    //Create the health bar
+                    UnloadBar1 = new PIXI.DisplayObjectContainer();
+                    UnloadBar1.position.set(x, y)
+                    app.stage.addChild(UnloadBar1);
+
+                    //Create the black background rectangle
+                    let innerBar = new PIXI.Graphics();
+                    innerBar.beginFill(0x000000);
+                    innerBar.drawRect(0, 0, w, h);
+                    innerBar.endFill();
+                    UnloadBar1.addChild(innerBar);
+
+                    //Create the front red rectangle 动态变化颜色
+                    let outerBar = new PIXI.Graphics();
+                    outerBar.beginFill(u.color("orange"));
+                    outerBar.drawRect(0, 0, w, h);
+                    outerBar.endFill();
+                    UnloadBar1.addChild(outerBar);
+
+                    UnloadBar1.outer = outerBar;
+
+                },
+                this.HealthBarInit = function () {
+                    //Create the health bar
+                    healthBar1 = new PIXI.DisplayObjectContainer();
+                    healthBar1.position.set(x, y)
+                    app.stage.addChild(healthBar1);
+
+                    //Create the black background rectangle
+                    let innerBar = new PIXI.Graphics();
+                    innerBar.beginFill(0x000000);
+                    innerBar.drawRect(0, 0, w, h);
+                    innerBar.endFill();
+                    healthBar1.addChild(innerBar);
+
+                    //Create the front red rectangle 动态变化颜色
+                    let outerBar = new PIXI.Graphics();
+                    outerBar.beginFill(0xFF3300);
+                    outerBar.drawRect(0, 0, w, h);
+                    outerBar.endFill();
+                    healthBar1.addChild(outerBar);
+
+                    healthBar1.outer = outerBar;
+                }
+        }
+
+        function Bar2(x, y) {
+            var w = 200;
+            var h = 8;
+            this.LoadBarInit = function () {
+                    //Create the health bar
+                    LoadBar2 = new PIXI.DisplayObjectContainer();
+                    LoadBar2.position.set(x, y)
+                    app.stage.addChild(LoadBar2);
+
+                    //Create the black background rectangle
+                    let innerBar = new PIXI.Graphics();
+                    innerBar.beginFill(0x000000);
+                    innerBar.drawRect(0, 0, w, h);
+                    innerBar.endFill();
+                    LoadBar2.addChild(innerBar);
+
+                    //Create the front red rectangle 动态变化颜色
+                    let outerBar = new PIXI.Graphics();
+                    outerBar.beginFill(u.color("green"));
+                    outerBar.drawRect(0, 0, w, h);
+                    outerBar.endFill();
+                    LoadBar2.addChild(outerBar);
+                    LoadBar2.outer = outerBar;
+                },
+                this.UnloadBarInit = function () {
+                    //Create the health bar
+                    UnloadBar2 = new PIXI.DisplayObjectContainer();
+                    UnloadBar2.position.set(x, y)
+                    app.stage.addChild(UnloadBar2);
+
+                    //Create the black background rectangle
+                    let innerBar = new PIXI.Graphics();
+                    innerBar.beginFill(0x000000);
+                    innerBar.drawRect(0, 0, w, h);
+                    innerBar.endFill();
+                    UnloadBar2.addChild(innerBar);
+
+                    //Create the front red rectangle 动态变化颜色
+                    let outerBar = new PIXI.Graphics();
+                    outerBar.beginFill(u.color("orange"));
+                    outerBar.drawRect(0, 0, w, h);
+                    outerBar.endFill();
+                    UnloadBar2.addChild(outerBar);
+
+                    UnloadBar2.outer = outerBar;
+
+                },
+                this.HealthBarInit = function () {
+                    //Create the health bar
+                    healthBar2 = new PIXI.DisplayObjectContainer();
+                    healthBar2.position.set(x, y)
+                    app.stage.addChild(healthBar2);
+
+                    //Create the black background rectangle
+                    let innerBar = new PIXI.Graphics();
+                    innerBar.beginFill(0x000000);
+                    innerBar.drawRect(0, 0, w, h);
+                    innerBar.endFill();
+                    healthBar2.addChild(innerBar);
+
+                    //Create the front red rectangle 动态变化颜色
+                    let outerBar = new PIXI.Graphics();
+                    outerBar.beginFill(0xFF3300);
+                    outerBar.drawRect(0, 0, w, h);
+                    outerBar.endFill();
+                    healthBar2.addChild(outerBar);
+
+                    healthBar2.outer = outerBar;
+                }
+        }
+
+        function Bar3(x, y) {
+            var w = 200;
+            var h = 8;
+            this.LoadBarInit = function () {
+                    //Create the health bar
+                    LoadBar3 = new PIXI.DisplayObjectContainer();
+                    LoadBar3.position.set(x, y)
+                    app.stage.addChild(LoadBar3);
+
+                    //Create the black background rectangle
+                    let innerBar = new PIXI.Graphics();
+                    innerBar.beginFill(0x000000);
+                    innerBar.drawRect(0, 0, w, h);
+                    innerBar.endFill();
+                    LoadBar3.addChild(innerBar);
+
+                    //Create the front red rectangle 动态变化颜色
+                    let outerBar = new PIXI.Graphics();
+                    outerBar.beginFill(u.color("green"));
+                    outerBar.drawRect(0, 0, w, h);
+                    outerBar.endFill();
+                    LoadBar3.addChild(outerBar);
+                    LoadBar3.outer = outerBar;
+                },
+                this.UnloadBarInit = function () {
+                    //Create the health bar
+                    UnloadBar3 = new PIXI.DisplayObjectContainer();
+                    UnloadBar3.position.set(x, y)
+                    app.stage.addChild(UnloadBar3);
+
+                    //Create the black background rectangle
+                    let innerBar = new PIXI.Graphics();
+                    innerBar.beginFill(0x000000);
+                    innerBar.drawRect(0, 0, w, h);
+                    innerBar.endFill();
+                    UnloadBar3.addChild(innerBar);
+
+                    //Create the front red rectangle 动态变化颜色
+                    let outerBar = new PIXI.Graphics();
+                    outerBar.beginFill(u.color("orange"));
+                    outerBar.drawRect(0, 0, w, h);
+                    outerBar.endFill();
+                    UnloadBar3.addChild(outerBar);
+
+                    UnloadBar3.outer = outerBar;
+
+                },
+                this.HealthBarInit = function () {
+                    //Create the health bar
+                    healthBar3 = new PIXI.DisplayObjectContainer();
+                    healthBar3.position.set(x, y)
+                    app.stage.addChild(healthBar3);
+
+                    //Create the black background rectangle
+                    let innerBar = new PIXI.Graphics();
+                    innerBar.beginFill(0x000000);
+                    innerBar.drawRect(0, 0, w, h);
+                    innerBar.endFill();
+                    healthBar3.addChild(innerBar);
+
+                    //Create the front red rectangle 动态变化颜色
+                    let outerBar = new PIXI.Graphics();
+                    outerBar.beginFill(0xFF3300);
+                    outerBar.drawRect(0, 0, w, h);
+                    outerBar.endFill();
+                    healthBar3.addChild(outerBar);
+
+                    healthBar3.outer = outerBar;
+                }
+        }
+
+        function Bar4(x, y) {
+            var w = 200;
+            var h = 8;
+            this.LoadBarInit = function () {
+                    //Create the health bar
+                    LoadBar4 = new PIXI.DisplayObjectContainer();
+                    LoadBar4.position.set(x, y)
+                    app.stage.addChild(LoadBar4);
+
+                    //Create the black background rectangle
+                    let innerBar = new PIXI.Graphics();
+                    innerBar.beginFill(0x000000);
+                    innerBar.drawRect(0, 0, w, h);
+                    innerBar.endFill();
+                    LoadBar4.addChild(innerBar);
+
+                    //Create the front red rectangle 动态变化颜色
+                    let outerBar = new PIXI.Graphics();
+                    outerBar.beginFill(u.color("green"));
+                    outerBar.drawRect(0, 0, w, h);
+                    outerBar.endFill();
+                    LoadBar4.addChild(outerBar);
+                    LoadBar4.outer = outerBar;
+                },
+                this.UnloadBarInit = function () {
+                    //Create the health bar
+                    UnloadBar4 = new PIXI.DisplayObjectContainer();
+                    UnloadBar4.position.set(x, y)
+                    app.stage.addChild(UnloadBar4);
+
+                    //Create the black background rectangle
+                    let innerBar = new PIXI.Graphics();
+                    innerBar.beginFill(0x000000);
+                    innerBar.drawRect(0, 0, w, h);
+                    innerBar.endFill();
+                    UnloadBar4.addChild(innerBar);
+
+                    //Create the front red rectangle 动态变化颜色
+                    let outerBar = new PIXI.Graphics();
+                    outerBar.beginFill(u.color("orange"));
+                    outerBar.drawRect(0, 0, w, h);
+                    outerBar.endFill();
+                    UnloadBar4.addChild(outerBar);
+
+                    UnloadBar4.outer = outerBar;
+
+                },
+                this.HealthBarInit = function () {
+                    //Create the health bar
+                    healthBar4 = new PIXI.DisplayObjectContainer();
+                    healthBar4.position.set(x, y)
+                    app.stage.addChild(healthBar4);
+
+                    //Create the black background rectangle
+                    let innerBar = new PIXI.Graphics();
+                    innerBar.beginFill(0x000000);
+                    innerBar.drawRect(0, 0, w, h);
+                    innerBar.endFill();
+                    healthBar4.addChild(innerBar);
+
+                    //Create the front red rectangle 动态变化颜色
+                    let outerBar = new PIXI.Graphics();
+                    outerBar.beginFill(0xFF3300);
+                    outerBar.drawRect(0, 0, w, h);
+                    outerBar.endFill();
+                    healthBar4.addChild(outerBar);
+
+                    healthBar4.outer = outerBar;
+                }
+        }
+
+        function Bar5(x, y) {
+            var w = 200;
+            var h = 8;
+            this.LoadBarInit = function () {
+                    //Create the health bar
+                    LoadBar5 = new PIXI.DisplayObjectContainer();
+                    LoadBar5.position.set(x, y)
+                    app.stage.addChild(LoadBar5);
+
+                    //Create the black background rectangle
+                    let innerBar = new PIXI.Graphics();
+                    innerBar.beginFill(0x000000);
+                    innerBar.drawRect(0, 0, w, h);
+                    innerBar.endFill();
+                    LoadBar5.addChild(innerBar);
+
+                    //Create the front red rectangle 动态变化颜色
+                    let outerBar = new PIXI.Graphics();
+                    outerBar.beginFill(u.color("green"));
+                    outerBar.drawRect(0, 0, w, h);
+                    outerBar.endFill();
+                    LoadBar5.addChild(outerBar);
+                    LoadBar5.outer = outerBar;
+                },
+                this.UnloadBarInit = function () {
+                    //Create the health bar
+                    UnloadBar5 = new PIXI.DisplayObjectContainer();
+                    UnloadBar5.position.set(x, y)
+                    app.stage.addChild(UnloadBar5);
+
+                    //Create the black background rectangle
+                    let innerBar = new PIXI.Graphics();
+                    innerBar.beginFill(0x000000);
+                    innerBar.drawRect(0, 0, w, h);
+                    innerBar.endFill();
+                    UnloadBar5.addChild(innerBar);
+
+                    //Create the front red rectangle 动态变化颜色
+                    let outerBar = new PIXI.Graphics();
+                    outerBar.beginFill(u.color("orange"));
+                    outerBar.drawRect(0, 0, w, h);
+                    outerBar.endFill();
+                    UnloadBar5.addChild(outerBar);
+
+                    UnloadBar5.outer = outerBar;
+
+                },
+                this.HealthBarInit = function () {
+                    //Create the health bar
+                    healthBar5 = new PIXI.DisplayObjectContainer();
+                    healthBar5.position.set(x, y)
+                    app.stage.addChild(healthBar5);
+
+                    //Create the black background rectangle
+                    let innerBar = new PIXI.Graphics();
+                    innerBar.beginFill(0x000000);
+                    innerBar.drawRect(0, 0, w, h);
+                    innerBar.endFill();
+                    healthBar5.addChild(innerBar);
+
+                    //Create the front red rectangle 动态变化颜色
+                    let outerBar = new PIXI.Graphics();
+                    outerBar.beginFill(0xFF3300);
+                    outerBar.drawRect(0, 0, w, h);
+                    outerBar.endFill();
+                    healthBar5.addChild(outerBar);
+
+                    healthBar5.outer = outerBar;
+                }
+        }
+
+        function Bar6(x, y) {
+            var w = 200;
+            var h = 8;
+            this.LoadBarInit = function () {
+                    //Create the health bar
+                    LoadBar6 = new PIXI.DisplayObjectContainer();
+                    LoadBar6.position.set(x, y)
+                    app.stage.addChild(LoadBar6);
+
+                    //Create the black background rectangle
+                    let innerBar = new PIXI.Graphics();
+                    innerBar.beginFill(0x000000);
+                    innerBar.drawRect(0, 0, w, h);
+                    innerBar.endFill();
+                    LoadBar6.addChild(innerBar);
+
+                    //Create the front red rectangle 动态变化颜色
+                    let outerBar = new PIXI.Graphics();
+                    outerBar.beginFill(u.color("green"));
+                    outerBar.drawRect(0, 0, w, h);
+                    outerBar.endFill();
+                    LoadBar6.addChild(outerBar);
+                    LoadBar6.outer = outerBar;
+                },
+                this.UnloadBarInit = function () {
+                    //Create the health bar
+                    UnloadBar6 = new PIXI.DisplayObjectContainer();
+                    UnloadBar6.position.set(x, y)
+                    app.stage.addChild(UnloadBar6);
+
+                    //Create the black background rectangle
+                    let innerBar = new PIXI.Graphics();
+                    innerBar.beginFill(0x000000);
+                    innerBar.drawRect(0, 0, w, h);
+                    innerBar.endFill();
+                    UnloadBar6.addChild(innerBar);
+
+                    //Create the front red rectangle 动态变化颜色
+                    let outerBar = new PIXI.Graphics();
+                    outerBar.beginFill(u.color("orange"));
+                    outerBar.drawRect(0, 0, w, h);
+                    outerBar.endFill();
+                    UnloadBar6.addChild(outerBar);
+
+                    UnloadBar6.outer = outerBar;
+
+                },
+                this.HealthBarInit = function () {
+                    //Create the health bar
+                    healthBar6 = new PIXI.DisplayObjectContainer();
+                    healthBar6.position.set(x, y)
+                    app.stage.addChild(healthBar6);
+
+                    //Create the black background rectangle
+                    let innerBar = new PIXI.Graphics();
+                    innerBar.beginFill(0x000000);
+                    innerBar.drawRect(0, 0, w, h);
+                    innerBar.endFill();
+                    healthBar6.addChild(innerBar);
+
+                    //Create the front red rectangle 动态变化颜色
+                    let outerBar = new PIXI.Graphics();
+                    outerBar.beginFill(0xFF3300);
+                    outerBar.drawRect(0, 0, w, h);
+                    outerBar.endFill();
+                    healthBar6.addChild(outerBar);
+
+                    healthBar6.outer = outerBar;
+                }
+        }
 
         function imageFill(imageFill, x, y, scale, debug, func) {
             imageFill = new Sprite(imageFill);
