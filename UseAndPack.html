@@ -36,11 +36,6 @@
         //碰撞检测初始化
         let b = new Bump(PIXI);
 
-
-        let areaTest;
-        let GasArea4FlowText;
-
-
         //create a Pixi App
         let app = new Application({
             width: 1920,
@@ -64,10 +59,7 @@
             .on("progress", loadProgressHandler)
             .load(setup);
 
-
         //管道相对位置
-        let pipelineRelativePosition = 123;
-        var test;
         let modifyCount = 1;
 
         let pipeLineTop;
@@ -77,8 +69,9 @@
         let pipeLineMiddle4;
         let pipeLineMiddle5;
         let pipeLineBottom;
-        let tempTextPure;
 
+        //调整位置变量 例如 tempTextPure=xxx;则xxx所代表的元素可以调整位置
+        let tempTextPure;
 
         //管道初始化纹理
         let pipeLineTopTexture;
@@ -112,6 +105,7 @@
         let SelfCleaningFilter5Texture;
         let SelfCleaningFilter6Texture;
 
+        //进度条封装
         let bar;
         let bar1;
         let bar2;
@@ -119,36 +113,34 @@
         let bar4;
         let bar5;
         let bar6;
-
+        //#0进度条制作
         let HealthBar;
         let LoadBar;
         let UnloadBar;
-
+        //#1进度条制作
         let HealthBar1;
         let LoadBar1;
         let UnloadBar1;
-
+        //#2进度条制作
         let HealthBar2;
         let LoadBar2;
         let UnloadBar2;
-
+        //#3进度条制作
         let HealthBar3;
         let LoadBar3;
         let UnloadBar3;
-
+        //#4进度条制作
         let HealthBar4;
         let LoadBar4;
         let UnloadBar4;
-
+        //#5进度条制作
         let HealthBar5;
         let LoadBar5;
         let UnloadBar5;
-
+        //#6血条制作
         let HealthBar6;
         let LoadBar6;
         let UnloadBar6;
-
-        // let areaTest;
 
         //This setup function that will run when the image has loaded
         function setup() {
@@ -211,6 +203,18 @@
                 0.05, false);
             dryer6Texture = imageFillAndinteractive(dryer6Texture, 975 - pipeLineleft, 132 + 133 * 5 - pipeLinewidth,
                 0.05, false);
+            dryerFunction();
+
+            //所有干燥机鼠标指向时跳转函数
+            function dryerFunction() {
+                dryer1Texture.on('pointerdown', () => {});
+                dryer2Texture.on('pointerdown', () => {});
+                dryer3Texture.on('pointerdown', () => {});
+                dryer4Texture.on('pointerdown', () => {});
+                dryer5Texture.on('pointerdown', () => {});
+                dryer6Texture.on('pointerdown', () => {});
+            }
+
 
             //同属第二层级 用于覆盖第一层级
             airCompress1Texture = imageFillAndinteractive(airCompress1Texture, 650 - pipeLineleft, 142 + 133 * 0 -
@@ -225,6 +229,19 @@
                 pipeLinewidth, 1, false);
             airCompress6Texture = imageFillAndinteractive(airCompress6Texture, 650 - pipeLineleft, 142 + 133 * 5 -
                 pipeLinewidth, 1, false);
+
+
+            airCompressFunction();
+            //所有空压机鼠标按下时跳转函数
+            function airCompressFunction() {
+                airCompress1Texture.on('pointerdown', () => {});
+                airCompress2Texture.on('pointerdown', () => {});
+                airCompress3Texture.on('pointerdown', () => {});
+                airCompress4Texture.on('pointerdown', () => {});
+                airCompress5Texture.on('pointerdown', () => {});
+                airCompress6Texture.on('pointerdown', () => {});
+            }
+
 
             //同属第二层级 用于覆盖第一层级
             SelfCleaningFilter1Texture = imageFillAndinteractive(SelfCleaningFilter1Texture, 458 - pipeLineleft, 139 +
@@ -246,13 +263,18 @@
                 133 * 5 -
                 pipeLinewidth, 1, false);
 
+            //干燥机跳转函数
+            SelfCleaningFilterFunction();
 
+            function SelfCleaningFilterFunction() {
+                SelfCleaningFilter1Texture.on('pointerdown', () => {});
+                SelfCleaningFilter2Texture.on('pointerdown', () => {});
+                SelfCleaningFilter3Texture.on('pointerdown', () => {});
+                SelfCleaningFilter4Texture.on('pointerdown', () => {});
+                SelfCleaningFilter5Texture.on('pointerdown', () => {});
+                SelfCleaningFilter6Texture.on('pointerdown', () => {});
+            }
 
-
-            //点击事件
-            dryer6Texture.on('pointerdown', () => {
-
-            });
 
             powerAndUPIInit(pipeLineleft, pipeLinewidth);
 
