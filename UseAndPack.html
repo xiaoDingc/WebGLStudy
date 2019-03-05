@@ -105,18 +105,84 @@
         let SelfCleaningFilter5Texture;
         let SelfCleaningFilter6Texture;
 
-        //进度条封装
-        let bar;
+
+        //#加载效率 功率 UPI
+        let flowTexture;
+        let flowTexture01;
+        let flowTexture02;
+        //#1加载功率 功率 UPI
+        let flowTexture1;
+        let flowTexture11;
+        let flowTexture12;
+        //#2加载功率 功率 UPI
+        let flowTexture2;
+        let flowTexture21;
+        let flowTexture22;
+        //#3加载功率 功率 UPI
+        let flowTexture3;
+        let flowTexture31;
+        let flowTexture32;
+        //#4加载功率 功率 UPI
+        let flowTexture4;
+        let flowTexture41;
+        let flowTexture42;
+        //#5加载功率 功率 UPI
+        let flowTexture5;
+        let flowTexture51;
+        let flowTexture52;
+
+        //#1空压机流量 压力文字
+        let flow0Texture;
+        let press0Texture;
+        //#2空压机流量 压力文字
+        let flow1Texture;
+        let press1Texture;
+        //#3空压机流量 压力文字
+        let flow2Texture;
+        let press2Texture;
+        //#4空压机流量 压力文字
+        let flow3Texture;
+        let press3Texture;
+        //#5空压机流量 压力文字
+        let flow4Texture;
+        let press4Texture;
+        //#6空压机流量 压力文字
+        let flow5Texture;
+        let press5Texture;
+
+        //#干燥机 压差及漏点
+        let flowTextureRight;
+        let pressTextureRight;
+        //#1干燥机 压差及漏点
+        let flow1TextureRight;
+        let press1TextureRight;
+        //#2干燥机 压差及漏点
+        let flow2TextureRight;
+        let press2TextureRight;
+        //#3干燥机 压差及漏点
+        let flow3TextureRight;
+        let press3TextureRight;
+        //#4干燥机 压差及漏点
+        let flow4TextureRight;
+        let press4TextureRight;
+        //#5干燥机 压差及漏点
+        let flow5TextureRight;
+        let press5TextureRight;
+
+
+        //#1进度条封装
         let bar1;
+        //#2进度条封装
         let bar2;
+        //#3进度条封装
         let bar3;
+        //#4进度条封装
         let bar4;
+        //#5进度条封装
         let bar5;
+        //#6进度条封装
         let bar6;
-        //#0进度条制作
-        let HealthBar;
-        let LoadBar;
-        let UnloadBar;
+
         //#1进度条制作
         let HealthBar1;
         let LoadBar1;
@@ -275,402 +341,45 @@
                 SelfCleaningFilter6Texture.on('pointerdown', () => {});
             }
 
-
+            // 空压机加载功率以及UPI等制作
             powerAndUPIInit(pipeLineleft, pipeLinewidth);
 
-            function powerAndUPIInit(pipeLineleft, pipeLinewidth) {
-                //#1加载功率以及UPI等制作
-                let areaTest;
-                areaTest = rectangleFill(areaTest, x = 550 + pipeLineleft - 5, y = 149 +
-                    142 * 0 - pipeLinewidth + 70, width = 308, height = 24, debug = false, fillColor = "RoyalBlue");
 
-                let flowTexture;
-                flowTexture = textFill(flowTexture, x = 589 + pipeLineleft, y = 222 - pipeLinewidth, "加载功率:         ",
-                    debug = false);
-                let flowTexture01;
-                flowTexture01 = textFill(flowTexture01, x = 694 + pipeLineleft, y = 222 - pipeLinewidth, "功率: ", debug =
-                    false);
-                let flowTexture02;
-                flowTexture02 = textFill(flowTexture02, x = 769 + pipeLineleft, y = 222 - pipeLinewidth, "UPI: ", debug =
-                    false);
-
-
-                //#2加载功率以及UPI等制作
-                let areaTest1;
-                areaTest1 = rectangleFill(areaTest1, x = 550 + pipeLineleft - 5, y = 149 +
-                    142 * 1 - pipeLinewidth + 70, width = 308, height = 24, debug = false, fillColor = "RoyalBlue");
-                let flowTexture1;
-                flowTexture1 = textFill(flowTexture1, x = 589 + pipeLineleft, y = 222 - pipeLinewidth + 142 * 1,
-                    "加载功率: ",
-                    debug = false);
-                let flowTexture11;
-                flowTexture11 = textFill(flowTexture11, x = 694 + pipeLineleft, y = 222 - pipeLinewidth + 142 * 1,
-                    "功率: ", debug =
-                    false);
-                let flowTexture12;
-                flowTexture12 = textFill(flowTexture12, x = 769 + pipeLineleft, y = 222 - pipeLinewidth + 142 * 1,
-                    "UPI: ", debug =
-                    false);
-
-                //#3加载功率以及UPI等制作
-                let areaTest2;
-                areaTest2 = rectangleFill(areaTest2, x = 550 + pipeLineleft - 5, y = 149 +
-                    142 * 2 - pipeLinewidth + 70 - 15, width = 308, height = 24, debug = false, fillColor =
-                    "RoyalBlue");
-
-                let flowTexture2;
-                flowTexture2 = textFill(flowTexture2, x = 589 + pipeLineleft, y = 222 - pipeLinewidth + 142 * 2 - 15,
-                    "加载功率: ",
-                    debug = false);
-                let flowTexture21;
-                flowTexture21 = textFill(flowTexture21, x = 694 + pipeLineleft, y = 222 - pipeLinewidth + 142 * 2 - 15,
-                    "功率: ", debug =
-                    false);
-                let flowTexture22;
-                flowTexture22 = textFill(flowTexture22, x = 769 + pipeLineleft, y = 222 - pipeLinewidth + 142 * 2 - 15,
-                    "UPI: ", debug =
-                    false);
-
-                //#4加载功率以及UPI等制作
-                let areaTest3;
-                areaTest3 = rectangleFill(areaTest3, x = 550 + pipeLineleft - 5, y = 149 +
-                    142 * 3 - pipeLinewidth + 70 - 15, width = 308, height = 24, debug = false, fillColor =
-                    "RoyalBlue");
-
-                let flowTexture3;
-                flowTexture3 = textFill(flowTexture3, x = 589 + pipeLineleft, y = 222 - pipeLinewidth + 142 * 3 -
-                    15,
-                    "加载功率: ",
-                    debug = false);
-                let flowTexture31;
-                flowTexture31 = textFill(flowTexture31, x = 694 + pipeLineleft, y = 222 - pipeLinewidth + 142 * 3 -
-                    15,
-                    "功率: ", debug =
-                    false);
-                let flowTexture32;
-                flowTexture32 = textFill(flowTexture32, x = 769 + pipeLineleft, y = 222 - pipeLinewidth + 142 * 3 -
-                    15,
-                    "UPI: ", debug =
-                    false);
-
-                //#5加载功率以及UPI等制作
-                let areaTest4;
-                areaTest4 = rectangleFill(areaTest4, x = 550 + pipeLineleft - 5, y = 149 +
-                    142 * 4 - pipeLinewidth + 70 - 25, width = 308, height = 24, debug = false, fillColor =
-                    "RoyalBlue");
-
-                let flowTexture4;
-                flowTexture4 = textFill(flowTexture4, x = 589 + pipeLineleft, y = 222 - pipeLinewidth + 142 * 4 -
-                    25,
-                    "加载功率: ",
-                    debug = false);
-                let flowTexture41;
-                flowTexture41 = textFill(flowTexture41, x = 694 + pipeLineleft, y = 222 - pipeLinewidth + 142 * 4 -
-                    25,
-                    "功率: ", debug =
-                    false);
-                let flowTexture42;
-                flowTexture42 = textFill(flowTexture42, x = 769 + pipeLineleft, y = 222 - pipeLinewidth + 142 * 4 -
-                    25,
-                    "UPI: ", debug =
-                    false);
-
-                //#6加载功率以及UPI等制作
-                let areaTest5;
-                areaTest5 = rectangleFill(areaTest5, x = 550 + pipeLineleft - 5, y = 149 +
-                    142 * 5 - pipeLinewidth + 70 - 40, width = 308, height = 24, debug = false, fillColor =
-                    "RoyalBlue");
-
-                let flowTexture5;
-                flowTexture5 = textFill(flowTexture5, x = 589 + pipeLineleft, y = 222 - pipeLinewidth + 142 * 5 -
-                    40,
-                    "加载功率: ",
-                    debug = false);
-                let flowTexture51;
-                flowTexture51 = textFill(flowTexture51, x = 694 + pipeLineleft, y = 222 - pipeLinewidth + 142 * 5 -
-                    40,
-                    "功率: ", debug =
-                    false);
-                let flowTexture52;
-                flowTexture52 = textFill(flowTexture52, x = 769 + pipeLineleft, y = 222 - pipeLinewidth + 142 * 5 -
-                    40,
-                    "UPI: ", debug =
-                    false);
-
-            }
 
             FlowAreaInit(pipeLineleft, pipeLinewidth);
 
-            function FlowAreaInit(pipeLineleft, pipeLinewidth) {
-
-                //空压机绘制及文字制作
-                let areaTest;
-                areaTest = rectangleFill(areaTest, x = 750 + pipeLineleft, y = 149 +
-                    142 * 0 - pipeLinewidth, width = 108, height = 24, debug = false, fillColor = "RoyalBlue");
-                let areaTestBottom;
-                areaTestBottom = rectangleFill(areaTestBottom, x = 750 + pipeLineleft, y = 189 + 142 * 0 -
-                    pipeLinewidth, width = 108,
-                    height = 24, debug = false, fillColor = "RoyalBlue");
-
-
-                let flowTexture;
-                flowTexture = textFill(flowTexture, x = 759 + pipeLineleft, y = 152 - pipeLinewidth, "流量 :", debug =
-                    false);
-
-                let pressTexture;
-                pressTexture = textFill(pressTexture, x = 759 + pipeLineleft, y = 192 - pipeLinewidth, "压力 :", debug =
-                    false);
-
-
-                //空压机2
-                let areaTest1;
-                areaTest1 = rectangleFill(areaTest1, x = 750 + pipeLineleft, y = 149 +
-                    142 * 1 - pipeLinewidth, width = 108, height = 24, debug = false, fillColor = "RoyalBlue");
-
-                let areaTestBottom1;
-                areaTestBottom1 = rectangleFill(areaTestBottom1, x = 750 + pipeLineleft, y = 189 + 142 * 1 -
-                    pipeLinewidth, width = 108,
-                    height = 24, debug = false, fillColor = "RoyalBlue");
-
-                let flow1Texture;
-                flow1Texture = textFill(flow1Texture, x = 759 + pipeLineleft, y = 152 - pipeLinewidth + 142 * 1, "流量 :",
-                    debug =
-                    false);
-                let press1Texture;
-                press1Texture = textFill(press1Texture, x = 759 + pipeLineleft, y = 192 - pipeLinewidth + 142 * 1,
-                    "压力 :", debug =
-                    false);
-
-
-                let areaTest2;
-                areaTest2 = rectangleFill(areaTest2, x = 750 + pipeLineleft, y = 149 - 15 +
-                    142 * 2 - pipeLinewidth + 5, width = 108, height = 24, debug = false, fillColor = "RoyalBlue");
-                let areaTestBottom2;
-                areaTestBottom2 = rectangleFill(areaTestBottom2, x = 750 + pipeLineleft, y = 189 - 15 + 142 * 2 -
-                    pipeLinewidth, width = 108,
-                    height = 24, debug = false, fillColor = "RoyalBlue");
-
-                let flow2Texture;
-                flow2Texture = textFill(flow2Texture, x = 759 + pipeLineleft, y = 152 - pipeLinewidth + 142 * 2 - 11,
-                    "流量 :",
-                    debug =
-                    false);
-                let press2Texture;
-                press2Texture = textFill(press2Texture, x = 759 + pipeLineleft, y = 192 - pipeLinewidth + 142 * 2 - 15,
-                    "压力 :", debug =
-                    false);
-
-
-
-                let areaTest3;
-                areaTest3 = rectangleFill(areaTest3, x = 750 + pipeLineleft, y = 149 +
-                    142 * 3 - pipeLinewidth - 15, width = 108, height = 24, debug = false, fillColor = "RoyalBlue");
-                let areaTestBottom3;
-                areaTestBottom3 = rectangleFill(areaTestBottom3, x = 750 + pipeLineleft, y = 189 + 142 * 3 -
-                    pipeLinewidth - 15, width = 108,
-                    height = 24, debug = false, fillColor = "RoyalBlue");
-
-                let flow3Texture;
-                flow3Texture = textFill(flow3Texture, x = 759 + pipeLineleft, y = 152 - pipeLinewidth + 142 * 3 - 15,
-                    "流量 :",
-                    debug =
-                    false);
-                let press3Texture;
-                press3Texture = textFill(press3Texture, x = 759 + pipeLineleft, y = 192 - pipeLinewidth + 142 * 3 - 15,
-                    "压力 :", debug =
-                    false);
-
-                let areaTest4;
-                areaTest4 = rectangleFill(areaTest4, x = 750 + pipeLineleft, y = 149 +
-                    142 * 4 - pipeLinewidth - 25, width = 108, height = 24, debug = false, fillColor = "RoyalBlue");
-                let areaTestBottom4;
-                areaTestBottom4 = rectangleFill(areaTestBottom4, x = 750 + pipeLineleft, y = 189 + 142 * 4 -
-                    pipeLinewidth - 25, width = 108,
-                    height = 24, debug = false, fillColor = "RoyalBlue");
-
-                let flow4Texture;
-                flow4Texture = textFill(flow4Texture, x = 759 + pipeLineleft, y = 152 - pipeLinewidth + 142 * 4 - 25,
-                    "流量 :",
-                    debug =
-                    false);
-                let press4Texture;
-                press4Texture = textFill(press4Texture, x = 759 + pipeLineleft, y = 192 - pipeLinewidth + 142 * 4 - 25,
-                    "压力 :", debug =
-                    false);
-
-                let areaTest5;
-                areaTest5 = rectangleFill(areaTest5, x = 750 + pipeLineleft, y = 149 +
-                    142 * 5 - pipeLinewidth - 35, width = 108, height = 24, debug = false, fillColor = "RoyalBlue");
-                let areaTestBottom5;
-                areaTestBottom5 = rectangleFill(areaTestBottom5, x = 750 + pipeLineleft, y = 189 + 142 * 5 -
-                    pipeLinewidth - 40, width = 108,
-                    height = 24, debug = false, fillColor = "RoyalBlue");
-
-                let flow5Texture;
-                flow5Texture = textFill(flow5Texture, x = 759 + pipeLineleft, y = 152 - pipeLinewidth + 142 * 5 - 35,
-                    "流量 :",
-                    debug =
-                    false);
-                let press5Texture;
-                press5Texture = textFill(press5Texture, x = 759 + pipeLineleft, y = 192 - pipeLinewidth + 142 * 5 - 40,
-                    "压力 :", debug =
-                    false);
-
-                //吸附式干燥机绘制
-                let areaTestRight;
-                areaTestRight = rectangleFill(areaTestRight, x = 1065 + pipeLineleft, y = 149 +
-                    142 * 0 - pipeLinewidth, width = 108, height = 24, debug = false, fillColor = "RoyalBlue");
-                let areaTestBottomRight;
-                areaTestBottomRight = rectangleFill(areaTestBottomRight, x = 1065 + pipeLineleft, y = 189 + 142 * 0 -
-                    pipeLinewidth, width = 108,
-                    height = 24, debug = false, fillColor = "RoyalBlue");
-
-                let flowTextureRight;
-                flowTextureRight = textFill(flowTextureRight, x = 1065 + pipeLineleft, y = 152 - pipeLinewidth,
-                    "流量 :",
-                    debug =
-                    false);
-
-                let pressTextureRight;
-                pressTextureRight = textFill(pressTextureRight, x = 1065 + pipeLineleft, y = 192 - pipeLinewidth,
-                    "压力 :",
-                    debug =
-                    false);
-
-
-                let areaTest1Right;
-                areaTest1Right = rectangleFill(areaTest1Right, x = 1065 + pipeLineleft, y = 149 +
-                    142 * 1 - pipeLinewidth, width = 108, height = 24, debug = false, fillColor = "RoyalBlue");
-                let areaTestBottom1Right;
-                areaTestBottom1Right = rectangleFill(areaTestBottom1Right, x = 1065 + pipeLineleft, y = 189 + 142 * 1 -
-                    pipeLinewidth, width = 108,
-                    height = 24, debug = false, fillColor = "RoyalBlue");
-
-                let flow1TextureRight;
-                flow1TextureRight = textFill(flow1TextureRight, x = 1065 + pipeLineleft, y = 152 - pipeLinewidth + 142 *
-                    1,
-                    "流量 :",
-                    debug =
-                    false);
-                let press1TextureRight;
-                press1TextureRight = textFill(press1TextureRight, x = 1065 + pipeLineleft, y = 192 - pipeLinewidth +
-                    142 * 1,
-                    "压力 :", debug =
-                    false);
-
-
-                let areaTest2Right;
-                areaTest2Right = rectangleFill(areaTest2Right, x = 1065 + pipeLineleft, y = 149 - 15 +
-                    142 * 2 - pipeLinewidth + 5, width = 108, height = 24, debug = false, fillColor = "RoyalBlue");
-                let areaTestBottom2Right;
-                areaTestBottom2Right = rectangleFill(areaTestBottom2Right, x = 1065 + pipeLineleft, y = 189 - 15 + 142 *
-                    2 -
-                    pipeLinewidth, width = 108,
-                    height = 24, debug = false, fillColor = "RoyalBlue");
-
-                let flow2TextureRight;
-                flow2TextureRight = textFill(flow2TextureRight, x = 1065 + pipeLineleft, y = 152 - pipeLinewidth + 142 *
-                    2 - 11,
-                    "流量 :",
-                    debug =
-                    false);
-                let press2TextureRight;
-                press2TextureRight = textFill(press2TextureRight, x = 1065 + pipeLineleft, y = 192 - pipeLinewidth +
-                    142 *
-                    2 - 15,
-                    "压力 :", debug =
-                    false);
-
-                let areaTest3Right;
-                areaTest3Right = rectangleFill(areaTest3Right, x = 1065 + pipeLineleft, y = 149 +
-                    142 * 3 - pipeLinewidth - 15, width = 108, height = 24, debug = false, fillColor = "RoyalBlue");
-                let areaTestBottom3Right;
-                areaTestBottom3Right = rectangleFill(areaTestBottom3Right, x = 1065 + pipeLineleft, y = 189 + 142 * 3 -
-                    pipeLinewidth - 15, width = 108,
-                    height = 24, debug = false, fillColor = "RoyalBlue");
-
-                let flow3TextureRight;
-                flow3TextureRight = textFill(flow3TextureRight, x = 1065 + pipeLineleft, y = 152 - pipeLinewidth + 142 *
-                    3 - 15,
-                    "流量 :",
-                    debug =
-                    false);
-                let press3TextureRight;
-                press3TextureRight = textFill(press3TextureRight, x = 1065 + pipeLineleft, y = 192 - pipeLinewidth +
-                    142 *
-                    3 - 15,
-                    "压力 :", debug =
-                    false);
-
-                let areaTest4Right;
-                areaTest4Right = rectangleFill(areaTest4Right, x = 1065 + pipeLineleft, y = 149 +
-                    142 * 4 - pipeLinewidth - 25, width = 108, height = 24, debug = false, fillColor = "RoyalBlue");
-                let areaTestBottom4Right;
-                areaTestBottom4Right = rectangleFill(areaTestBottom4Right, x = 1065 + pipeLineleft, y = 189 + 142 * 4 -
-                    pipeLinewidth - 25, width = 108,
-                    height = 24, debug = false, fillColor = "RoyalBlue");
-
-                let flow4TextureRight;
-                flow4TextureRight = textFill(flow4TextureRight, x = 1065 + pipeLineleft, y = 152 - pipeLinewidth + 142 *
-                    4 - 25,
-                    "流量 :",
-                    debug =
-                    false);
-                let press4TextureRight;
-                press4TextureRight = textFill(press4TextureRight, x = 1065 + pipeLineleft, y = 192 - pipeLinewidth +
-                    142 *
-                    4 - 25,
-                    "压力 :", debug =
-                    false);
-
-                let areaTest5Right;
-                areaTest5Right = rectangleFill(areaTest5Right, x = 1065 + pipeLineleft, y = 149 +
-                    142 * 5 - pipeLinewidth - 35, width = 108, height = 24, debug = false, fillColor = "RoyalBlue");
-                let areaTestBottom5Right;
-                areaTestBottom5Right = rectangleFill(areaTestBottom5Right, x = 1065 + pipeLineleft, y = 189 + 142 * 5 -
-                    pipeLinewidth - 40, width = 108,
-                    height = 24, debug = false, fillColor = "RoyalBlue");
-                let flow5TextureRight;
-                flow5TextureRight = textFill(flow5TextureRight, x = 1065 + pipeLineleft, y = 152 - pipeLinewidth + 142 *
-                    5 - 35,
-                    "流量 :",
-                    debug =
-                    false);
-                let press5TextureRight;
-                press5TextureRight = textFill(press5TextureRight, x = 1065 + pipeLineleft, y = 192 - pipeLinewidth +
-                    142 *
-                    5 - 40,
-                    "压力 :", debug =
-                    false);
-            }
 
 
 
 
-            //条形图绘制
-            var bar = new Bar(619 + pipeLineleft, 31 + pipeLinewidth);
 
-            bar.HealthBarInit();
-            bar.UnloadBarInit();
-            bar.LoadBarInit();
-
-            var bar2 = new Bar2(619 + pipeLineleft, 174 + pipeLinewidth);
+            //#1条形图绘制
+            bar1 = new Bar1(619 + pipeLineleft, 31 + pipeLinewidth);
+            bar1.HealthBarInit();
+            bar1.UnloadBarInit();
+            bar1.LoadBarInit();
+            //#2条形图绘制
+            bar2 = new Bar2(619 + pipeLineleft, 174 + pipeLinewidth);
             bar2.HealthBarInit();
             bar2.UnloadBarInit();
             bar2.LoadBarInit();
-            var bar3 = new Bar3(619 + pipeLineleft, 304 + pipeLinewidth);
+            //#3条形图绘制
+            bar3 = new Bar3(619 + pipeLineleft, 304 + pipeLinewidth);
             bar3.HealthBarInit();
             bar3.UnloadBarInit();
             bar3.LoadBarInit();
-            var bar4 = new Bar4(619 + pipeLineleft, 444 + pipeLinewidth);
+            //#4条形图绘制
+            bar4 = new Bar4(619 + pipeLineleft, 444 + pipeLinewidth);
             bar4.HealthBarInit();
             bar4.UnloadBarInit();
             bar4.LoadBarInit();
-            var bar5 = new Bar5(619 + pipeLineleft, 574 + pipeLinewidth);
+            //#5条形图绘制
+            bar5 = new Bar5(619 + pipeLineleft, 574 + pipeLinewidth);
             bar5.HealthBarInit();
             bar5.UnloadBarInit();
             bar5.LoadBarInit();
-            var bar6 = new Bar6(619 + pipeLineleft, 705 + pipeLinewidth);
+            //#6条形图绘制
+            bar6 = new Bar6(619 + pipeLineleft, 705 + pipeLinewidth);
             bar6.HealthBarInit();
             bar6.UnloadBarInit();
             bar6.LoadBarInit();
@@ -688,30 +397,24 @@
             }
             //Right arrow key 'press' method
             let change = 5;
+
             //Left arrow key `press` method          
             left.press = () => {
                 //左键调节
                 tempTextPure.x -= change;
                 console.log(tempTextPure.x + ": " + tempTextPure.y);
-
             };
-
-
             right.press = () => {
                 //右键调节
                 tempTextPure.x += change;
                 console.log(tempTextPure.x + ": " + tempTextPure.y);
-
             }
-
             //Up arrow key 'press' method
             up.press = () => {
                 //上键调节
                 tempTextPure.y -= change;
                 console.log(tempTextPure.x + ": " + tempTextPure.y);
-
             }
-
             //Down arrow key 'press' method
             down.press = (event) => {
                 //下键调节
@@ -719,9 +422,9 @@
                 console.log(tempTextPure.x + ": " + tempTextPure.y);
             }
 
+
             app.ticker.add(delta => gameLoop(delta));
         }
-
         setInterval(modXY, 6000)
 
         function modXY() {
@@ -739,8 +442,6 @@
             });
         }
 
-        function onClick() {}
-
         //加载程序进程
         function loadProgressHandler(loader, resource) {
             console.log("loading " + resource.url)
@@ -750,18 +451,18 @@
         //每秒60帧运行函数
         function gameLoop(delta) {
             if (modifyCount < 30) {
-                LoadBar.visible = false;
-                UnloadBar.visible = true;
-                healthBar.visible = false;
+                LoadBar1.visible = false;
+                UnloadBar1.visible = true;
+                healthBar1.visible = false;
             } else if (modifyCount > 30 && modifyCount <= 60) {
-                LoadBar.visible = false;
-                UnloadBar.visible = false;
-                healthBar.visible = true;
-                healthBar.outer.width = modifyCount;
+                LoadBar1.visible = false;
+                UnloadBar1.visible = false;
+                healthBar1.visible = true;
+                healthBar1.outer.width = modifyCount;
             } else {
-                LoadBar.visible = true;
-                UnloadBar.visible = false;
-                healthBar.visible = false;
+                LoadBar1.visible = true;
+                UnloadBar1.visible = false;
+                healthBar1.visible = false;
             }
             console.log(modifyCount);
 
@@ -801,22 +502,6 @@
 
         }
 
-        // function FlowAreaInit(pipeLineleft, pipeLinewidth) {
-        //     //用气区域IV流量矩形区域绘制
-        //     //x y width height debug
-        //     //if debug=0
-        //     for (let index = 0; index < 6; index++) {
-        //         let areaTest;
-        //         areaTest = rectangleFill(areaTest, x = 750 + pipeLineleft, y = 149 +
-        //             142 * index - pipeLinewidth, width = 108, height = 24, debug = false, fillColor = "RoyalBlue");
-        //         let areaTestBottom
-        //         areaTestBottom = rectangleFill(areaTestBottom, x = 750 + pipeLineleft, y = 189 + 133 * index -
-        //             pipeLinewidth, width = 108,
-        //             height = 24, debug = true, fillColor = "RoyalBlue");
-        //     }
-        // }
-
-
 
         //鼠标拖拽开始
         function onDragStart(event) {
@@ -852,76 +537,7 @@
         }
 
 
-        function Bar(x, y) {
-            var w = 200;
-            var h = 8;
-            this.LoadBarInit = function () {
-                    //Create the health bar
-                    LoadBar = new PIXI.DisplayObjectContainer();
-                    LoadBar.position.set(x, y)
-                    app.stage.addChild(LoadBar);
 
-                    //Create the black background rectangle
-                    let innerBar = new PIXI.Graphics();
-                    innerBar.beginFill(0x000000);
-                    innerBar.drawRect(0, 0, w, h);
-                    innerBar.endFill();
-                    LoadBar.addChild(innerBar);
-
-                    //Create the front red rectangle 动态变化颜色
-                    let outerBar = new PIXI.Graphics();
-                    outerBar.beginFill(u.color("green"));
-                    outerBar.drawRect(0, 0, w, h);
-                    outerBar.endFill();
-                    LoadBar.addChild(outerBar);
-                    LoadBar.outer = outerBar;
-                },
-                this.UnloadBarInit = function () {
-                    //Create the health bar
-                    UnloadBar = new PIXI.DisplayObjectContainer();
-                    UnloadBar.position.set(x, y)
-                    app.stage.addChild(UnloadBar);
-
-                    //Create the black background rectangle
-                    let innerBar = new PIXI.Graphics();
-                    innerBar.beginFill(0x000000);
-                    innerBar.drawRect(0, 0, w, h);
-                    innerBar.endFill();
-                    UnloadBar.addChild(innerBar);
-
-                    //Create the front red rectangle 动态变化颜色
-                    let outerBar = new PIXI.Graphics();
-                    outerBar.beginFill(u.color("orange"));
-                    outerBar.drawRect(0, 0, w, h);
-                    outerBar.endFill();
-                    UnloadBar.addChild(outerBar);
-
-                    UnloadBar.outer = outerBar;
-
-                },
-                this.HealthBarInit = function () {
-                    //Create the health bar
-                    healthBar = new PIXI.DisplayObjectContainer();
-                    healthBar.position.set(x, y)
-                    app.stage.addChild(healthBar);
-
-                    //Create the black background rectangle
-                    let innerBar = new PIXI.Graphics();
-                    innerBar.beginFill(0x000000);
-                    innerBar.drawRect(0, 0, w, h);
-                    innerBar.endFill();
-                    healthBar.addChild(innerBar);
-
-                    //Create the front red rectangle 动态变化颜色
-                    let outerBar = new PIXI.Graphics();
-                    outerBar.beginFill(0xFF3300);
-                    outerBar.drawRect(0, 0, w, h);
-                    outerBar.endFill();
-                    healthBar.addChild(outerBar);
-
-                    healthBar.outer = outerBar;
-                }
-        }
 
         function Bar1(x, y) {
             var w = 200;
@@ -1347,6 +963,352 @@
 
                     healthBar6.outer = outerBar;
                 }
+        }
+
+        function FlowAreaInit(pipeLineleft, pipeLinewidth) {
+
+            //空压机绘制及文字制作
+            let areaTest;
+            areaTest = rectangleFill(areaTest, x = 750 + pipeLineleft, y = 149 +
+                142 * 0 - pipeLinewidth, width = 108, height = 24, debug = false, fillColor = "RoyalBlue");
+            let areaTestBottom;
+            areaTestBottom = rectangleFill(areaTestBottom, x = 750 + pipeLineleft, y = 189 + 142 * 0 -
+                pipeLinewidth, width = 108,
+                height = 24, debug = false, fillColor = "RoyalBlue");
+
+            flow0Texture = textFill(flow0Texture, x = 759 + pipeLineleft, y = 152 - pipeLinewidth, "流量 :", debug =
+                false);
+            press0Texture = textFill(press0Texture, x = 759 + pipeLineleft, y = 192 - pipeLinewidth, "压力 :", debug =
+                false);
+
+
+            //空压机2
+            let areaTest1;
+            areaTest1 = rectangleFill(areaTest1, x = 750 + pipeLineleft, y = 149 +
+                142 * 1 - pipeLinewidth, width = 108, height = 24, debug = false, fillColor = "RoyalBlue");
+
+            let areaTestBottom1;
+            areaTestBottom1 = rectangleFill(areaTestBottom1, x = 750 + pipeLineleft, y = 189 + 142 * 1 -
+                pipeLinewidth, width = 108,
+                height = 24, debug = false, fillColor = "RoyalBlue");
+
+            flow1Texture = textFill(flow1Texture, x = 759 + pipeLineleft, y = 152 - pipeLinewidth + 142 * 1, "流量 :",
+                debug =
+                false);
+            press1Texture = textFill(press1Texture, x = 759 + pipeLineleft, y = 192 - pipeLinewidth + 142 * 1,
+                "压力 :", debug =
+                false);
+
+
+            let areaTest2;
+            areaTest2 = rectangleFill(areaTest2, x = 750 + pipeLineleft, y = 149 - 15 +
+                142 * 2 - pipeLinewidth + 5, width = 108, height = 24, debug = false, fillColor = "RoyalBlue");
+            let areaTestBottom2;
+            areaTestBottom2 = rectangleFill(areaTestBottom2, x = 750 + pipeLineleft, y = 189 - 15 + 142 * 2 -
+                pipeLinewidth, width = 108,
+                height = 24, debug = false, fillColor = "RoyalBlue");
+
+            flow2Texture = textFill(flow2Texture, x = 759 + pipeLineleft, y = 152 - pipeLinewidth + 142 * 2 - 11,
+                "流量 :",
+                debug =
+                false);
+
+            press2Texture = textFill(press2Texture, x = 759 + pipeLineleft, y = 192 - pipeLinewidth + 142 * 2 - 15,
+                "压力 :", debug =
+                false);
+
+
+
+            let areaTest3;
+            areaTest3 = rectangleFill(areaTest3, x = 750 + pipeLineleft, y = 149 +
+                142 * 3 - pipeLinewidth - 15, width = 108, height = 24, debug = false, fillColor = "RoyalBlue");
+            let areaTestBottom3;
+            areaTestBottom3 = rectangleFill(areaTestBottom3, x = 750 + pipeLineleft, y = 189 + 142 * 3 -
+                pipeLinewidth - 15, width = 108,
+                height = 24, debug = false, fillColor = "RoyalBlue");
+
+            flow3Texture = textFill(flow3Texture, x = 759 + pipeLineleft, y = 152 - pipeLinewidth + 142 * 3 - 15,
+                "流量 :",
+                debug =
+                false);
+
+            press3Texture = textFill(press3Texture, x = 759 + pipeLineleft, y = 192 - pipeLinewidth + 142 * 3 - 15,
+                "压力 :", debug =
+                false);
+
+            let areaTest4;
+            areaTest4 = rectangleFill(areaTest4, x = 750 + pipeLineleft, y = 149 +
+                142 * 4 - pipeLinewidth - 25, width = 108, height = 24, debug = false, fillColor = "RoyalBlue");
+            let areaTestBottom4;
+            areaTestBottom4 = rectangleFill(areaTestBottom4, x = 750 + pipeLineleft, y = 189 + 142 * 4 -
+                pipeLinewidth - 25, width = 108,
+                height = 24, debug = false, fillColor = "RoyalBlue");
+
+            flow4Texture = textFill(flow4Texture, x = 759 + pipeLineleft, y = 152 - pipeLinewidth + 142 * 4 - 25,
+                "流量 :",
+                debug =
+                false);
+
+            press4Texture = textFill(press4Texture, x = 759 + pipeLineleft, y = 192 - pipeLinewidth + 142 * 4 - 25,
+                "压力 :", debug =
+                false);
+
+            let areaTest5;
+            areaTest5 = rectangleFill(areaTest5, x = 750 + pipeLineleft, y = 149 +
+                142 * 5 - pipeLinewidth - 35, width = 108, height = 24, debug = false, fillColor = "RoyalBlue");
+            let areaTestBottom5;
+            areaTestBottom5 = rectangleFill(areaTestBottom5, x = 750 + pipeLineleft, y = 189 + 142 * 5 -
+                pipeLinewidth - 40, width = 108,
+                height = 24, debug = false, fillColor = "RoyalBlue");
+
+            flow5Texture = textFill(flow5Texture, x = 759 + pipeLineleft, y = 152 - pipeLinewidth + 142 * 5 - 35,
+                "流量 :",
+                debug =
+                false);
+
+
+            press5Texture = textFill(press5Texture, x = 759 + pipeLineleft, y = 192 - pipeLinewidth + 142 * 5 - 40,
+                "压力 :", debug =
+                false);
+
+            //吸附式干燥机绘制
+            let areaTestRight;
+            areaTestRight = rectangleFill(areaTestRight, x = 1065 + pipeLineleft, y = 149 +
+                142 * 0 - pipeLinewidth, width = 108, height = 24, debug = false, fillColor = "RoyalBlue");
+            let areaTestBottomRight;
+            areaTestBottomRight = rectangleFill(areaTestBottomRight, x = 1065 + pipeLineleft, y = 189 + 142 * 0 -
+                pipeLinewidth, width = 108,
+                height = 24, debug = false, fillColor = "RoyalBlue");
+
+
+
+            flowTextureRight = textFill(flowTextureRight, x = 1065 + pipeLineleft, y = 152 - pipeLinewidth,
+                "压差 :",
+                debug =
+                false);
+            pressTextureRight = textFill(pressTextureRight, x = 1065 + pipeLineleft, y = 192 - pipeLinewidth,
+                "露点 :",
+                debug =
+                false);
+
+
+            let areaTest1Right;
+            areaTest1Right = rectangleFill(areaTest1Right, x = 1065 + pipeLineleft, y = 149 +
+                142 * 1 - pipeLinewidth, width = 108, height = 24, debug = false, fillColor = "RoyalBlue");
+            let areaTestBottom1Right;
+            areaTestBottom1Right = rectangleFill(areaTestBottom1Right, x = 1065 + pipeLineleft, y = 189 + 142 * 1 -
+                pipeLinewidth, width = 108,
+                height = 24, debug = false, fillColor = "RoyalBlue");
+
+            flow1TextureRight = textFill(flow1TextureRight, x = 1065 + pipeLineleft, y = 152 - pipeLinewidth + 142 *
+                1,
+                "压差 :",
+                debug =
+                false);
+            press1TextureRight = textFill(press1TextureRight, x = 1065 + pipeLineleft, y = 192 - pipeLinewidth +
+                142 * 1,
+                "露点 :", debug =
+                false);
+
+
+            let areaTest2Right;
+            areaTest2Right = rectangleFill(areaTest2Right, x = 1065 + pipeLineleft, y = 149 - 15 +
+                142 * 2 - pipeLinewidth + 5, width = 108, height = 24, debug = false, fillColor = "RoyalBlue");
+            let areaTestBottom2Right;
+            areaTestBottom2Right = rectangleFill(areaTestBottom2Right, x = 1065 + pipeLineleft, y = 189 - 15 + 142 *
+                2 -
+                pipeLinewidth, width = 108,
+                height = 24, debug = false, fillColor = "RoyalBlue");
+
+            flow2TextureRight = textFill(flow2TextureRight, x = 1065 + pipeLineleft, y = 152 - pipeLinewidth + 142 *
+                2 - 11,
+                "压差 :",
+                debug =
+                false);
+            press2TextureRight = textFill(press2TextureRight, x = 1065 + pipeLineleft, y = 192 - pipeLinewidth +
+                142 *
+                2 - 15,
+                "露点 :", debug =
+                false);
+
+            let areaTest3Right;
+            areaTest3Right = rectangleFill(areaTest3Right, x = 1065 + pipeLineleft, y = 149 +
+                142 * 3 - pipeLinewidth - 15, width = 108, height = 24, debug = false, fillColor = "RoyalBlue");
+            let areaTestBottom3Right;
+            areaTestBottom3Right = rectangleFill(areaTestBottom3Right, x = 1065 + pipeLineleft, y = 189 + 142 * 3 -
+                pipeLinewidth - 15, width = 108,
+                height = 24, debug = false, fillColor = "RoyalBlue");
+
+            flow3TextureRight = textFill(flow3TextureRight, x = 1065 + pipeLineleft, y = 152 - pipeLinewidth + 142 *
+                3 - 15,
+                "压差 :",
+                debug =
+                false);
+
+            press3TextureRight = textFill(press3TextureRight, x = 1065 + pipeLineleft, y = 192 - pipeLinewidth +
+                142 *
+                3 - 15,
+                "露点 :", debug =
+                false);
+
+            let areaTest4Right;
+            let areaTestBottom4Right;
+
+            areaTest4Right = rectangleFill(areaTest4Right, x = 1065 + pipeLineleft, y = 149 +
+                142 * 4 - pipeLinewidth - 25, width = 108, height = 24, debug = false, fillColor = "RoyalBlue");
+            areaTestBottom4Right = rectangleFill(areaTestBottom4Right, x = 1065 + pipeLineleft, y = 189 + 142 * 4 -
+                pipeLinewidth - 25, width = 108,
+                height = 24, debug = false, fillColor = "RoyalBlue");
+
+            flow4TextureRight = textFill(flow4TextureRight, x = 1065 + pipeLineleft, y = 152 - pipeLinewidth + 142 *
+                4 - 25,
+                "压差 :",
+                debug =
+                false);
+
+            press4TextureRight = textFill(press4TextureRight, x = 1065 + pipeLineleft, y = 192 - pipeLinewidth +
+                142 *
+                4 - 25,
+                "露点 :", debug =
+                false);
+
+            let areaTest5Right;
+            areaTest5Right = rectangleFill(areaTest5Right, x = 1065 + pipeLineleft, y = 149 +
+                142 * 5 - pipeLinewidth - 35, width = 108, height = 24, debug = false, fillColor = "RoyalBlue");
+            let areaTestBottom5Right;
+            areaTestBottom5Right = rectangleFill(areaTestBottom5Right, x = 1065 + pipeLineleft, y = 189 + 142 * 5 -
+                pipeLinewidth - 40, width = 108,
+                height = 24, debug = false, fillColor = "RoyalBlue");
+
+
+            flow5TextureRight = textFill(flow5TextureRight, x = 1065 + pipeLineleft, y = 152 - pipeLinewidth + 142 *
+                5 - 35,
+                "压差 :",
+                debug =
+                false);
+            press5TextureRight = textFill(press5TextureRight, x = 1065 + pipeLineleft, y = 192 - pipeLinewidth +
+                142 *
+                5 - 40,
+                "露点 :", debug =
+                false);
+        }
+
+        function powerAndUPIInit(pipeLineleft, pipeLinewidth) {
+            //#1加载功率以及UPI等制作
+            let areaTest;
+            areaTest = rectangleFill(areaTest, x = 550 + pipeLineleft - 5, y = 149 +
+                142 * 0 - pipeLinewidth + 70, width = 308, height = 24, debug = false, fillColor = "RoyalBlue");
+
+
+            flowTexture = textFill(flowTexture, x = 589 + pipeLineleft, y = 222 - pipeLinewidth, "加载效率:         ",
+                debug = false);
+
+            flowTexture01 = textFill(flowTexture01, x = 694 + pipeLineleft, y = 222 - pipeLinewidth, "功率: ", debug =
+                false);
+            flowTexture02 = textFill(flowTexture02, x = 769 + pipeLineleft, y = 222 - pipeLinewidth, "UPI: ", debug =
+                false);
+
+
+            //#2加载功率以及UPI等制作
+            let areaTest1;
+            areaTest1 = rectangleFill(areaTest1, x = 550 + pipeLineleft - 5, y = 149 +
+                142 * 1 - pipeLinewidth + 70, width = 308, height = 24, debug = false, fillColor = "RoyalBlue");
+
+
+            flowTexture1 = textFill(flowTexture1, x = 589 + pipeLineleft, y = 222 - pipeLinewidth + 142 * 1,
+                "加载效率: ",
+                debug = false);
+            flowTexture11 = textFill(flowTexture11, x = 694 + pipeLineleft, y = 222 - pipeLinewidth + 142 * 1,
+                "功率: ", debug =
+                false);
+            flowTexture12 = textFill(flowTexture12, x = 769 + pipeLineleft, y = 222 - pipeLinewidth + 142 * 1,
+                "UPI: ", debug =
+                false);
+
+            //#3加载功率以及UPI等制作
+            let areaTest2;
+            areaTest2 = rectangleFill(areaTest2, x = 550 + pipeLineleft - 5, y = 149 +
+                142 * 2 - pipeLinewidth + 70 - 15, width = 308, height = 24, debug = false, fillColor =
+                "RoyalBlue");
+
+
+            flowTexture2 = textFill(flowTexture2, x = 589 + pipeLineleft, y = 222 - pipeLinewidth + 142 * 2 - 15,
+                "加载效率: ",
+                debug = false);
+
+            flowTexture21 = textFill(flowTexture21, x = 694 + pipeLineleft, y = 222 - pipeLinewidth + 142 * 2 - 15,
+                "功率: ", debug =
+                false);
+
+            flowTexture22 = textFill(flowTexture22, x = 769 + pipeLineleft, y = 222 - pipeLinewidth + 142 * 2 - 15,
+                "UPI: ", debug =
+                false);
+
+            //#4加载功率以及UPI等制作
+            let areaTest3;
+            areaTest3 = rectangleFill(areaTest3, x = 550 + pipeLineleft - 5, y = 149 +
+                142 * 3 - pipeLinewidth + 70 - 15, width = 308, height = 24, debug = false, fillColor =
+                "RoyalBlue");
+
+
+            flowTexture3 = textFill(flowTexture3, x = 589 + pipeLineleft, y = 222 - pipeLinewidth + 142 * 3 -
+                15,
+                "加载效率: ",
+                debug = false);
+
+            flowTexture31 = textFill(flowTexture31, x = 694 + pipeLineleft, y = 222 - pipeLinewidth + 142 * 3 -
+                15,
+                "功率: ", debug =
+                false);
+
+            flowTexture32 = textFill(flowTexture32, x = 769 + pipeLineleft, y = 222 - pipeLinewidth + 142 * 3 -
+                15,
+                "UPI: ", debug =
+                false);
+
+            //#5加载功率以及UPI等制作
+            let areaTest4;
+            areaTest4 = rectangleFill(areaTest4, x = 550 + pipeLineleft - 5, y = 149 +
+                142 * 4 - pipeLinewidth + 70 - 25, width = 308, height = 24, debug = false, fillColor =
+                "RoyalBlue");
+
+            flowTexture4 = textFill(flowTexture4, x = 589 + pipeLineleft, y = 222 - pipeLinewidth + 142 * 4 -
+                25,
+                "加载效率: ",
+                debug = false);
+
+            flowTexture41 = textFill(flowTexture41, x = 694 + pipeLineleft, y = 222 - pipeLinewidth + 142 * 4 -
+                25,
+                "功率: ", debug =
+                false);
+
+            flowTexture42 = textFill(flowTexture42, x = 769 + pipeLineleft, y = 222 - pipeLinewidth + 142 * 4 -
+                25,
+                "UPI: ", debug =
+                false);
+
+            //#6加载功率以及UPI等制作
+            let areaTest5;
+            areaTest5 = rectangleFill(areaTest5, x = 550 + pipeLineleft - 5, y = 149 +
+                142 * 5 - pipeLinewidth + 70 - 40, width = 308, height = 24, debug = false, fillColor =
+                "RoyalBlue");
+
+
+            flowTexture5 = textFill(flowTexture5, x = 589 + pipeLineleft, y = 222 - pipeLinewidth + 142 * 5 -
+                40,
+                "加载效率: ",
+                debug = false);
+
+            flowTexture51 = textFill(flowTexture51, x = 694 + pipeLineleft, y = 222 - pipeLinewidth + 142 * 5 -
+                40,
+                "功率: ", debug =
+                false);
+
+            flowTexture52 = textFill(flowTexture52, x = 769 + pipeLineleft, y = 222 - pipeLinewidth + 142 * 5 -
+                40,
+                "UPI: ", debug =
+                false);
+
         }
 
         function imageFill(imageFill, x, y, scale, debug, func) {
