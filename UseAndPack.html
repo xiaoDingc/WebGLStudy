@@ -12,7 +12,6 @@
 <script src="pixi/bump.js"></script>
 <script src="pixi/jquery-3.3.1.min.js"></script>
 
-
 <body>
 
     <script type="text/javascript">
@@ -269,17 +268,6 @@
                 0.05, false);
             dryer6Texture = imageFillAndinteractive(dryer6Texture, 975 - pipeLineleft, 132 + 133 * 5 - pipeLinewidth,
                 0.05, false);
-            dryerFunction();
-
-            //所有干燥机鼠标指向时跳转函数
-            function dryerFunction() {
-                dryer1Texture.on('pointerdown', () => {});
-                dryer2Texture.on('pointerdown', () => {});
-                dryer3Texture.on('pointerdown', () => {});
-                dryer4Texture.on('pointerdown', () => {});
-                dryer5Texture.on('pointerdown', () => {});
-                dryer6Texture.on('pointerdown', () => {});
-            }
 
 
             //同属第二层级 用于覆盖第一层级
@@ -296,17 +284,6 @@
             airCompress6Texture = imageFillAndinteractive(airCompress6Texture, 650 - pipeLineleft, 142 + 133 * 5 -
                 pipeLinewidth, 1, false);
 
-
-            airCompressFunction();
-            //所有空压机鼠标按下时跳转函数
-            function airCompressFunction() {
-                airCompress1Texture.on('pointerdown', () => {});
-                airCompress2Texture.on('pointerdown', () => {});
-                airCompress3Texture.on('pointerdown', () => {});
-                airCompress4Texture.on('pointerdown', () => {});
-                airCompress5Texture.on('pointerdown', () => {});
-                airCompress6Texture.on('pointerdown', () => {});
-            }
 
 
             //同属第二层级 用于覆盖第一层级
@@ -329,29 +306,11 @@
                 133 * 5 -
                 pipeLinewidth, 1, false);
 
-            //干燥机跳转函数
-            SelfCleaningFilterFunction();
-
-            function SelfCleaningFilterFunction() {
-                SelfCleaningFilter1Texture.on('pointerdown', () => {});
-                SelfCleaningFilter2Texture.on('pointerdown', () => {});
-                SelfCleaningFilter3Texture.on('pointerdown', () => {});
-                SelfCleaningFilter4Texture.on('pointerdown', () => {});
-                SelfCleaningFilter5Texture.on('pointerdown', () => {});
-                SelfCleaningFilter6Texture.on('pointerdown', () => {});
-            }
 
             // 空压机加载功率以及UPI等制作
             powerAndUPIInit(pipeLineleft, pipeLinewidth);
 
-
-
             FlowAreaInit(pipeLineleft, pipeLinewidth);
-
-
-
-
-
 
             //#1条形图绘制
             bar1 = new Bar1(619 + pipeLineleft, 31 + pipeLinewidth);
@@ -421,11 +380,143 @@
                 tempTextPure.y += change;
                 console.log(tempTextPure.x + ": " + tempTextPure.y);
             }
+            //所有干燥机鼠标指向时跳转函数
+            dryerFunction();
 
+            //所有空压机鼠标按下时跳转函数
+            airCompressFunction();
+
+            //自洁式过滤器鼠标点击时指向函数
+            SelfCleaningFilterFunction();
+
+            //所有空压机鼠标按下时跳转函数
+            function airCompressFunction() {
+                airCompress1Texture.on('pointerdown', () => {});
+                airCompress2Texture.on('pointerdown', () => {});
+                airCompress3Texture.on('pointerdown', () => {});
+                airCompress4Texture.on('pointerdown', () => {});
+                airCompress5Texture.on('pointerdown', () => {});
+                airCompress6Texture.on('pointerdown', () => {});
+            }
+            //所有干燥机鼠标点击时指向函数
+            function dryerFunction() {
+                dryer1Texture.on('pointerdown', () => {});
+                dryer2Texture.on('pointerdown', () => {});
+                dryer3Texture.on('pointerdown', () => {});
+                dryer4Texture.on('pointerdown', () => {});
+                dryer5Texture.on('pointerdown', () => {});
+                dryer6Texture.on('pointerdown', () => {});
+            }
+
+            //自洁式过滤器鼠标点击时指向函数
+            function SelfCleaningFilterFunction() {
+                SelfCleaningFilter1Texture.on('pointerdown', () => {});
+                SelfCleaningFilter2Texture.on('pointerdown', () => {});
+                SelfCleaningFilter3Texture.on('pointerdown', () => {});
+                SelfCleaningFilter4Texture.on('pointerdown', () => {});
+                SelfCleaningFilter5Texture.on('pointerdown', () => {});
+                SelfCleaningFilter6Texture.on('pointerdown', () => {});
+            }
+
+            //加载功率 功率 UPI添加鼠标功能函数
+            clickAddAndFunction();
+
+            //空压机流量 压力文字加载函数
+            clickStationFlowAndPressFunc();
+
+            clickDryerPressAndDewpointFunc();
+
+            function clickDryerPressAndDewpointFunc() {
+                //#干燥机 压差及漏点
+                clickEventAdd(flowTextureRight);
+                flowTextureRight.on('pointerdown', () => {
+                    var dt = new Date();
+                    alert(dt);
+                });
+                clickEventAdd(pressTextureRight);
+                //#1干燥机 压差及漏点
+                clickEventAdd(flow1TextureRight);
+                clickEventAdd(press1TextureRight);
+                //#2干燥机 压差及漏点
+                clickEventAdd(flow2TextureRight);
+                clickEventAdd(press2TextureRight);
+                //#3干燥机 压差及漏点
+                clickEventAdd(flow3TextureRight);
+                clickEventAdd(press3TextureRight);
+                //#4干燥机 压差及漏点
+                clickEventAdd(flow4TextureRight);
+                clickEventAdd(press4TextureRight);
+                //#5干燥机 压差及漏点
+                clickEventAdd(flow5TextureRight);
+                clickEventAdd(press5TextureRight);
+            }
+
+            function clickStationFlowAndPressFunc() {
+                //#1空压机流量 压力文字
+                clickEventAdd(flow0Texture);
+                flow0Texture.on('pointerdown', () => {
+                    var dt = new Date();
+                    alert(dt);
+                })
+                clickEventAdd(press0Texture);
+                //#2空压机流量 压力文字
+                clickEventAdd(flow1Texture);
+                clickEventAdd(press1Texture);
+                //#3空压机流量 压力文字
+                clickEventAdd(flow2Texture);
+                clickEventAdd(press2Texture);
+                //#4空压机流量 压力文字
+                clickEventAdd(flow3Texture);
+                clickEventAdd(press3Texture);
+                //#5空压机流量 压力文字
+                clickEventAdd(flow4Texture);
+                clickEventAdd(press4Texture);
+                //#6空压机流量 压力文字
+                clickEventAdd(flow5Texture);
+                clickEventAdd(press5Texture);
+            }
+
+
+            function clickAddAndFunction() {
+                clickEventAdd(flowTexture);
+                flowTexture.on('pointerdown', () => {
+                    var dt = new Date();
+                    alert(dt);
+                })
+                clickEventAdd(flowTexture01);
+                clickEventAdd(flowTexture02);
+                //#1加载功率 功率 UPI
+                clickEventAdd(flowTexture1);
+                clickEventAdd(flowTexture11);
+                clickEventAdd(flowTexture12);
+                //#2加载功率 功率 UPI
+                clickEventAdd(flowTexture2);
+                clickEventAdd(flowTexture21);
+                clickEventAdd(flowTexture22);
+                //#3加载功率 功率 UPI
+                clickEventAdd(flowTexture3);
+                clickEventAdd(flowTexture31);
+                clickEventAdd(flowTexture32);
+                //#4加载功率 功率 UPI
+                clickEventAdd(flowTexture4);
+                clickEventAdd(flowTexture41);
+                clickEventAdd(flowTexture42);
+                //#5加载功率 功率 UPI
+                clickEventAdd(flowTexture5);
+                clickEventAdd(flowTexture51);
+                clickEventAdd(flowTexture52);
+            }
+
+
+            //添加鼠标点击事件到元素中
+            function clickEventAdd(sprite) {
+                sprite.interactive = true;
+                sprite.buttonMode = true;
+            }
 
             app.ticker.add(delta => gameLoop(delta));
         }
-        setInterval(modXY, 6000)
+        setInterval(modXY, 6000);
 
         function modXY() {
             var url = "";
@@ -449,6 +540,10 @@
         }
 
         //每秒60帧运行函数
+        //空压机运行状态下  才会有加载卸载状态
+        //停机情况下  显示红色
+        //卸载情况下,显示橙色
+        //加载状态下,显示dre数据
         function gameLoop(delta) {
             if (modifyCount < 30) {
                 LoadBar1.visible = false;
@@ -465,7 +560,6 @@
                 healthBar1.visible = false;
             }
             console.log(modifyCount);
-
         }
 
         //鼠标拖放事件函数
