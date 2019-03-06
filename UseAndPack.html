@@ -391,8 +391,10 @@
 
             //所有空压机鼠标按下时跳转函数
             function airCompressFunction() {
-                airCompress1Texture.on('pointerdown', () => {});
-                airCompress2Texture.on('pointerdown', () => {});
+                airCompress1Texture.on('click', () => {
+                    window.location.href = "http://www.baidu.com";
+                });
+                airCompress2Texture.on('click', () => {});
                 airCompress3Texture.on('pointerdown', () => {});
                 airCompress4Texture.on('pointerdown', () => {});
                 airCompress5Texture.on('pointerdown', () => {});
@@ -529,7 +531,6 @@
                 error: function (res) {
                     // alert(res);
                 }
-
             });
         }
 
