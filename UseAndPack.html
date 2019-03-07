@@ -70,8 +70,9 @@
             //初始化为0,便于调节
             let relativewidth = 0;
             //第一层级
-            backImage = imageFill(backImage, 489 - relativeleft, 173 - relativewidth, 1, false);
+            backImage = imageFillAndinteractive(backImage, 238 + relativeleft, 56 + relativewidth, 1, false);
 
+            tempTextPure = backImage;
             //上下左右箭头加载
             let left = keyboard(37),
                 up = keyboard(38),
