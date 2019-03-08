@@ -1,44 +1,20 @@
 {"frames": {
 
-"右上.png":
+"factory.svg":
 {
-	"frame": {"x":1,"y":764,"w":1033,"h":761},
-	"rotated": true,
-	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":1033,"h":761},
-	"sourceSize": {"w":1033,"h":761}
-},
-"右下.png":
-{
-	"frame": {"x":764,"y":1244,"w":1033,"h":561},
+	"frame": {"x":0,"y":0,"w":1988,"h":1141},
 	"rotated": false,
 	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":1033,"h":561},
-	"sourceSize": {"w":1033,"h":561}
-},
-"左上.png":
-{
-	"frame": {"x":1,"y":1,"w":1241,"h":761},
-	"rotated": false,
-	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":1241,"h":761},
-	"sourceSize": {"w":1241,"h":761}
-},
-"左下.png":
-{
-	"frame": {"x":1244,"y":1,"w":1241,"h":561},
-	"rotated": true,
-	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":1241,"h":561},
-	"sourceSize": {"w":1241,"h":561}
+	"spriteSourceSize": {"x":0,"y":0,"w":1988,"h":1141},
+	"sourceSize": {"w":1988,"h":1141}
 }},
 "meta": {
 	"app": "https://www.codeandweb.com/texturepacker",
 	"version": "1.0",
 	"image": "factory.png",
 	"format": "RGBA8888",
-	"size": {"w":1806,"h":1806},
+	"size": {"w":1988,"h":1141},
 	"scale": "1",
-	"smartupdate": "$TexturePacker:SmartUpdate:975b5156b2db86957396c1270faa1cda:c0c1136fb036bf1ff558d9ad633856f0:6f709d966622fc1b6c5e4025e33ed04a$"
+	"smartupdate": "$TexturePacker:SmartUpdate:7d4f9dcbab2c991a17d0b268d2465cc4:3be72105c5c1fc8be83008d895faa898:6f709d966622fc1b6c5e4025e33ed04a$"
 }
 }
