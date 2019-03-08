@@ -37,6 +37,11 @@
 
         //初始背景绘制
         let backImage;
+
+        let png1;
+        let png2;
+        let png3;
+        let png4;
         //模拟变量
         let modifyCount;
         //create a Pixi App
@@ -63,16 +68,33 @@
 
         //This setup function that will run when the image has loaded
         function setup() {
+            let container = u.group();
             //管道加载
-            backImage = TextureCache['空压机内部结构.svg'];
+            png1 = TextureCache['右上.png'];
+            png2 = TextureCache['右下.png'];
+            png3 = TextureCache['左上.png'];
+            png4 = TextureCache['左下.png'];
+
             //初始化为0,便于调节
             let relativeleft = 0;
             //初始化为0,便于调节
             let relativewidth = 0;
             //第一层级
-            backImage = imageFillAndinteractive(backImage, 238 + relativeleft, 56 + relativewidth, 1, false);
-
-            tempTextPure = backImage;
+            png1 = imageFillAndinteractive(png1, 710 + relativeleft, 16 + relativewidth, 1, false);
+            let temp = 1;
+            png1.scale.set(temp, temp);
+            png2 = imageFillAndinteractive(png2, 710 + relativeleft, 396 + relativewidth, 1, false);
+            png2.scale.set(temp, temp);
+            png3 = imageFillAndinteractive(png3, 85 + relativeleft, -59 + relativewidth, 1, false);
+            png3.scale.set(temp, temp);
+            png4 = imageFillAndinteractive(png4, 85 + relativeleft, 321 + relativewidth, 1, false);
+            png4.scale.set(temp, temp);
+            container.addChild(png1);
+            container.addChild(png2);
+            container.addChild(png3);
+            container.addChild(png4);
+            app.stage.addChild(container);
+            tempTextPure = container;
             //上下左右箭头加载
             let left = keyboard(37),
                 up = keyboard(38),
