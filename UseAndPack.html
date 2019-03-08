@@ -13,14 +13,14 @@
 <script src="pixi/jquery-3.3.1.min.js"></script>
 
 <body>
-
     <script type="text/javascript">
-        let type = "WebGL"
+        var stationID = "S001";
+        //重新渲染表单
+        // modXY();
+        let type = "WebGL";
         if (!PIXI.utils.isWebGLSupported()) {
             type = "canvas"
         }
-        PIXI.utils.sayHello(type)
-
         let Application = PIXI.Application,
             Container = PIXI.Container,
             loader = PIXI.loader,
@@ -48,12 +48,13 @@
         app.renderer.backgroundColor = hexColor; //蓝色 16进制码
         document.body.appendChild(app.view);
 
+
         //loader an image and run the 'setup' function when it's done
         //添加json文件,并加载'setup'函数
         loader
             .add([
                 "./realImages/PipelineAndFlowArrow.json",
-                "./realImages/station.json",
+                "./realImages/station.json"
             ])
             .on("progress", loadProgressHandler)
             .load(setup);
@@ -78,6 +79,7 @@
         let pipeLineMiddle2Texture;
         let pipeLineMiddle3Texture;
         let pipeLineMiddle4Texture;
+        let pipeLineMiddle5Texture;
         let pipeLineBottomTexture;
 
         //干燥机初始化纹理
@@ -181,7 +183,9 @@
         let bar5;
         //#6进度条封装
         let bar6;
-
+        let run = [];
+        let load = [];
+        let dre = [];
         //#1进度条制作
         let HealthBar1;
         let LoadBar1;
@@ -244,67 +248,151 @@
             let pipeLineleft = 0;
             let pipeLinewidth = 108;
             //第一层级
-            pipeLineTopTexture = imageFill(pipeLineTopTexture, 489 - pipeLineleft, 173 - pipeLinewidth, 1, false);
-            pipeLineMiddle1Texture = imageFill(pipeLineMiddle1Texture, 490 - pipeLineleft, 306 - pipeLinewidth, 1,
+            pipeLineTopTexture = imageFill(pipeLineTopTexture, 489 - pipeLineleft, 173 + 133 * 0 - pipeLinewidth, 1,
                 false);
-            pipeLineMiddle2Texture = imageFill(pipeLineMiddle2Texture, 490 - pipeLineleft, 439 - pipeLinewidth, 1,
+            pipeLineMiddle1Texture = imageFill(pipeLineMiddle1Texture,
+                490 - pipeLineleft,
+                173 + 133 * 1 - pipeLinewidth,
+                1,
                 false);
-            pipeLineMiddle3Texture = imageFill(pipeLineMiddle3Texture, 490 - pipeLineleft, 572 - pipeLinewidth, 1,
+            pipeLineMiddle2Texture = imageFill(pipeLineMiddle2Texture,
+                490 - pipeLineleft,
+                173 + 133 * 2 - pipeLinewidth,
+                1,
                 false);
-            pipeLineMiddle4Texture = imageFill(pipeLineMiddle4Texture, 490 - pipeLineleft, 705 - pipeLinewidth, 1,
+            pipeLineMiddle3Texture = imageFill(pipeLineMiddle3Texture,
+                490 - pipeLineleft,
+                173 + 133 * 3 - pipeLinewidth,
+                1,
+                false);
+            pipeLineMiddle4Texture = imageFill(pipeLineMiddle4Texture,
+                490 - pipeLineleft,
+                173 + 133 * 4 - pipeLinewidth,
+                1,
                 false);
             pipeLineBottomTexture = imageFill(pipeLineBottomTexture, 489 - pipeLineleft, 838 - pipeLinewidth, 1, false);
 
             //第二层级 这样会把第一层级部分覆盖达到存在的效果
-            dryer1Texture = imageFillAndinteractive(dryer1Texture, 975 - pipeLineleft, 132 + 133 * 0 - pipeLinewidth,
-                0.05, false);
-            dryer2Texture = imageFillAndinteractive(dryer2Texture, 975 - pipeLineleft, 132 + 133 * 1 - pipeLinewidth,
-                0.05, false);
-            dryer3Texture = imageFillAndinteractive(dryer3Texture, 975 - pipeLineleft, 132 + 133 * 2 - pipeLinewidth,
-                0.05, false);
-            dryer4Texture = imageFillAndinteractive(dryer4Texture, 975 - pipeLineleft, 132 + 133 * 3 - pipeLinewidth,
-                0.05, false);
-            dryer5Texture = imageFillAndinteractive(dryer5Texture, 975 - pipeLineleft, 132 + 133 * 4 - pipeLinewidth,
-                0.05, false);
-            dryer6Texture = imageFillAndinteractive(dryer6Texture, 975 - pipeLineleft, 132 + 133 * 5 - pipeLinewidth,
-                0.05, false);
+            dryer1Texture = imageFillAndinteractive(dryer1Texture,
+                975 - pipeLineleft,
+                132 + 133 * 0 - pipeLinewidth,
+                0.05,
+                false);
+            dryer2Texture = imageFillAndinteractive(dryer2Texture,
+                975 - pipeLineleft,
+                132 + 133 * 1 - pipeLinewidth,
+                0.05,
+                false);
+            dryer3Texture = imageFillAndinteractive(dryer3Texture,
+                975 - pipeLineleft,
+                132 + 133 * 2 - pipeLinewidth,
+                0.05,
+                false);
+            dryer4Texture = imageFillAndinteractive(dryer4Texture,
+                975 - pipeLineleft,
+                132 + 133 * 3 - pipeLinewidth,
+                0.05,
+                false);
+            dryer5Texture = imageFillAndinteractive(dryer5Texture,
+                975 - pipeLineleft,
+                132 + 133 * 4 - pipeLinewidth,
+                0.05,
+                false);
+            dryer6Texture = imageFillAndinteractive(dryer6Texture,
+                975 - pipeLineleft,
+                132 + 133 * 5 - pipeLinewidth,
+                0.05,
+                false);
 
 
             //同属第二层级 用于覆盖第一层级
-            airCompress1Texture = imageFillAndinteractive(airCompress1Texture, 650 - pipeLineleft, 142 + 133 * 0 -
-                pipeLinewidth, 1, false);
-            airCompress2Texture = imageFillAndinteractive(airCompress2Texture, 650 - pipeLineleft, 142 + 133 * 1 -
-                pipeLinewidth, 1, false);
-            airCompress3Texture = imageFillAndinteractive(airCompress3Texture, 650 - pipeLineleft, 142 + 133 * 2 -
-                pipeLinewidth, 1, false);
-            airCompress4Texture = imageFillAndinteractive(airCompress4Texture, 650 - pipeLineleft, 142 + 133 * 3 -
-                pipeLinewidth, 1, false);
-            airCompress5Texture = imageFillAndinteractive(airCompress5Texture, 650 - pipeLineleft, 142 + 133 * 4 -
-                pipeLinewidth, 1, false);
-            airCompress6Texture = imageFillAndinteractive(airCompress6Texture, 650 - pipeLineleft, 142 + 133 * 5 -
-                pipeLinewidth, 1, false);
-
-
-
-            //同属第二层级 用于覆盖第一层级
-            SelfCleaningFilter1Texture = imageFillAndinteractive(SelfCleaningFilter1Texture, 458 - pipeLineleft, 139 +
+            airCompress1Texture = imageFillAndinteractive(airCompress1Texture,
+                650 - pipeLineleft,
+                142 +
                 133 * 0 -
-                pipeLinewidth, 1, false);
-            SelfCleaningFilter2Texture = imageFillAndinteractive(SelfCleaningFilter2Texture, 458 - pipeLineleft, 139 +
+                pipeLinewidth,
+                1,
+                false);
+            airCompress2Texture = imageFillAndinteractive(airCompress2Texture,
+                650 - pipeLineleft,
+                142 +
                 133 * 1 -
-                pipeLinewidth, 1, false);
-            SelfCleaningFilter3Texture = imageFillAndinteractive(SelfCleaningFilter3Texture, 458 - pipeLineleft, 139 +
+                pipeLinewidth,
+                1,
+                false);
+            airCompress3Texture = imageFillAndinteractive(airCompress3Texture,
+                650 - pipeLineleft,
+                142 +
                 133 * 2 -
-                pipeLinewidth, 1, false);
-            SelfCleaningFilter4Texture = imageFillAndinteractive(SelfCleaningFilter4Texture, 458 - pipeLineleft, 139 +
+                pipeLinewidth,
+                1,
+                false);
+            airCompress4Texture = imageFillAndinteractive(airCompress4Texture,
+                650 - pipeLineleft,
+                142 +
                 133 * 3 -
-                pipeLinewidth, 1, false);
-            SelfCleaningFilter5Texture = imageFillAndinteractive(SelfCleaningFilter5Texture, 458 - pipeLineleft, 139 +
+                pipeLinewidth,
+                1,
+                false);
+            airCompress5Texture = imageFillAndinteractive(airCompress5Texture,
+                650 - pipeLineleft,
+                142 +
                 133 * 4 -
-                pipeLinewidth, 1, false);
-            SelfCleaningFilter6Texture = imageFillAndinteractive(SelfCleaningFilter6Texture, 458 - pipeLineleft, 139 +
+                pipeLinewidth,
+                1,
+                false);
+            airCompress6Texture = imageFillAndinteractive(airCompress6Texture,
+                650 - pipeLineleft,
+                142 +
                 133 * 5 -
-                pipeLinewidth, 1, false);
+                pipeLinewidth,
+                1,
+                false);
+
+
+            //同属第二层级 用于覆盖第一层级
+            SelfCleaningFilter1Texture = imageFillAndinteractive(SelfCleaningFilter1Texture,
+                458 - pipeLineleft,
+                139 +
+                133 * 0 -
+                pipeLinewidth,
+                1,
+                false);
+            SelfCleaningFilter2Texture = imageFillAndinteractive(SelfCleaningFilter2Texture,
+                458 - pipeLineleft,
+                139 +
+                133 * 1 -
+                pipeLinewidth,
+                1,
+                false);
+            SelfCleaningFilter3Texture = imageFillAndinteractive(SelfCleaningFilter3Texture,
+                458 - pipeLineleft,
+                139 +
+                133 * 2 -
+                pipeLinewidth,
+                1,
+                false);
+            SelfCleaningFilter4Texture = imageFillAndinteractive(SelfCleaningFilter4Texture,
+                458 - pipeLineleft,
+                139 +
+                133 * 3 -
+                pipeLinewidth,
+                1,
+                false);
+            SelfCleaningFilter5Texture = imageFillAndinteractive(SelfCleaningFilter5Texture,
+                458 - pipeLineleft,
+                139 +
+                133 * 4 -
+                pipeLinewidth,
+                1,
+                false);
+            SelfCleaningFilter6Texture = imageFillAndinteractive(SelfCleaningFilter6Texture,
+                458 - pipeLineleft,
+                139 +
+                133 * 5 -
+                pipeLinewidth,
+                1,
+                false);
 
 
             // 空压机加载功率以及UPI等制作
@@ -357,7 +445,7 @@
             //Right arrow key 'press' method
             let change = 5;
 
-            //Left arrow key `press` method          
+            //Left arrow key `press` method
             left.press = () => {
                 //左键调节
                 tempTextPure.x -= change;
@@ -391,31 +479,44 @@
 
             //所有空压机鼠标按下时跳转函数
             function airCompressFunction() {
-                airCompress1Texture.on('pointerdown', () => {});
-                airCompress2Texture.on('pointerdown', () => {});
-                airCompress3Texture.on('pointerdown', () => {});
-                airCompress4Texture.on('pointerdown', () => {});
-                airCompress5Texture.on('pointerdown', () => {});
-                airCompress6Texture.on('pointerdown', () => {});
+                airCompress1Texture.on('click',
+                    () => {
+                        //window.location.href = "/EnergySys/CentriStatus";
+                        layui.use('layer', function () {
+                            var layer = layui.layer;
+                            layer.open({
+                                type: 2,
+                                area: ['400px', '400px'],
+                                offset: ['171px', '100px'], //top left
+                                content: "/EnergySys/CentriStatus" //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响                        
+                            });
+                        });
+                    });
+                airCompress2Texture.on('click', () => {});
+                airCompress3Texture.on('click', () => {});
+                airCompress4Texture.on('click', () => {});
+                airCompress5Texture.on('click', () => {});
+                airCompress6Texture.on('click', () => {});
             }
+
             //所有干燥机鼠标点击时指向函数
             function dryerFunction() {
-                dryer1Texture.on('pointerdown', () => {});
-                dryer2Texture.on('pointerdown', () => {});
-                dryer3Texture.on('pointerdown', () => {});
-                dryer4Texture.on('pointerdown', () => {});
-                dryer5Texture.on('pointerdown', () => {});
-                dryer6Texture.on('pointerdown', () => {});
+                dryer1Texture.on('click', () => {});
+                dryer2Texture.on('click', () => {});
+                dryer3Texture.on('click', () => {});
+                dryer4Texture.on('click', () => {});
+                dryer5Texture.on('click', () => {});
+                dryer6Texture.on('click', () => {});
             }
 
             //自洁式过滤器鼠标点击时指向函数
             function SelfCleaningFilterFunction() {
-                SelfCleaningFilter1Texture.on('pointerdown', () => {});
-                SelfCleaningFilter2Texture.on('pointerdown', () => {});
-                SelfCleaningFilter3Texture.on('pointerdown', () => {});
-                SelfCleaningFilter4Texture.on('pointerdown', () => {});
-                SelfCleaningFilter5Texture.on('pointerdown', () => {});
-                SelfCleaningFilter6Texture.on('pointerdown', () => {});
+                SelfCleaningFilter1Texture.on('click', () => {});
+                SelfCleaningFilter2Texture.on('click', () => {});
+                SelfCleaningFilter3Texture.on('click', () => {});
+                SelfCleaningFilter4Texture.on('click', () => {});
+                SelfCleaningFilter5Texture.on('click', () => {});
+                SelfCleaningFilter6Texture.on('click', () => {});
             }
 
             //加载功率 功率 UPI添加鼠标功能函数
@@ -429,82 +530,483 @@
             function clickDryerPressAndDewpointFunc() {
                 //#干燥机 压差及漏点
                 clickEventAdd(flowTextureRight);
-                flowTextureRight.on('pointerdown', () => {
-                    var dt = new Date();
-                    alert(dt);
-                });
+                flowTextureRight.on('click',
+                    () => {
+                        let EquipID = "E101";
+                        let code = 6;
+                        let name = 'CDyer_InOutValue';
+                        layui.use('layer', function () {
+                            var layer = layui.layer;
+                            layer.open({
+                                type: 2,
+                                area: ['400px', '400px'],
+                                shadeClose: true,
+                                offset: ['171px', '100px'], //top left
+                                content: "/EnergySys/LineChart/?code=" + code + "&stationId=" +
+                                    stationID + "&equipId=" + EquipID + "&name=" + name //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
+                            });
+                        });
+                    })
                 clickEventAdd(pressTextureRight);
+                pressTextureRight.on('click',
+                    () => {
+                        let EquipID = "E101";
+                        let code = 7;
+                        let name = 'CDyer_LeakT';
+                        layui.use('layer', function () {
+                            var layer = layui.layer;
+                            layer.open({
+                                type: 2,
+                                area: ['400px', '400px'],
+                                offset: ['171px', '100px'], //top left
+                                content: "/EnergySys/LineChart/?code=" + code + "&stationId=" +
+                                    stationID + "&equipId=" + EquipID + "&name=" + name //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
+                            });
+                        });
+                    })
                 //#1干燥机 压差及漏点
                 clickEventAdd(flow1TextureRight);
+                flow1TextureRight.on('click',
+                    () => {
+                        let EquipID = "E102";
+                        let code = 6;
+                        let name = 'CDyer_InOutValue';
+                        layui.use('layer', function () {
+                            var layer = layui.layer;
+                            layer.open({
+                                type: 2,
+                                area: ['400px', '400px'],
+                                shadeClose: true,
+                                offset: ['171px', '100px'], //top left
+                                content: "/EnergySys/LineChart/?code=" + code + "&stationId=" +
+                                    stationID + "&equipId=" + EquipID + "&name=" + name //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
+                            });
+                        });
+                    })
                 clickEventAdd(press1TextureRight);
-                //#2干燥机 压差及漏点
-                clickEventAdd(flow2TextureRight);
-                clickEventAdd(press2TextureRight);
+                press1TextureRight.on('click',
+                    () => {
+                        let EquipID = "E102";
+                        let code = 7;
+                        let name = 'CDyer_LeakT';
+                        layui.use('layer', function () {
+                            var layer = layui.layer;
+                            layer.open({
+                                type: 2,
+                                area: ['400px', '400px'],
+                                offset: ['171px', '100px'], //top left
+                                content: "/EnergySys/LineChart/?code=" + code + "&stationId=" +
+                                    stationID + "&equipId=" + EquipID + "&name=" + name //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
+                            });
+                        });
+                    })
                 //#3干燥机 压差及漏点
-                clickEventAdd(flow3TextureRight);
-                clickEventAdd(press3TextureRight);
+                clickEventAdd(flow2TextureRight);
+                flow2TextureRight.on('click',
+                    () => {
+                        let EquipID = "E103";
+                        let code = 6;
+                        let name = 'CDyer_InOutValue';
+                        layui.use('layer', function () {
+                            var layer = layui.layer;
+                            layer.open({
+                                type: 2,
+                                area: ['400px', '400px'],
+                                shadeClose: true,
+                                offset: ['171px', '100px'], //top left
+                                content: "/EnergySys/LineChart/?code=" + code + "&stationId=" +
+                                    stationID + "&equipId=" + EquipID + "&name=" + name //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
+                            });
+                        });
+                    })
+                clickEventAdd(press2TextureRight);
+                press2TextureRight.on('click',
+                    () => {
+                        let EquipID = "E103";
+                        let code = 7;
+                        let name = 'CDyer_LeakT';
+                        layui.use('layer', function () {
+                            var layer = layui.layer;
+                            layer.open({
+                                type: 2,
+                                area: ['400px', '400px'],
+                                offset: ['171px', '100px'], //top left
+                                content: "/EnergySys/LineChart/?code=" + code + "&stationId=" +
+                                    stationID + "&equipId=" + EquipID + "&name=" + name //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
+                            });
+                        });
+                    })
                 //#4干燥机 压差及漏点
-                clickEventAdd(flow4TextureRight);
-                clickEventAdd(press4TextureRight);
+                clickEventAdd(flow3TextureRight);
+                flow3TextureRight.on('click',
+                    () => {
+                        let EquipID = "E104";
+                        let code = 6;
+                        let name = 'CDyer_InOutValue';
+                        layui.use('layer', function () {
+                            var layer = layui.layer;
+                            layer.open({
+                                type: 2,
+                                area: ['400px', '400px'],
+                                shadeClose: true,
+                                offset: ['171px', '100px'], //top left
+                                content: "/EnergySys/LineChart/?code=" + code + "&stationId=" +
+                                    stationID + "&equipId=" + EquipID + "&name=" + name //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
+                            });
+                        });
+                    })
+                clickEventAdd(press3TextureRight);
+                press3TextureRight.on('click',
+                    () => {
+                        let EquipID = "E104";
+                        let code = 7;
+                        let name = 'CDyer_LeakT';
+                        layui.use('layer', function () {
+                            var layer = layui.layer;
+                            layer.open({
+                                type: 2,
+                                area: ['400px', '400px'],
+                                offset: ['171px', '100px'], //top left
+                                content: "/EnergySys/LineChart/?code=" + code + "&stationId=" +
+                                    stationID + "&equipId=" + EquipID + "&name=" + name //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
+                            });
+                        });
+                    })
                 //#5干燥机 压差及漏点
+                clickEventAdd(flow4TextureRight);
+                flow4TextureRight.on('click',
+                    () => {
+                        let EquipID = "E105";
+                        let code = 6;
+                        let name = 'CDyer_InOutValue';
+                        layui.use('layer', function () {
+                            var layer = layui.layer;
+                            layer.open({
+                                type: 2,
+                                area: ['400px', '400px'],
+                                shadeClose: true,
+                                offset: ['171px', '100px'], //top left
+                                content: "/EnergySys/LineChart/?code=" + code + "&stationId=" +
+                                    stationID + "&equipId=" + EquipID + "&name=" + name //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
+                            });
+                        });
+                    })
+                clickEventAdd(press4TextureRight);
+                //#6干燥机 压差及漏点
                 clickEventAdd(flow5TextureRight);
+                flow5TextureRight.on('click',
+                    () => {
+                        let EquipID = "E106";
+                        let code = 6;
+                        let name = 'CDyer_InOutValue';
+                        layui.use('layer', function () {
+                            var layer = layui.layer;
+                            layer.open({
+                                type: 2,
+                                area: ['400px', '400px'],
+                                shadeClose: true,
+                                offset: ['171px', '100px'], //top left
+                                content: "/EnergySys/LineChart/?code=" + code + "&stationId=" +
+                                    stationID + "&equipId=" + EquipID + "&name=" + name //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
+                            });
+                        });
+                    })
                 clickEventAdd(press5TextureRight);
+                press5TextureRight.on('click',
+                    () => {
+                        let EquipID = "E106";
+                        let code = 7;
+                        let name = 'CDyer_LeakT';
+                        layui.use('layer', function () {
+                            var layer = layui.layer;
+                            layer.open({
+                                type: 2,
+                                area: ['400px', '400px'],
+                                offset: ['171px', '100px'], //top left
+                                content: "/EnergySys/LineChart/?code=" + code + "&stationId=" +
+                                    stationID + "&equipId=" + EquipID + "&name=" + name //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
+                            });
+                        });
+                    })
             }
 
             function clickStationFlowAndPressFunc() {
                 //#1空压机流量 压力文字
                 clickEventAdd(flow0Texture);
-                flow0Texture.on('pointerdown', () => {
-                    var dt = new Date();
-                    alert(dt);
-                })
+                flow0Texture.on('click',
+                    () => {
+                        let EquipID = "E001";
+                        let code = 1;
+                        let name = 'Q';
+                        layui.use('layer', function () {
+                            var layer = layui.layer;
+                            layer.open({
+                                type: 2,
+                                area: ['400px', '400px'],
+                                offset: ['171px', '100px'], //top left
+                                content: "/EnergySys/LineChart/?code=" + code + "&stationId=" +
+                                    stationID + "&equipId=" + EquipID + "&name=" + name //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
+                            });
+                        });
+                    })
                 clickEventAdd(press0Texture);
+                press0Texture.on('click',
+                    () => {
+                        let EquipID = "E001";
+                        let code = 2;
+                        let name = 'Press';
+                        layui.use('layer', function () {
+                            var layer = layui.layer;
+                            layer.open({
+                                type: 2,
+                                area: ['400px', '400px'],
+                                offset: ['171px', '100px'], //top left
+                                content: "/EnergySys/LineChart/?code=" + code + "&stationId=" +
+                                    stationID + "&equipId=" + EquipID + "&name=" + name //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
+                            });
+                        });
+                    })
                 //#2空压机流量 压力文字
                 clickEventAdd(flow1Texture);
+                flow1Texture.on('click',
+                    () => {
+                        let EquipID = "E002";
+                        let code = 1;
+                        let name = 'Q';
+                        layui.use('layer', function () {
+                            var layer = layui.layer;
+                            layer.open({
+                                type: 2,
+                                area: ['400px', '400px'],
+                                offset: ['171px', '100px'], //top left
+                                content: "/EnergySys/LineChart/?code=" + code + "&stationId=" +
+                                    stationID + "&equipId=" + EquipID + "&name=" + name //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
+                            });
+                        });
+                    })
                 clickEventAdd(press1Texture);
+                press1Texture.on('click',
+                    () => {
+                        let EquipID = "E002";
+                        let code = 2;
+                        let name = 'Press';
+                        layui.use('layer', function () {
+                            var layer = layui.layer;
+                            layer.open({
+                                type: 2,
+                                area: ['400px', '400px'],
+                                offset: ['171px', '100px'], //top left
+                                content: "/EnergySys/LineChart/?code=" + code + "&stationId=" +
+                                    stationID + "&equipId=" + EquipID + "&name=" + name //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
+                            });
+                        });
+                    })
                 //#3空压机流量 压力文字
                 clickEventAdd(flow2Texture);
+                flow2Texture.on('click',
+                    () => {
+                        let EquipID = "E003";
+                        let code = 1;
+                        let name = 'Q';
+                        layui.use('layer', function () {
+                            var layer = layui.layer;
+                            layer.open({
+                                type: 2,
+                                area: ['400px', '400px'],
+                                offset: ['171px', '100px'], //top left
+                                content: "/EnergySys/LineChart/?code=" + code + "&stationId=" +
+                                    stationID + "&equipId=" + EquipID + "&name=" + name //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
+                            });
+                        });
+                    })
                 clickEventAdd(press2Texture);
+                press2Texture.on('click',
+                    () => {
+                        let EquipID = "E003";
+                        let code = 2;
+                        let name = 'Press';
+                        layui.use('layer', function () {
+                            var layer = layui.layer;
+                            layer.open({
+                                type: 2,
+                                area: ['400px', '400px'],
+                                offset: ['171px', '100px'], //top left
+                                content: "/EnergySys/LineChart/?code=" + code + "&stationId=" +
+                                    stationID + "&equipId=" + EquipID + "&name=" + name //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
+                            });
+                        });
+                    })
                 //#4空压机流量 压力文字
                 clickEventAdd(flow3Texture);
+                flow3Texture.on('click',
+                    () => {
+                        let EquipID = "E004";
+                        let code = 1;
+                        let name = 'Q';
+                        layui.use('layer', function () {
+                            var layer = layui.layer;
+                            layer.open({
+                                type: 2,
+                                area: ['400px', '400px'],
+                                offset: ['171px', '100px'], //top left
+                                content: "/EnergySys/LineChart/?code=" + code + "&stationId=" +
+                                    stationID + "&equipId=" + EquipID + "&name=" + name //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
+                            });
+                        });
+                    })
                 clickEventAdd(press3Texture);
+                press3Texture.on('click',
+                    () => {
+                        let EquipID = "E004";
+                        let code = 2;
+                        let name = 'Press';
+                        layui.use('layer', function () {
+                            var layer = layui.layer;
+                            layer.open({
+                                type: 2,
+                                area: ['400px', '400px'],
+                                offset: ['171px', '100px'], //top left
+                                content: "/EnergySys/LineChart/?code=" + code + "&stationId=" +
+                                    stationID + "&equipId=" + EquipID + "&name=" + name //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
+                            });
+                        });
+                    })
                 //#5空压机流量 压力文字
                 clickEventAdd(flow4Texture);
+                flow4Texture.on('click',
+                    () => {
+                        let EquipID = "E005";
+                        let code = 1;
+                        let name = 'Q';
+                        layui.use('layer', function () {
+                            var layer = layui.layer;
+                            layer.open({
+                                type: 2,
+                                area: ['400px', '400px'],
+                                offset: ['171px', '100px'], //top left
+                                content: "/EnergySys/LineChart/?code=" + code + "&stationId=" +
+                                    stationID + "&equipId=" + EquipID + "&name=" + name //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
+                            });
+                        });
+                    })
                 clickEventAdd(press4Texture);
+                press4Texture.on('click',
+                    () => {
+                        let EquipID = "E005";
+                        let code = 2;
+                        let name = 'Press';
+                        layui.use('layer', function () {
+                            var layer = layui.layer;
+                            layer.open({
+                                type: 2,
+                                area: ['400px', '400px'],
+                                offset: ['171px', '100px'], //top left
+                                content: "/EnergySys/LineChart/?code=" + code + "&stationId=" +
+                                    stationID + "&equipId=" + EquipID + "&name=" + name //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
+                            });
+                        });
+                    })
                 //#6空压机流量 压力文字
                 clickEventAdd(flow5Texture);
+                flow5Texture.on('click',
+                    () => {
+                        let EquipID = "E006";
+                        let code = 1;
+                        let name = 'Q';
+                        layui.use('layer', function () {
+                            var layer = layui.layer;
+                            layer.open({
+                                type: 2,
+                                area: ['400px', '400px'],
+                                offset: ['171px', '100px'], //top left
+                                content: "/EnergySys/LineChart/?code=" + code + "&stationId=" +
+                                    stationID + "&equipId=" + EquipID + "&name=" + name //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
+                            });
+                        });
+                    })
                 clickEventAdd(press5Texture);
+                press5Texture.on('click',
+                    () => {
+                        let EquipID = "E006";
+                        let code = 2;
+                        let name = 'Press';
+                        layui.use('layer', function () {
+                            var layer = layui.layer;
+                            layer.open({
+                                type: 2,
+                                area: ['400px', '400px'],
+                                offset: ['171px', '100px'], //top left
+                                content: "/EnergySys/LineChart/?code=" + code + "&stationId=" +
+                                    stationID + "&equipId=" + EquipID + "&name=" + name //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
+                            });
+                        });
+                    })
             }
 
+            function ChartLoadEvent(sprite, eId, flagCode, flagName) {
+                sprite.on('click',
+                    () => {
+                        let EquipID = eId;
+                        let code = flagCode;
+                        let name = flagName;
+                        layui.use('layer', function () {
+                            var layer = layui.layer;
+                            layer.open({
+                                type: 2,
+                                area: ['400px', '400px'],
+                                offset: ['171px', '100px'], //top left
+                                content: "/EnergySys/LineChart/?code=" + code + "&stationId=" +
+                                    stationID + "&equipId=" + EquipID + "&name=" + name //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
+                            });
+                        });
+                    })
+            }
 
             function clickAddAndFunction() {
-                clickEventAdd(flowTexture);
-                flowTexture.on('pointerdown', () => {
-                    var dt = new Date();
-                    alert(dt);
-                })
-                clickEventAdd(flowTexture01);
-                clickEventAdd(flowTexture02);
                 //#1加载功率 功率 UPI
-                clickEventAdd(flowTexture1);
-                clickEventAdd(flowTexture11);
-                clickEventAdd(flowTexture12);
+                clickEventAdd(flowTexture);
+                ChartLoadEvent(flowTexture, "E001", 3, "LossRatio");
+                //功率
+                clickEventAdd(flowTexture01);
+                ChartLoadEvent(flowTexture01, "E001", 4, "ePower");
+                // UPI
+                clickEventAdd(flowTexture02);
+                ChartLoadEvent(flowTexture02, "E001", 5, "UPI");
                 //#2加载功率 功率 UPI
-                clickEventAdd(flowTexture2);
-                clickEventAdd(flowTexture21);
-                clickEventAdd(flowTexture22);
+                clickEventAdd(flowTexture1);
+                ChartLoadEvent(flowTexture1, "E002", 3, "LossRatio");
+                clickEventAdd(flowTexture11);
+                ChartLoadEvent(flowTexture11, "E002", 4, "ePower");
+                clickEventAdd(flowTexture12);
+                ChartLoadEvent(flowTexture12, "E002", 5, "UPI");
                 //#3加载功率 功率 UPI
-                clickEventAdd(flowTexture3);
-                clickEventAdd(flowTexture31);
-                clickEventAdd(flowTexture32);
+                clickEventAdd(flowTexture2);
+                ChartLoadEvent(flowTexture2, "E003", 3, "LossRatio");
+                clickEventAdd(flowTexture21);
+                ChartLoadEvent(flowTexture21, "E003", 4, "ePower");
+                clickEventAdd(flowTexture22);
+                ChartLoadEvent(flowTexture22, "E003", 5, "UPI");
                 //#4加载功率 功率 UPI
-                clickEventAdd(flowTexture4);
-                clickEventAdd(flowTexture41);
-                clickEventAdd(flowTexture42);
+                clickEventAdd(flowTexture3);
+                ChartLoadEvent(flowTexture3, "E004", 3, "LossRatio");
+                clickEventAdd(flowTexture31);
+                ChartLoadEvent(flowTexture31, "E004", 4, "ePower");
+                clickEventAdd(flowTexture32);
+                ChartLoadEvent(flowTexture32, "E004", 5, "UPI");
                 //#5加载功率 功率 UPI
+                clickEventAdd(flowTexture4);
+                ChartLoadEvent(flowTexture4, "E005", 3, "LossRatio");
+                clickEventAdd(flowTexture41);
+                ChartLoadEvent(flowTexture41, "E005", 4, "ePower");
+                clickEventAdd(flowTexture42);
+                ChartLoadEvent(flowTexture42, "E005", 5, "UPI");
+                //#6加载功率 功率 UPI
                 clickEventAdd(flowTexture5);
+                ChartLoadEvent(flowTexture5, "E006", 3, "LossRatio");
                 clickEventAdd(flowTexture51);
+                ChartLoadEvent(flowTexture51, "E006", 4, "ePower");
                 clickEventAdd(flowTexture52);
+                ChartLoadEvent(flowTexture52, "E006", 5, "UPI");
             }
 
 
@@ -516,20 +1018,117 @@
 
             app.ticker.add(delta => gameLoop(delta));
         }
-        setInterval(modXY, 6000);
+
+
+        //setInterval(modXY, 6000);
 
         function modXY() {
+            console.log("stationID   " + stationID)
+            if (stationID == "undefined") {
+                stationID = "S001";
+            }
             var url = "";
             $.ajax({
-                url: "http://localhost:35544/Home/TestWeb",
+                url: "/EnergySys/StationPerSecData",
                 type: "GET",
+                data: {
+                    stationID: stationID
+                },
+                beforeSend: function () {},
                 success: function (data) {
-                    modifyCount = data;
+                    //modifyCount = data;
+                    flow0Texture.text = "流量: " + data.centrifuges[5].Q;
+                    press0Texture.text = "压力: " + data.centrifuges[5].Outlet_P;
+                    flow1Texture.text = "流量: " + data.centrifuges[4].Q;
+                    press1Texture.text = "压力: " + data.centrifuges[4].Outlet_P;
+                    flow2Texture.text = "流量: " + data.centrifuges[3].Q;
+                    press2Texture.text = "压力: " + data.centrifuges[3].Outlet_P;
+                    flow3Texture.text = "流量: " + data.centrifuges[2].Q;
+                    press3Texture.text = "压力: " + data.centrifuges[2].Outlet_P;
+                    flow4Texture.text = "流量: " + data.centrifuges[1].Q;
+                    press4Texture.text = "压力: " + data.centrifuges[1].Outlet_P;
+                    flow5Texture.text = "流量: " + data.centrifuges[0].Q;
+                    press5Texture.text = "压力: " + data.centrifuges[0].Outlet_P;
+
+
+                    flowTexture.text = "加载效率:" + data.centrifuges[5].LossRatio;
+                    flowTexture01.text = "功率:" + data.centrifuges[5].EPower;
+                    flowTexture02.text = "   UPI:" + data.centrifuges[5].UPI;
+
+                    flowTexture1.text = "加载效率:" + data.centrifuges[4].LossRatio;
+                    flowTexture11.text = "功率:" + data.centrifuges[4].EPower;
+                    flowTexture12.text = "   UPI:" + data.centrifuges[4].UPI;
+
+
+                    flowTexture2.text = "加载效率:" + data.centrifuges[3].LossRatio;
+                    flowTexture21.text = "功率:" + data.centrifuges[3].EPower;
+                    flowTexture22.text = "   UPI:" + data.centrifuges[3].UPI;
+
+
+                    flowTexture3.text = "加载效率:" + data.centrifuges[2].LossRatio;
+                    flowTexture31.text = "功率:" + data.centrifuges[2].EPower;
+                    flowTexture32.text = "   UPI:" + data.centrifuges[2].UPI;
+
+
+                    flowTexture4.text = "加载效率:" + data.centrifuges[1].LossRatio;
+                    flowTexture41.text = "功率:" + data.centrifuges[1].EPower;
+                    flowTexture42.text = "   UPI:" + data.centrifuges[1].UPI;
+
+
+                    flowTexture5.text = "加载效率:" + data.centrifuges[0].LossRatio;
+                    flowTexture51.text = "功率:" + data.centrifuges[0].EPower;
+                    flowTexture52.text = "   UPI:" + data.centrifuges[0].UPI;
+
+                    //赋值前清空数组里面的数据
+                    run.splice(0);
+                    load.splice(0);
+                    dre.splice(0);
+                    for (var item in data.centrifuges) {
+                        for (var key in data.centrifuges[item]) {
+                            if (key == "Run") {
+                                run.push(data.centrifuges[item][key]);
+                            }
+                            if (key == "Load") {
+                                load.push(data.centrifuges[item][key]);
+
+                            }
+                            if (key == "DRE") {
+                                dre.push(data.centrifuges[item][key]);
+                            }
+                        }
+                    }
+
+                    //for (var i = 0; i < data.centrifuges.count; i++) {
+                    //    run.append(data.centrifuges[i].Run);
+                    //    load.append(data.centrifuges[i].Load);
+                    //    dre.append(data.centrifuges[i].DRE);
+                    //};
+
+                    //console.error(run)
+                    //console.error(load)
+                    //console.error(dre)
+
+
+                    flowTextureRight.text = "压差: " + data.drys[5].CDyer_InOutValue;
+                    pressTextureRight.text = "露点: " + data.drys[5].CDyer_LeakT;
+                    flow1TextureRight.text = "压差: " + data.drys[4].CDyer_InOutValue;
+                    press1TextureRight.text = "露点: " + data.drys[4].CDyer_LeakT;
+                    flow2TextureRight.text = "压差: " + data.drys[3].CDyer_InOutValue;
+                    press2TextureRight.text = "露点: " + data.drys[3].CDyer_LeakT;
+                    flow3TextureRight.text = "压差: " + data.drys[2].CDyer_InOutValue;
+                    press3TextureRight.text = "露点: " + data.drys[2].CDyer_LeakT;
+                    flow4TextureRight.text = "压差: " + data.drys[1].CDyer_InOutValue;
+                    press4TextureRight.text = "露点: " + data.drys[1].CDyer_LeakT;
+                    flow5TextureRight.text = "压差: " + data.drys[0].CDyer_InOutValue;
+                    press5TextureRight.text = "露点: " + data.drys[0].CDyer_LeakT;
+
+                },
+                complete: function (data) {
+
                 },
                 error: function (res) {
-                    // alert(res);
-                }
 
+                }
             });
         }
 
@@ -545,21 +1144,108 @@
         //卸载情况下,显示橙色
         //加载状态下,显示dre数据
         function gameLoop(delta) {
-            if (modifyCount < 30) {
+            if (run[5] == 0) {
                 LoadBar1.visible = false;
                 UnloadBar1.visible = true;
                 healthBar1.visible = false;
-            } else if (modifyCount > 30 && modifyCount <= 60) {
-                LoadBar1.visible = false;
-                UnloadBar1.visible = false;
-                healthBar1.visible = true;
-                healthBar1.outer.width = modifyCount;
             } else {
-                LoadBar1.visible = true;
-                UnloadBar1.visible = false;
-                healthBar1.visible = false;
+                if (load[5] == 0) {
+                    LoadBar1.visible = true;
+                    UnloadBar1.visible = false;
+                    healthBar1.visible = false;
+                } else {
+                    LoadBar1.visible = false;
+                    UnloadBar1.visible = false;
+                    healthBar1.visible = true;
+                    healthBar1.outer.width = dre[5] * 100 * 2;
+                }
             }
-            console.log(modifyCount);
+
+            if (run[4] == 0) {
+                LoadBar2.visible = false;
+                UnloadBar2.visible = true;
+                healthBar2.visible = false;
+            } else {
+                if (load[4] == 0) {
+                    LoadBar2.visible = true;
+                    UnloadBar2.visible = false;
+                    healthBar2.visible = false;
+                } else {
+                    LoadBar2.visible = false;
+                    UnloadBar2.visible = false;
+                    healthBar2.visible = true;
+                    healthBar2.outer.width = dre[4] * 100 * 2;
+                }
+            }
+
+
+            if (run[3] == 0) {
+                LoadBar3.visible = false;
+                UnloadBar3.visible = true;
+                healthBar3.visible = false;
+            } else {
+                if (load[3] == 0) {
+                    LoadBar3.visible = true;
+                    UnloadBar3.visible = false;
+                    healthBar3.visible = false;
+                } else {
+                    LoadBar3.visible = false;
+                    UnloadBar3.visible = false;
+                    healthBar3.visible = true;
+                    healthBar3.outer.width = dre[3] * 100 * 2;
+                }
+            }
+
+            if (run[2] == 0) {
+                LoadBar4.visible = false;
+                UnloadBar4.visible = true;
+                healthBar4.visible = false;
+            } else {
+                if (load[2] == 0) {
+                    LoadBar4.visible = true;
+                    UnloadBar4.visible = false;
+                    healthBar4.visible = false;
+                } else {
+                    LoadBar4.visible = false;
+                    UnloadBar4.visible = false;
+                    healthBar4.visible = true;
+                    healthBar4.outer.width = dre[2] * 100 * 2;
+                }
+            }
+
+            if (run[1] == 0) {
+                LoadBar5.visible = false;
+                UnloadBar5.visible = true;
+                healthBar5.visible = false;
+            } else {
+                if (load[1] == 0) {
+                    LoadBar5.visible = true;
+                    UnloadBar5.visible = false;
+                    healthBar5.visible = false;
+                } else {
+                    LoadBar5.visible = false;
+                    UnloadBar5.visible = false;
+                    healthBar5.visible = true;
+                    healthBar5.outer.width = dre[1] * 100 * 2;
+                }
+            }
+
+            if (run[0] == 0) {
+                LoadBar6.visible = false;
+                UnloadBar6.visible = true;
+                healthBar6.visible = false;
+            } else {
+                if (load[0] == 0) {
+                    LoadBar6.visible = true;
+                    UnloadBar6.visible = false;
+                    healthBar6.visible = false;
+                } else {
+                    LoadBar6.visible = false;
+                    UnloadBar6.visible = false;
+                    healthBar6.visible = true;
+                    healthBar6.outer.width = dre[0] * 100 * 2;
+                }
+            }
         }
 
         //鼠标拖放事件函数
@@ -575,7 +1261,7 @@
             // setup events for mouse + touch using
             // the pointer events
             // sprite
-            //     .on('pointerdown', onDragStart)
+            //     .on('click', onDragStart)
             //     .on('pointerup', onDragEnd)
             //     .on('pointerupoutside', onDragEnd)
             //     .on('pointermove', onDragMove);
@@ -606,6 +1292,7 @@
             this.alpha = 0.5;
             this.dragging = true;
         }
+
         //鼠标拖拽结束
         function onDragEnd(event) {
             // this.alpha = 1;
@@ -620,6 +1307,7 @@
             this.y = newPosition.y;
             console.log("this X:" + this.x + " this Y:" + this.y);
         }
+
         //鼠标拖拽过程
         function onDragMove() {
             // if (this.dragging) {
@@ -629,8 +1317,6 @@
             //      console.log("this X:" + this.x + "  this Y:" + this.y);
             // }
         }
-
-
 
 
         function Bar1(x, y) {
@@ -651,7 +1337,7 @@
 
                     //Create the front red rectangle 动态变化颜色
                     let outerBar = new PIXI.Graphics();
-                    outerBar.beginFill(u.color("green"));
+                    outerBar.beginFill(u.color("orange"));
                     outerBar.drawRect(0, 0, w, h);
                     outerBar.endFill();
                     LoadBar1.addChild(outerBar);
@@ -672,7 +1358,7 @@
 
                     //Create the front red rectangle 动态变化颜色
                     let outerBar = new PIXI.Graphics();
-                    outerBar.beginFill(u.color("orange"));
+                    outerBar.beginFill(u.color("red"));
                     outerBar.drawRect(0, 0, w, h);
                     outerBar.endFill();
                     UnloadBar1.addChild(outerBar);
@@ -695,7 +1381,7 @@
 
                     //Create the front red rectangle 动态变化颜色
                     let outerBar = new PIXI.Graphics();
-                    outerBar.beginFill(0xFF3300);
+                    outerBar.beginFill(u.color("green"));
                     outerBar.drawRect(0, 0, w, h);
                     outerBar.endFill();
                     healthBar1.addChild(outerBar);
@@ -722,7 +1408,7 @@
 
                     //Create the front red rectangle 动态变化颜色
                     let outerBar = new PIXI.Graphics();
-                    outerBar.beginFill(u.color("green"));
+                    outerBar.beginFill(u.color("orange"));
                     outerBar.drawRect(0, 0, w, h);
                     outerBar.endFill();
                     LoadBar2.addChild(outerBar);
@@ -743,7 +1429,7 @@
 
                     //Create the front red rectangle 动态变化颜色
                     let outerBar = new PIXI.Graphics();
-                    outerBar.beginFill(u.color("orange"));
+                    outerBar.beginFill(u.color("red"));
                     outerBar.drawRect(0, 0, w, h);
                     outerBar.endFill();
                     UnloadBar2.addChild(outerBar);
@@ -766,7 +1452,7 @@
 
                     //Create the front red rectangle 动态变化颜色
                     let outerBar = new PIXI.Graphics();
-                    outerBar.beginFill(0xFF3300);
+                    outerBar.beginFill(u.color("green"));
                     outerBar.drawRect(0, 0, w, h);
                     outerBar.endFill();
                     healthBar2.addChild(outerBar);
@@ -793,7 +1479,7 @@
 
                     //Create the front red rectangle 动态变化颜色
                     let outerBar = new PIXI.Graphics();
-                    outerBar.beginFill(u.color("green"));
+                    outerBar.beginFill(u.color("orange"));
                     outerBar.drawRect(0, 0, w, h);
                     outerBar.endFill();
                     LoadBar3.addChild(outerBar);
@@ -814,7 +1500,7 @@
 
                     //Create the front red rectangle 动态变化颜色
                     let outerBar = new PIXI.Graphics();
-                    outerBar.beginFill(u.color("orange"));
+                    outerBar.beginFill(u.color("red"));
                     outerBar.drawRect(0, 0, w, h);
                     outerBar.endFill();
                     UnloadBar3.addChild(outerBar);
@@ -837,7 +1523,7 @@
 
                     //Create the front red rectangle 动态变化颜色
                     let outerBar = new PIXI.Graphics();
-                    outerBar.beginFill(0xFF3300);
+                    outerBar.beginFill(u.color("green"));
                     outerBar.drawRect(0, 0, w, h);
                     outerBar.endFill();
                     healthBar3.addChild(outerBar);
@@ -864,7 +1550,7 @@
 
                     //Create the front red rectangle 动态变化颜色
                     let outerBar = new PIXI.Graphics();
-                    outerBar.beginFill(u.color("green"));
+                    outerBar.beginFill(u.color("orange"));
                     outerBar.drawRect(0, 0, w, h);
                     outerBar.endFill();
                     LoadBar4.addChild(outerBar);
@@ -885,7 +1571,7 @@
 
                     //Create the front red rectangle 动态变化颜色
                     let outerBar = new PIXI.Graphics();
-                    outerBar.beginFill(u.color("orange"));
+                    outerBar.beginFill(u.color("red"));
                     outerBar.drawRect(0, 0, w, h);
                     outerBar.endFill();
                     UnloadBar4.addChild(outerBar);
@@ -908,7 +1594,7 @@
 
                     //Create the front red rectangle 动态变化颜色
                     let outerBar = new PIXI.Graphics();
-                    outerBar.beginFill(0xFF3300);
+                    outerBar.beginFill(u.color("green"));
                     outerBar.drawRect(0, 0, w, h);
                     outerBar.endFill();
                     healthBar4.addChild(outerBar);
@@ -935,7 +1621,7 @@
 
                     //Create the front red rectangle 动态变化颜色
                     let outerBar = new PIXI.Graphics();
-                    outerBar.beginFill(u.color("green"));
+                    outerBar.beginFill(u.color("orange"));
                     outerBar.drawRect(0, 0, w, h);
                     outerBar.endFill();
                     LoadBar5.addChild(outerBar);
@@ -956,7 +1642,7 @@
 
                     //Create the front red rectangle 动态变化颜色
                     let outerBar = new PIXI.Graphics();
-                    outerBar.beginFill(u.color("orange"));
+                    outerBar.beginFill(u.color("red"));
                     outerBar.drawRect(0, 0, w, h);
                     outerBar.endFill();
                     UnloadBar5.addChild(outerBar);
@@ -979,7 +1665,7 @@
 
                     //Create the front red rectangle 动态变化颜色
                     let outerBar = new PIXI.Graphics();
-                    outerBar.beginFill(0xFF3300);
+                    outerBar.beginFill(u.color("green"));
                     outerBar.drawRect(0, 0, w, h);
                     outerBar.endFill();
                     healthBar5.addChild(outerBar);
@@ -1006,7 +1692,7 @@
 
                     //Create the front red rectangle 动态变化颜色
                     let outerBar = new PIXI.Graphics();
-                    outerBar.beginFill(u.color("green"));
+                    outerBar.beginFill(u.color("orange"));
                     outerBar.drawRect(0, 0, w, h);
                     outerBar.endFill();
                     LoadBar6.addChild(outerBar);
@@ -1027,7 +1713,7 @@
 
                     //Create the front red rectangle 动态变化颜色
                     let outerBar = new PIXI.Graphics();
-                    outerBar.beginFill(u.color("orange"));
+                    outerBar.beginFill(u.color("red"));
                     outerBar.drawRect(0, 0, w, h);
                     outerBar.endFill();
                     UnloadBar6.addChild(outerBar);
@@ -1050,7 +1736,7 @@
 
                     //Create the front red rectangle 动态变化颜色
                     let outerBar = new PIXI.Graphics();
-                    outerBar.beginFill(0xFF3300);
+                    outerBar.beginFill(u.color("green"));
                     outerBar.drawRect(0, 0, w, h);
                     outerBar.endFill();
                     healthBar6.addChild(outerBar);
@@ -1063,344 +1749,724 @@
 
             //空压机绘制及文字制作
             let areaTest;
-            areaTest = rectangleFill(areaTest, x = 750 + pipeLineleft, y = 149 +
-                142 * 0 - pipeLinewidth, width = 108, height = 24, debug = false, fillColor = "RoyalBlue");
+            areaTest = rectangleFill(areaTest,
+                x = 750 + pipeLineleft,
+                y = 149 +
+                142 * 0 -
+                pipeLinewidth,
+                width = 108,
+                height = 24,
+                debug = false,
+                fillColor = "RoyalBlue");
             let areaTestBottom;
-            areaTestBottom = rectangleFill(areaTestBottom, x = 750 + pipeLineleft, y = 189 + 142 * 0 -
-                pipeLinewidth, width = 108,
-                height = 24, debug = false, fillColor = "RoyalBlue");
+            areaTestBottom = rectangleFill(areaTestBottom,
+                x = 750 + pipeLineleft,
+                y = 189 +
+                142 * 0 -
+                pipeLinewidth,
+                width = 108,
+                height = 24,
+                debug = false,
+                fillColor = "RoyalBlue");
 
-            flow0Texture = textFill(flow0Texture, x = 759 + pipeLineleft, y = 152 - pipeLinewidth, "流量 :", debug =
+            flow0Texture = textFill(flow0Texture,
+                x = 759 + pipeLineleft,
+                y = 152 - pipeLinewidth,
+                "流量 :",
+                debug =
                 false);
-            press0Texture = textFill(press0Texture, x = 759 + pipeLineleft, y = 192 - pipeLinewidth, "压力 :", debug =
+            press0Texture = textFill(press0Texture,
+                x = 759 + pipeLineleft,
+                y = 192 - pipeLinewidth,
+                "压力 :",
+                debug =
                 false);
 
 
             //空压机2
             let areaTest1;
-            areaTest1 = rectangleFill(areaTest1, x = 750 + pipeLineleft, y = 149 +
-                142 * 1 - pipeLinewidth, width = 108, height = 24, debug = false, fillColor = "RoyalBlue");
+            areaTest1 = rectangleFill(areaTest1,
+                x = 750 + pipeLineleft,
+                y = 149 +
+                142 * 1 -
+                pipeLinewidth,
+                width = 108,
+                height = 24,
+                debug = false,
+                fillColor = "RoyalBlue");
 
             let areaTestBottom1;
-            areaTestBottom1 = rectangleFill(areaTestBottom1, x = 750 + pipeLineleft, y = 189 + 142 * 1 -
-                pipeLinewidth, width = 108,
-                height = 24, debug = false, fillColor = "RoyalBlue");
+            areaTestBottom1 = rectangleFill(areaTestBottom1,
+                x = 750 + pipeLineleft,
+                y = 189 +
+                142 * 1 -
+                pipeLinewidth,
+                width = 108,
+                height = 24,
+                debug = false,
+                fillColor = "RoyalBlue");
 
-            flow1Texture = textFill(flow1Texture, x = 759 + pipeLineleft, y = 152 - pipeLinewidth + 142 * 1, "流量 :",
+            flow1Texture = textFill(flow1Texture,
+                x = 759 + pipeLineleft,
+                y = 152 - pipeLinewidth + 142 * 1,
+                "流量 :",
                 debug =
                 false);
-            press1Texture = textFill(press1Texture, x = 759 + pipeLineleft, y = 192 - pipeLinewidth + 142 * 1,
-                "压力 :", debug =
+            press1Texture = textFill(press1Texture,
+                x = 759 + pipeLineleft,
+                y = 192 - pipeLinewidth + 142 * 1,
+                "压力 :",
+                debug =
                 false);
 
 
             let areaTest2;
-            areaTest2 = rectangleFill(areaTest2, x = 750 + pipeLineleft, y = 149 - 15 +
-                142 * 2 - pipeLinewidth + 5, width = 108, height = 24, debug = false, fillColor = "RoyalBlue");
+            areaTest2 = rectangleFill(areaTest2,
+                x = 750 + pipeLineleft,
+                y = 149 -
+                15 +
+                142 * 2 -
+                pipeLinewidth +
+                5,
+                width = 108,
+                height = 24,
+                debug = false,
+                fillColor = "RoyalBlue");
             let areaTestBottom2;
-            areaTestBottom2 = rectangleFill(areaTestBottom2, x = 750 + pipeLineleft, y = 189 - 15 + 142 * 2 -
-                pipeLinewidth, width = 108,
-                height = 24, debug = false, fillColor = "RoyalBlue");
+            areaTestBottom2 = rectangleFill(areaTestBottom2,
+                x = 750 + pipeLineleft,
+                y = 189 -
+                15 +
+                142 * 2 -
+                pipeLinewidth,
+                width = 108,
+                height = 24,
+                debug = false,
+                fillColor = "RoyalBlue");
 
-            flow2Texture = textFill(flow2Texture, x = 759 + pipeLineleft, y = 152 - pipeLinewidth + 142 * 2 - 11,
+            flow2Texture = textFill(flow2Texture,
+                x = 759 + pipeLineleft,
+                y = 152 - pipeLinewidth + 142 * 2 - 11,
                 "流量 :",
                 debug =
                 false);
 
-            press2Texture = textFill(press2Texture, x = 759 + pipeLineleft, y = 192 - pipeLinewidth + 142 * 2 - 15,
-                "压力 :", debug =
+            press2Texture = textFill(press2Texture,
+                x = 759 + pipeLineleft,
+                y = 192 - pipeLinewidth + 142 * 2 - 15,
+                "压力 :",
+                debug =
                 false);
-
 
 
             let areaTest3;
-            areaTest3 = rectangleFill(areaTest3, x = 750 + pipeLineleft, y = 149 +
-                142 * 3 - pipeLinewidth - 15, width = 108, height = 24, debug = false, fillColor = "RoyalBlue");
+            areaTest3 = rectangleFill(areaTest3,
+                x = 750 + pipeLineleft,
+                y = 149 +
+                142 * 3 -
+                pipeLinewidth -
+                15,
+                width = 108,
+                height = 24,
+                debug = false,
+                fillColor = "RoyalBlue");
             let areaTestBottom3;
-            areaTestBottom3 = rectangleFill(areaTestBottom3, x = 750 + pipeLineleft, y = 189 + 142 * 3 -
-                pipeLinewidth - 15, width = 108,
-                height = 24, debug = false, fillColor = "RoyalBlue");
+            areaTestBottom3 = rectangleFill(areaTestBottom3,
+                x = 750 + pipeLineleft,
+                y = 189 +
+                142 * 3 -
+                pipeLinewidth -
+                15,
+                width = 108,
+                height = 24,
+                debug = false,
+                fillColor = "RoyalBlue");
 
-            flow3Texture = textFill(flow3Texture, x = 759 + pipeLineleft, y = 152 - pipeLinewidth + 142 * 3 - 15,
+            flow3Texture = textFill(flow3Texture,
+                x = 759 + pipeLineleft,
+                y = 152 - pipeLinewidth + 142 * 3 - 15,
                 "流量 :",
                 debug =
                 false);
 
-            press3Texture = textFill(press3Texture, x = 759 + pipeLineleft, y = 192 - pipeLinewidth + 142 * 3 - 15,
-                "压力 :", debug =
+            press3Texture = textFill(press3Texture,
+                x = 759 + pipeLineleft,
+                y = 192 - pipeLinewidth + 142 * 3 - 15,
+                "压力 :",
+                debug =
                 false);
 
             let areaTest4;
-            areaTest4 = rectangleFill(areaTest4, x = 750 + pipeLineleft, y = 149 +
-                142 * 4 - pipeLinewidth - 25, width = 108, height = 24, debug = false, fillColor = "RoyalBlue");
+            areaTest4 = rectangleFill(areaTest4,
+                x = 750 + pipeLineleft,
+                y = 149 +
+                142 * 4 -
+                pipeLinewidth -
+                25,
+                width = 108,
+                height = 24,
+                debug = false,
+                fillColor = "RoyalBlue");
             let areaTestBottom4;
-            areaTestBottom4 = rectangleFill(areaTestBottom4, x = 750 + pipeLineleft, y = 189 + 142 * 4 -
-                pipeLinewidth - 25, width = 108,
-                height = 24, debug = false, fillColor = "RoyalBlue");
+            areaTestBottom4 = rectangleFill(areaTestBottom4,
+                x = 750 + pipeLineleft,
+                y = 189 +
+                142 * 4 -
+                pipeLinewidth -
+                25,
+                width = 108,
+                height = 24,
+                debug = false,
+                fillColor = "RoyalBlue");
 
-            flow4Texture = textFill(flow4Texture, x = 759 + pipeLineleft, y = 152 - pipeLinewidth + 142 * 4 - 25,
+            flow4Texture = textFill(flow4Texture,
+                x = 759 + pipeLineleft,
+                y = 152 - pipeLinewidth + 142 * 4 - 25,
                 "流量 :",
                 debug =
                 false);
 
-            press4Texture = textFill(press4Texture, x = 759 + pipeLineleft, y = 192 - pipeLinewidth + 142 * 4 - 25,
-                "压力 :", debug =
+            press4Texture = textFill(press4Texture,
+                x = 759 + pipeLineleft,
+                y = 192 - pipeLinewidth + 142 * 4 - 25,
+                "压力 :",
+                debug =
                 false);
 
             let areaTest5;
-            areaTest5 = rectangleFill(areaTest5, x = 750 + pipeLineleft, y = 149 +
-                142 * 5 - pipeLinewidth - 35, width = 108, height = 24, debug = false, fillColor = "RoyalBlue");
+            areaTest5 = rectangleFill(areaTest5,
+                x = 750 + pipeLineleft,
+                y = 149 +
+                142 * 5 -
+                pipeLinewidth -
+                35,
+                width = 108,
+                height = 24,
+                debug = false,
+                fillColor = "RoyalBlue");
             let areaTestBottom5;
-            areaTestBottom5 = rectangleFill(areaTestBottom5, x = 750 + pipeLineleft, y = 189 + 142 * 5 -
-                pipeLinewidth - 40, width = 108,
-                height = 24, debug = false, fillColor = "RoyalBlue");
+            areaTestBottom5 = rectangleFill(areaTestBottom5,
+                x = 750 + pipeLineleft,
+                y = 189 +
+                142 * 5 -
+                pipeLinewidth -
+                40,
+                width = 108,
+                height = 24,
+                debug = false,
+                fillColor = "RoyalBlue");
 
-            flow5Texture = textFill(flow5Texture, x = 759 + pipeLineleft, y = 152 - pipeLinewidth + 142 * 5 - 35,
+            flow5Texture = textFill(flow5Texture,
+                x = 759 + pipeLineleft,
+                y = 152 - pipeLinewidth + 142 * 5 - 35,
                 "流量 :",
                 debug =
                 false);
 
 
-            press5Texture = textFill(press5Texture, x = 759 + pipeLineleft, y = 192 - pipeLinewidth + 142 * 5 - 40,
-                "压力 :", debug =
+            press5Texture = textFill(press5Texture,
+                x = 759 + pipeLineleft,
+                y = 192 - pipeLinewidth + 142 * 5 - 40,
+                "压力 :",
+                debug =
                 false);
 
             //吸附式干燥机绘制
             let areaTestRight;
-            areaTestRight = rectangleFill(areaTestRight, x = 1065 + pipeLineleft, y = 149 +
-                142 * 0 - pipeLinewidth, width = 108, height = 24, debug = false, fillColor = "RoyalBlue");
+            areaTestRight = rectangleFill(areaTestRight,
+                x = 1065 + pipeLineleft,
+                y = 149 +
+                142 * 0 -
+                pipeLinewidth,
+                width = 108,
+                height = 24,
+                debug = false,
+                fillColor = "RoyalBlue");
             let areaTestBottomRight;
-            areaTestBottomRight = rectangleFill(areaTestBottomRight, x = 1065 + pipeLineleft, y = 189 + 142 * 0 -
-                pipeLinewidth, width = 108,
-                height = 24, debug = false, fillColor = "RoyalBlue");
+            areaTestBottomRight = rectangleFill(areaTestBottomRight,
+                x = 1065 + pipeLineleft,
+                y = 189 +
+                142 * 0 -
+                pipeLinewidth,
+                width = 108,
+                height = 24,
+                debug = false,
+                fillColor = "RoyalBlue");
 
 
-
-            flowTextureRight = textFill(flowTextureRight, x = 1065 + pipeLineleft, y = 152 - pipeLinewidth,
+            flowTextureRight = textFill(flowTextureRight,
+                x = 1065 + pipeLineleft,
+                y = 152 - pipeLinewidth,
                 "压差 :",
                 debug =
                 false);
-            pressTextureRight = textFill(pressTextureRight, x = 1065 + pipeLineleft, y = 192 - pipeLinewidth,
+            pressTextureRight = textFill(pressTextureRight,
+                x = 1065 + pipeLineleft,
+                y = 192 - pipeLinewidth,
                 "露点 :",
                 debug =
                 false);
 
 
             let areaTest1Right;
-            areaTest1Right = rectangleFill(areaTest1Right, x = 1065 + pipeLineleft, y = 149 +
-                142 * 1 - pipeLinewidth, width = 108, height = 24, debug = false, fillColor = "RoyalBlue");
+            areaTest1Right = rectangleFill(areaTest1Right,
+                x = 1065 + pipeLineleft,
+                y = 149 +
+                142 * 1 -
+                pipeLinewidth,
+                width = 108,
+                height = 24,
+                debug = false,
+                fillColor = "RoyalBlue");
             let areaTestBottom1Right;
-            areaTestBottom1Right = rectangleFill(areaTestBottom1Right, x = 1065 + pipeLineleft, y = 189 + 142 * 1 -
-                pipeLinewidth, width = 108,
-                height = 24, debug = false, fillColor = "RoyalBlue");
+            areaTestBottom1Right = rectangleFill(areaTestBottom1Right,
+                x = 1065 + pipeLineleft,
+                y = 189 +
+                142 * 1 -
+                pipeLinewidth,
+                width = 108,
+                height = 24,
+                debug = false,
+                fillColor = "RoyalBlue");
 
-            flow1TextureRight = textFill(flow1TextureRight, x = 1065 + pipeLineleft, y = 152 - pipeLinewidth + 142 *
+            flow1TextureRight = textFill(flow1TextureRight,
+                x = 1065 + pipeLineleft,
+                y = 152 -
+                pipeLinewidth +
+                142 *
                 1,
                 "压差 :",
                 debug =
                 false);
-            press1TextureRight = textFill(press1TextureRight, x = 1065 + pipeLineleft, y = 192 - pipeLinewidth +
+            press1TextureRight = textFill(press1TextureRight,
+                x = 1065 + pipeLineleft,
+                y = 192 -
+                pipeLinewidth +
                 142 * 1,
-                "露点 :", debug =
+                "露点 :",
+                debug =
                 false);
 
 
             let areaTest2Right;
-            areaTest2Right = rectangleFill(areaTest2Right, x = 1065 + pipeLineleft, y = 149 - 15 +
-                142 * 2 - pipeLinewidth + 5, width = 108, height = 24, debug = false, fillColor = "RoyalBlue");
+            areaTest2Right = rectangleFill(areaTest2Right,
+                x = 1065 + pipeLineleft,
+                y = 149 -
+                15 +
+                142 * 2 -
+                pipeLinewidth +
+                5,
+                width = 108,
+                height = 24,
+                debug = false,
+                fillColor = "RoyalBlue");
             let areaTestBottom2Right;
-            areaTestBottom2Right = rectangleFill(areaTestBottom2Right, x = 1065 + pipeLineleft, y = 189 - 15 + 142 *
+            areaTestBottom2Right = rectangleFill(areaTestBottom2Right,
+                x = 1065 + pipeLineleft,
+                y = 189 -
+                15 +
+                142 *
                 2 -
-                pipeLinewidth, width = 108,
-                height = 24, debug = false, fillColor = "RoyalBlue");
+                pipeLinewidth,
+                width = 108,
+                height = 24,
+                debug = false,
+                fillColor = "RoyalBlue");
 
-            flow2TextureRight = textFill(flow2TextureRight, x = 1065 + pipeLineleft, y = 152 - pipeLinewidth + 142 *
-                2 - 11,
+            flow2TextureRight = textFill(flow2TextureRight,
+                x = 1065 + pipeLineleft,
+                y = 152 -
+                pipeLinewidth +
+                142 *
+                2 -
+                11,
                 "压差 :",
                 debug =
                 false);
-            press2TextureRight = textFill(press2TextureRight, x = 1065 + pipeLineleft, y = 192 - pipeLinewidth +
+            press2TextureRight = textFill(press2TextureRight,
+                x = 1065 + pipeLineleft,
+                y = 192 -
+                pipeLinewidth +
                 142 *
-                2 - 15,
-                "露点 :", debug =
+                2 -
+                15,
+                "露点 :",
+                debug =
                 false);
 
             let areaTest3Right;
-            areaTest3Right = rectangleFill(areaTest3Right, x = 1065 + pipeLineleft, y = 149 +
-                142 * 3 - pipeLinewidth - 15, width = 108, height = 24, debug = false, fillColor = "RoyalBlue");
+            areaTest3Right = rectangleFill(areaTest3Right,
+                x = 1065 + pipeLineleft,
+                y = 149 +
+                142 * 3 -
+                pipeLinewidth -
+                15,
+                width = 108,
+                height = 24,
+                debug = false,
+                fillColor = "RoyalBlue");
             let areaTestBottom3Right;
-            areaTestBottom3Right = rectangleFill(areaTestBottom3Right, x = 1065 + pipeLineleft, y = 189 + 142 * 3 -
-                pipeLinewidth - 15, width = 108,
-                height = 24, debug = false, fillColor = "RoyalBlue");
+            areaTestBottom3Right = rectangleFill(areaTestBottom3Right,
+                x = 1065 + pipeLineleft,
+                y = 189 +
+                142 * 3 -
+                pipeLinewidth -
+                15,
+                width = 108,
+                height = 24,
+                debug = false,
+                fillColor = "RoyalBlue");
 
-            flow3TextureRight = textFill(flow3TextureRight, x = 1065 + pipeLineleft, y = 152 - pipeLinewidth + 142 *
-                3 - 15,
+            flow3TextureRight = textFill(flow3TextureRight,
+                x = 1065 + pipeLineleft,
+                y = 152 -
+                pipeLinewidth +
+                142 *
+                3 -
+                15,
                 "压差 :",
                 debug =
                 false);
 
-            press3TextureRight = textFill(press3TextureRight, x = 1065 + pipeLineleft, y = 192 - pipeLinewidth +
+            press3TextureRight = textFill(press3TextureRight,
+                x = 1065 + pipeLineleft,
+                y = 192 -
+                pipeLinewidth +
                 142 *
-                3 - 15,
-                "露点 :", debug =
+                3 -
+                15,
+                "露点 :",
+                debug =
                 false);
 
             let areaTest4Right;
             let areaTestBottom4Right;
 
-            areaTest4Right = rectangleFill(areaTest4Right, x = 1065 + pipeLineleft, y = 149 +
-                142 * 4 - pipeLinewidth - 25, width = 108, height = 24, debug = false, fillColor = "RoyalBlue");
-            areaTestBottom4Right = rectangleFill(areaTestBottom4Right, x = 1065 + pipeLineleft, y = 189 + 142 * 4 -
-                pipeLinewidth - 25, width = 108,
-                height = 24, debug = false, fillColor = "RoyalBlue");
+            areaTest4Right = rectangleFill(areaTest4Right,
+                x = 1065 + pipeLineleft,
+                y = 149 +
+                142 * 4 -
+                pipeLinewidth -
+                25,
+                width = 108,
+                height = 24,
+                debug = false,
+                fillColor = "RoyalBlue");
+            areaTestBottom4Right = rectangleFill(areaTestBottom4Right,
+                x = 1065 + pipeLineleft,
+                y = 189 +
+                142 * 4 -
+                pipeLinewidth -
+                25,
+                width = 108,
+                height = 24,
+                debug = false,
+                fillColor = "RoyalBlue");
 
-            flow4TextureRight = textFill(flow4TextureRight, x = 1065 + pipeLineleft, y = 152 - pipeLinewidth + 142 *
-                4 - 25,
+            flow4TextureRight = textFill(flow4TextureRight,
+                x = 1065 + pipeLineleft,
+                y = 152 -
+                pipeLinewidth +
+                142 *
+                4 -
+                25,
                 "压差 :",
                 debug =
                 false);
 
-            press4TextureRight = textFill(press4TextureRight, x = 1065 + pipeLineleft, y = 192 - pipeLinewidth +
+            press4TextureRight = textFill(press4TextureRight,
+                x = 1065 + pipeLineleft,
+                y = 192 -
+                pipeLinewidth +
                 142 *
-                4 - 25,
-                "露点 :", debug =
+                4 -
+                25,
+                "露点 :",
+                debug =
                 false);
 
             let areaTest5Right;
-            areaTest5Right = rectangleFill(areaTest5Right, x = 1065 + pipeLineleft, y = 149 +
-                142 * 5 - pipeLinewidth - 35, width = 108, height = 24, debug = false, fillColor = "RoyalBlue");
+            areaTest5Right = rectangleFill(areaTest5Right,
+                x = 1065 + pipeLineleft,
+                y = 149 +
+                142 * 5 -
+                pipeLinewidth -
+                35,
+                width = 108,
+                height = 24,
+                debug = false,
+                fillColor = "RoyalBlue");
             let areaTestBottom5Right;
-            areaTestBottom5Right = rectangleFill(areaTestBottom5Right, x = 1065 + pipeLineleft, y = 189 + 142 * 5 -
-                pipeLinewidth - 40, width = 108,
-                height = 24, debug = false, fillColor = "RoyalBlue");
+            areaTestBottom5Right = rectangleFill(areaTestBottom5Right,
+                x = 1065 + pipeLineleft,
+                y = 189 +
+                142 * 5 -
+                pipeLinewidth -
+                40,
+                width = 108,
+                height = 24,
+                debug = false,
+                fillColor = "RoyalBlue");
 
 
-            flow5TextureRight = textFill(flow5TextureRight, x = 1065 + pipeLineleft, y = 152 - pipeLinewidth + 142 *
-                5 - 35,
+            flow5TextureRight = textFill(flow5TextureRight,
+                x = 1065 + pipeLineleft,
+                y = 152 -
+                pipeLinewidth +
+                142 *
+                5 -
+                35,
                 "压差 :",
                 debug =
                 false);
-            press5TextureRight = textFill(press5TextureRight, x = 1065 + pipeLineleft, y = 192 - pipeLinewidth +
+            press5TextureRight = textFill(press5TextureRight,
+                x = 1065 + pipeLineleft,
+                y = 192 -
+                pipeLinewidth +
                 142 *
-                5 - 40,
-                "露点 :", debug =
+                5 -
+                40,
+                "露点 :",
+                debug =
                 false);
         }
 
         function powerAndUPIInit(pipeLineleft, pipeLinewidth) {
             //#1加载功率以及UPI等制作
             let areaTest;
-            areaTest = rectangleFill(areaTest, x = 550 + pipeLineleft - 5, y = 149 +
-                142 * 0 - pipeLinewidth + 70, width = 308, height = 24, debug = false, fillColor = "RoyalBlue");
+            areaTest = rectangleFill(areaTest,
+                x = 550 + pipeLineleft - 5,
+                y = 149 +
+                142 * 0 -
+                pipeLinewidth +
+                70,
+                width = 308,
+                height = 24,
+                debug = false,
+                fillColor = "RoyalBlue");
 
 
-            flowTexture = textFill(flowTexture, x = 589 + pipeLineleft, y = 222 - pipeLinewidth, "加载效率:         ",
+            flowTexture = textFill(flowTexture,
+                x = 569 + pipeLineleft,
+                y = 222 - pipeLinewidth,
+                "加载效率:         ",
                 debug = false);
 
-            flowTexture01 = textFill(flowTexture01, x = 694 + pipeLineleft, y = 222 - pipeLinewidth, "功率: ", debug =
-                false);
-            flowTexture02 = textFill(flowTexture02, x = 769 + pipeLineleft, y = 222 - pipeLinewidth, "UPI: ", debug =
+            flowTexture01 = textFill(flowTexture01,
+                x = 674 + pipeLineleft,
+                y = 222 - pipeLinewidth,
+                "功率: ",
+                debug =
                 false);
 
+            flowTexture02 = textFill(flowTexture02,
+                x = 759 + pipeLineleft,
+                y = 222 - pipeLinewidth,
+                "UPI: ",
+                debug =
+                false);
+            // tempTextPure = flowTexture02;
 
             //#2加载功率以及UPI等制作
             let areaTest1;
-            areaTest1 = rectangleFill(areaTest1, x = 550 + pipeLineleft - 5, y = 149 +
-                142 * 1 - pipeLinewidth + 70, width = 308, height = 24, debug = false, fillColor = "RoyalBlue");
+            areaTest1 = rectangleFill(areaTest1,
+                x = 550 + pipeLineleft - 5,
+                y = 149 +
+                142 * 1 -
+                pipeLinewidth +
+                70,
+                width = 308,
+                height = 24,
+                debug = false,
+                fillColor = "RoyalBlue");
 
 
-            flowTexture1 = textFill(flowTexture1, x = 589 + pipeLineleft, y = 222 - pipeLinewidth + 142 * 1,
+            flowTexture1 = textFill(flowTexture1,
+                x = 569 + pipeLineleft,
+                y = 222 - pipeLinewidth + 142 * 1,
                 "加载效率: ",
                 debug = false);
-            flowTexture11 = textFill(flowTexture11, x = 694 + pipeLineleft, y = 222 - pipeLinewidth + 142 * 1,
-                "功率: ", debug =
+            flowTexture11 = textFill(flowTexture11,
+                x = 674 + pipeLineleft,
+                y = 222 - pipeLinewidth + 142 * 1,
+                "功率: ",
+                debug =
                 false);
-            flowTexture12 = textFill(flowTexture12, x = 769 + pipeLineleft, y = 222 - pipeLinewidth + 142 * 1,
-                "UPI: ", debug =
+            flowTexture12 = textFill(flowTexture12,
+                x = 759 + pipeLineleft,
+                y = 222 - pipeLinewidth + 142 * 1,
+                "UPI: ",
+                debug =
                 false);
 
             //#3加载功率以及UPI等制作
             let areaTest2;
-            areaTest2 = rectangleFill(areaTest2, x = 550 + pipeLineleft - 5, y = 149 +
-                142 * 2 - pipeLinewidth + 70 - 15, width = 308, height = 24, debug = false, fillColor =
+            areaTest2 = rectangleFill(areaTest2,
+                x = 550 + pipeLineleft - 5,
+                y = 149 +
+                142 * 2 -
+                pipeLinewidth +
+                70 -
+                15,
+                width = 308,
+                height = 24,
+                debug = false,
+                fillColor =
                 "RoyalBlue");
 
 
-            flowTexture2 = textFill(flowTexture2, x = 589 + pipeLineleft, y = 222 - pipeLinewidth + 142 * 2 - 15,
+            flowTexture2 = textFill(flowTexture2,
+                x = 569 + pipeLineleft,
+                y = 222 - pipeLinewidth + 142 * 2 - 15,
                 "加载效率: ",
                 debug = false);
 
-            flowTexture21 = textFill(flowTexture21, x = 694 + pipeLineleft, y = 222 - pipeLinewidth + 142 * 2 - 15,
-                "功率: ", debug =
+            flowTexture21 = textFill(flowTexture21,
+                x = 674 + pipeLineleft,
+                y = 222 - pipeLinewidth + 142 * 2 - 15,
+                "功率: ",
+                debug =
                 false);
 
-            flowTexture22 = textFill(flowTexture22, x = 769 + pipeLineleft, y = 222 - pipeLinewidth + 142 * 2 - 15,
-                "UPI: ", debug =
+            flowTexture22 = textFill(flowTexture22,
+                x = 759 + pipeLineleft,
+                y = 222 - pipeLinewidth + 142 * 2 - 15,
+                "UPI: ",
+                debug =
                 false);
 
             //#4加载功率以及UPI等制作
             let areaTest3;
-            areaTest3 = rectangleFill(areaTest3, x = 550 + pipeLineleft - 5, y = 149 +
-                142 * 3 - pipeLinewidth + 70 - 15, width = 308, height = 24, debug = false, fillColor =
+            areaTest3 = rectangleFill(areaTest3,
+                x = 550 + pipeLineleft - 5,
+                y = 149 +
+                142 * 3 -
+                pipeLinewidth +
+                70 -
+                15,
+                width = 308,
+                height = 24,
+                debug = false,
+                fillColor =
                 "RoyalBlue");
 
 
-            flowTexture3 = textFill(flowTexture3, x = 589 + pipeLineleft, y = 222 - pipeLinewidth + 142 * 3 -
+            flowTexture3 = textFill(flowTexture3,
+                x = 569 + pipeLineleft,
+                y = 222 -
+                pipeLinewidth +
+                142 * 3 -
                 15,
                 "加载效率: ",
                 debug = false);
 
-            flowTexture31 = textFill(flowTexture31, x = 694 + pipeLineleft, y = 222 - pipeLinewidth + 142 * 3 -
+            flowTexture31 = textFill(flowTexture31,
+                x = 674 + pipeLineleft,
+                y = 222 -
+                pipeLinewidth +
+                142 * 3 -
                 15,
-                "功率: ", debug =
+                "功率: ",
+                debug =
                 false);
 
-            flowTexture32 = textFill(flowTexture32, x = 769 + pipeLineleft, y = 222 - pipeLinewidth + 142 * 3 -
+            flowTexture32 = textFill(flowTexture32,
+                x = 759 + pipeLineleft,
+                y = 222 -
+                pipeLinewidth +
+                142 * 3 -
                 15,
-                "UPI: ", debug =
+                "UPI: ",
+                debug =
                 false);
 
             //#5加载功率以及UPI等制作
             let areaTest4;
-            areaTest4 = rectangleFill(areaTest4, x = 550 + pipeLineleft - 5, y = 149 +
-                142 * 4 - pipeLinewidth + 70 - 25, width = 308, height = 24, debug = false, fillColor =
+            areaTest4 = rectangleFill(areaTest4,
+                x = 550 + pipeLineleft - 5,
+                y = 149 +
+                142 * 4 -
+                pipeLinewidth +
+                70 -
+                25,
+                width = 308,
+                height = 24,
+                debug = false,
+                fillColor =
                 "RoyalBlue");
 
-            flowTexture4 = textFill(flowTexture4, x = 589 + pipeLineleft, y = 222 - pipeLinewidth + 142 * 4 -
+            flowTexture4 = textFill(flowTexture4,
+                x = 569 + pipeLineleft,
+                y = 222 -
+                pipeLinewidth +
+                142 * 4 -
                 25,
                 "加载效率: ",
                 debug = false);
 
-            flowTexture41 = textFill(flowTexture41, x = 694 + pipeLineleft, y = 222 - pipeLinewidth + 142 * 4 -
+            flowTexture41 = textFill(flowTexture41,
+                x = 674 + pipeLineleft,
+                y = 222 -
+                pipeLinewidth +
+                142 * 4 -
                 25,
-                "功率: ", debug =
+                "功率: ",
+                debug =
                 false);
 
-            flowTexture42 = textFill(flowTexture42, x = 769 + pipeLineleft, y = 222 - pipeLinewidth + 142 * 4 -
+            flowTexture42 = textFill(flowTexture42,
+                x = 759 + pipeLineleft,
+                y = 222 -
+                pipeLinewidth +
+                142 * 4 -
                 25,
-                "UPI: ", debug =
+                "UPI: ",
+                debug =
                 false);
 
             //#6加载功率以及UPI等制作
             let areaTest5;
-            areaTest5 = rectangleFill(areaTest5, x = 550 + pipeLineleft - 5, y = 149 +
-                142 * 5 - pipeLinewidth + 70 - 40, width = 308, height = 24, debug = false, fillColor =
+            areaTest5 = rectangleFill(areaTest5,
+                x = 550 + pipeLineleft - 5,
+                y = 149 +
+                142 * 5 -
+                pipeLinewidth +
+                70 -
+                40,
+                width = 308,
+                height = 24,
+                debug = false,
+                fillColor =
                 "RoyalBlue");
 
 
-            flowTexture5 = textFill(flowTexture5, x = 589 + pipeLineleft, y = 222 - pipeLinewidth + 142 * 5 -
+            flowTexture5 = textFill(flowTexture5,
+                x = 569 + pipeLineleft,
+                y = 222 -
+                pipeLinewidth +
+                142 * 5 -
                 40,
                 "加载效率: ",
                 debug = false);
 
-            flowTexture51 = textFill(flowTexture51, x = 694 + pipeLineleft, y = 222 - pipeLinewidth + 142 * 5 -
+            flowTexture51 = textFill(flowTexture51,
+                x = 674 + pipeLineleft,
+                y = 222 -
+                pipeLinewidth +
+                142 * 5 -
                 40,
-                "功率: ", debug =
+                "功率: ",
+                debug =
                 false);
 
-            flowTexture52 = textFill(flowTexture52, x = 769 + pipeLineleft, y = 222 - pipeLinewidth + 142 * 5 -
+            flowTexture52 = textFill(flowTexture52,
+                x = 759 + pipeLineleft,
+                y = 222 -
+                pipeLinewidth +
+                142 * 5 -
                 40,
-                "UPI: ", debug =
+                "UPI: ",
+                debug =
                 false);
 
         }
@@ -1425,7 +2491,6 @@
             image.buttonMode = true;
             return image;
         }
-
 
 
         //矩形填充
@@ -1466,7 +2531,6 @@
         }
 
 
-
         //键盘事件函数
         function keyboard(keyCode) {
             let key = {};
@@ -1497,14 +2561,16 @@
 
             //Attach event listeners
             window.addEventListener(
-                "keydown", key.downHandler.bind(key), false
+                "keydown",
+                key.downHandler.bind(key),
+                false
             );
             window.addEventListener(
-                "keyup", key.upHandler.bind(key), false
+                "keyup",
+                key.upHandler.bind(key),
+                false
             );
             return key;
         }
     </script>
 </body>
-
-</html>
