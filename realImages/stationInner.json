@@ -1,0 +1,20 @@
+{"frames": {
+
+"空压机内部结构.svg":
+{
+	"frame": {"x":0,"y":0,"w":1366,"h":768},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":1366,"h":768},
+	"sourceSize": {"w":1366,"h":768}
+}},
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "stationInner.png",
+	"format": "RGBA8888",
+	"size": {"w":1366,"h":768},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:8ffbf721eef09ebcfc1779e4bd190824:626b0b20b24db4533d9551a2ec097573:95b4027dca7b1dd835243a322504cfad$"
+}
+}
